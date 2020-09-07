@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Titre de la page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row justify-content-between">
+                <p>ENI-Encheres</p>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Nouvelle vente</h1>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="250px" weight="250px" />
+            </div>
+            <div class="col-8">
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Catégories :</label>
+                    <input type="text" />
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Description :</label>
+                    <textarea rows="5"></textarea>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Catégories </label>
+                    <div class="col-9"> <select class="form-control">
+                            <option>Toutes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Photo de l'article</label>
+                    <input type="file" />
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Mise à prix :</label>
+                    <input type="number" />
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Début de l'enchère :</label>
+                    <input type="date" />
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 col-form-label">Fin de l'enchère :</label>
+                    <input type="date" />
+                </div>
+                <div>
+                    <fieldset class="border p-2">
+                        <legend class="w-auto">Retrait</legend>
+
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Rue :</label>
+                            <input type="text" />
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Code postal :</label>
+                            <input type="text" />
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label">Ville :</label>
+                            <input type="text" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <div class="mt-5 row justify-content-between">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        <button type="submit" class="btn btn-primary">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Annuler la vente</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
