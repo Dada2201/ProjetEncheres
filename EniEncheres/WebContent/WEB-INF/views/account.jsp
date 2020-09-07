@@ -1,5 +1,7 @@
-<!doctype html>
-<html lang="fr">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -29,11 +31,11 @@
                         <input type="text" class="form-control col-8">
                     </div>
                     <div class="form-group row">
-                        <label class="col-4">Prénom :</label>
+                        <label class="col-4">PrÃ©nom :</label>
                         <input type="text" class="form-control col-8">
                     </div>
                     <div class="form-group row">
-                        <label class="col-4">Téléphone :</label>
+                        <label class="col-4">TÃ©lÃ©phone :</label>
                         <input type="tel" class="form-control col-8">
                     </div>
                     <div class="form-group row">
@@ -69,7 +71,7 @@
                 </div>
             </div>
             <div class="mt-5 row justify-content-around">
-                <button type="submit" class="btn btn-primary">Créer un compte</button>
+                <button type="submit" class="btn btn-primary">CrÃ©er un compte</button>
                 <button type="submit" class="btn btn-primary">Annuler</button>
             </div>
         </form>
