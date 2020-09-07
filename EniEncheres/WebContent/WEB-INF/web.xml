@@ -18,5 +18,16 @@
     <servlet-name>ServletAddUser</servlet-name>
     <url-pattern>/ajoutUtilisateur</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>ServletProfil</servlet-name>
+    <servlet-class>servlets.ServletProfil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletProfil</servlet-name>
+    <url-pattern>/profil</url-pattern>
+  </servlet-mapping>
+ 
+
  
 </web-app>

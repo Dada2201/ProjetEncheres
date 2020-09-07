@@ -21,7 +21,7 @@
         <div class="row justify-content-center">
             <h1>Mon profil</h1>
         </div>
-        <form action="<%=request.getContextPath()%>/ajoutUtilisateur" method="post">
+        <form action="/ajoutUtilisateur" method="post">
             <div class="row">
                 <div class="col">
                     <div class="form-group row">
