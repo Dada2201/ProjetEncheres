@@ -45,6 +45,15 @@
     <servlet-name>ServletLogin</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>ServletLogout</servlet-name>
+    <servlet-class>servlets.ServletLogout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletLogout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
  
 
  

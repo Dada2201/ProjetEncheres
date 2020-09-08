@@ -31,10 +31,10 @@
                 <button type="submit" class="btn btn-primary mr-auto ">Connexion</button>
                 <div class="mr-auto">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input">
-                        <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
+                        <input type="checkbox" class="form-check-input" name="souvenir">
+                        <label class="form-check-label">Se souvenir de moi</label>
                     </div>
-                    <a href="">Mot de passe oubliÃ©</a>
+                    <a href="">Mot de passe oublié</a>
                 </div>
             </div>
         </form>

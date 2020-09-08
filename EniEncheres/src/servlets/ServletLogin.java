@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,12 +42,17 @@ public class ServletLogin extends HttpServlet {
 			
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudoMotDePasse(pseudo, motDePasse);
 			
+			if(request.getParameter("souvenir") != null) {
+				Cookie cookieUtilisateur = new Cookie("utilisateur", utilisateur.getId().toString());
+				response.addCookie(cookieUtilisateur);
+			}
+			
 			if(utilisateur != null) {
 				request.setAttribute("data", utilisateur);	
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute("utilisateur", utilisateur);
 			}else {
-				
+				throw new BusinessException();
 			}
 		}
 		catch (BusinessException e) {

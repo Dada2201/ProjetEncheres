@@ -20,23 +20,23 @@
     </header>
     <div class="container">
         <div class="row justify-content-center">
-            <h1>Liste des enchÃ¨res</h1>
+            <h1>Liste des enchères</h1>
         </div>
         <p>Filtres :</p>
         <div class="row justify-content-around">
             <div class="col-6">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">ğŸ”</span>
+                        <span class="input-group-text">&#x1F50D;</span>
                     </div>
                     <input type="text" class="form-control" placeholder="Le nom de l'aticle contient">
                 </div>
                 <div class="row form-group">
-                    <p>CatÃ©gories :</p>
+                    <p>Catégories :</p>
 
                 </div>
                 <div class="form-group row">
-                    <label for="inputPassword" class="col-3 col-form-label">CatÃ©gories :</label>
+                    <label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
                     <div class="col-9"> <select class="form-control">
                             <option>Toutes</option>
                         </select>
@@ -57,7 +57,7 @@
                 <div>
                     <p><u>PC Gamer pour travailler</u></p>
                     <p>Prix: 210 points</p>
-                    <p>Fin de l'enchÃ¨re: 10/08/2018</p>
+                    <p>Fin de l'enchère: 10/08/2018</p>
                     <p>Vendeur: jojo44</p>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div>
                     <p><u>PC Gamer pour travailler</u></p>
                     <p>Prix: 210 points</p>
-                    <p>Fin de l'enchÃ¨re: 10/08/2018</p>
+                    <p>Fin de l'enchère: 10/08/2018</p>
                     <p>Vendeur: jojo44</p>
                 </div>
             </div>
