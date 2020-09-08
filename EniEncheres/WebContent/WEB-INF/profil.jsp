@@ -18,6 +18,7 @@
             </div>
         </div>
     </header>
+    <form method="post" action="<%=request.getContextPath()%>/modificationProfil"> 
         <div class="container">
                     <div class="form-group row justify-content-center">
                         <label>Pseudo : ${data.pseudo}</label>
@@ -47,6 +48,7 @@
             <div class="mt-5 row justify-content-around">
                  <button type="submit" class="btn btn-primary">Modifier</button> 
             </div>
+            </form>
     </div>
     
 </body>

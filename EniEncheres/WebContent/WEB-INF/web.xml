@@ -28,6 +28,14 @@
     <url-pattern>/profil</url-pattern>
   </servlet-mapping>
  
+     <servlet>
+    <servlet-name>ServletModificationProfil</servlet-name>
+    <servlet-class>servlets.ServletModificationProfil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletModificationProfil</servlet-name>
+    <url-pattern>/modificationProfil</url-pattern>
+  </servlet-mapping>
 
  
 </web-app>
