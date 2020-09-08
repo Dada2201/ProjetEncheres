@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bll.CategoriesManager;
 import bll.UtilisateurManager;
 import bo.Article;
 import bo.Categorie;
@@ -92,9 +93,10 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	private Article articleBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		//TODO AJOUTER LE MANAGER CATEGORIES
+		CategoriesManager categoriesManager = new CategoriesManager();
 		Article article = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
-				rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), utilisateurManager.selectionParId(Integer.parseInt(rs.getString("no_utilisateur"))), new Categorie(1, "cat"));
+				rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), 
+				utilisateurManager.selectionParId(Integer.parseInt(rs.getString("no_utilisateur"))), categoriesManager.selectionById(Integer.parseInt(rs.getString("no_categorie"))));
 		return article;
 	}
 

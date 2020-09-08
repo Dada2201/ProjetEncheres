@@ -40,4 +40,12 @@ public abstract class CodesResultatDAL {
 	public static final int SELECT_ENCHERE_ECHEC = 10009;
 	
 	public static final int SUPPRESSION_ENCHERE_ERREUR = 10010;
+
+	public static final int SELECT_CATEGORIE_ECHEC = 100011;
+
+	public static final int SELECT_RETRAIT_ECHEC = 10012;
+
+	public static final int SUPPRESSION_RETRAIT_ERREUR = 10013;
+
+	public static final int AJOUTER_RETRAIT_ECHEC = 10014;
 }
