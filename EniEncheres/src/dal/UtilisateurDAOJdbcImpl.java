@@ -74,6 +74,9 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				Utilisateur utilisateur = utilisateurBuilder(rs);
 				listeUtilisateurs.add(utilisateur);
 			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
 		}
 		catch(Exception e)
 		{
@@ -97,6 +100,9 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				Utilisateur utilisateur = utilisateurBuilder(rs);
 				return utilisateur;
 			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
 		}
 		catch(Exception e)
 		{
@@ -121,6 +127,9 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				Utilisateur utilisateur = utilisateurBuilder(rs);
 				return utilisateur;
 			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
 		}
 		catch(Exception e)
 		{
@@ -144,6 +153,9 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				Utilisateur utilisateur = utilisateurBuilder(rs);
 				return utilisateur;
 			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
 		}
 		catch(Exception e)
 		{
@@ -156,7 +168,8 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	private Utilisateur utilisateurBuilder(ResultSet rs) throws SQLException {
-		Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur") );
+		Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"),
+				rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur") );
 		return utilisateur;
 	}
 
@@ -167,6 +180,8 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE_LISTE);
 			pstmt.setInt(1, idUtilisateur);
 			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
