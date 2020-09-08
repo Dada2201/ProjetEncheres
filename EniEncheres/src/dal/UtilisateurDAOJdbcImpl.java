@@ -13,6 +13,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT="INSERT INTO encheres.utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)VALUES(?,?,?,?,?,?,?,?,?,?,?);";
 	private static final String DELETE_LISTE = "DELETE from encheres.utilisateurs where no_utilisateur=?";
+	private static final String UPDATE="UPDATE encheres.utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur = ?";
 	private static final String SELECT_ALL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs;";
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where no_utilisateur = ?;";
 	private static final String SELECT_BY_PSEUDO="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ?;";
@@ -172,5 +173,31 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_UTILISATEUR_ERREUR);
 			throw businessException;
 		}
+	}
+
+	@Override
+	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE);
+//UPDATE encheres.utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur = ?";
+			
+			pstmt.setString(1, utilisateur.getPseudo());
+			pstmt.setString(2, utilisateur.getNom());
+			pstmt.setString(3, utilisateur.getPrenom());
+			pstmt.setString(4, utilisateur.getEmail());
+			pstmt.setString(5, utilisateur.getTelephone());
+			pstmt.setString(6, utilisateur.getRue());
+			pstmt.setString(7, utilisateur.getCodePostal());
+			pstmt.setString(8, utilisateur.getVille());
+			pstmt.setString(9, utilisateur.getMotDePasse());
+			pstmt.setInt(10, utilisateur.getId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			//businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_UTILISATEUR_ERREUR);
+			throw businessException;
+		}		
 	}
 }

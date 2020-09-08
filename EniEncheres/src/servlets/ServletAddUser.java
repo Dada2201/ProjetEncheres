@@ -70,6 +70,8 @@ public class ServletAddUser extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
+		rd.forward(request, response);
 		doGet(request, response);
 	}
 

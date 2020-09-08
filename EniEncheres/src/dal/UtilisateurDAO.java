@@ -17,5 +17,7 @@ public interface UtilisateurDAO {
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException;
 
 	public Utilisateur selectByPseudoPassword(String pseudo, String motDePasse) throws BusinessException;
+	
+	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
 }

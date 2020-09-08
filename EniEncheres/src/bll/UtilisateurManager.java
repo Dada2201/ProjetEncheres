@@ -37,6 +37,10 @@ public class UtilisateurManager {
 		this.utilisateurDAO.removeUtilisateur(idUtilisateur);
 	}
 	
+	public void update(Utilisateur utilisateur) throws BusinessException{
+		this.utilisateurDAO.updateUtilisateur(utilisateur);
+	}
+	
 	public Utilisateur selectionParPseudo(String pseudo) throws BusinessException {
 		return this.utilisateurDAO.selectByPseudo(pseudo);		
 	}
@@ -58,4 +62,6 @@ public class UtilisateurManager {
 			}
 		}
 	}
+	
+	
 }

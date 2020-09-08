@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bll.UtilisateurManager;
 import bo.Utilisateur;
@@ -47,8 +48,34 @@ public class ServletModificationProfil extends HttpServlet {
 				rd.forward(request, response);
 				
 		if (request.getParameter("update_button") != null) {
-			System.out.println("modif");
-			//ici update
+			request.setCharacterEncoding("UTF-8");
+	    	UtilisateurManager um = new UtilisateurManager();
+	    	String pseudo, nom,prenom,email,telephone,rue,codePostal,ville,motDePasse,confirmationMotDePasse;
+	    	int no_utilisateur;
+	    	
+	    	
+	    	pseudo = request.getParameter("pseudo");
+			nom = request.getParameter("nom");
+			prenom = request.getParameter("prenom");
+			email = request.getParameter("email");
+			telephone = request.getParameter("telephone");
+			rue = request.getParameter("rue");
+			codePostal = request.getParameter("codepostal");
+			ville = request.getParameter("ville");
+			motDePasse = request.getParameter("mdpnouveau");
+			confirmationMotDePasse = request.getParameter("mdpconfirm");
+			
+			HttpSession currentUserSession = request.getSession();
+			Utilisateur currentUser = (Utilisateur) currentUserSession.getAttribute("utilisateur");
+			
+			Utilisateur updatedUser = new Utilisateur(currentUser.getId(),pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse,currentUser.getCredit(),currentUser.getIsAdmin());
+			try {
+				um.update(updatedUser);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+			currentUserSession.setAttribute("utilisateur", updatedUser);
+			
 	    } else if (request.getParameter("delete_button") != null) {
 	    	Utilisateur u = (Utilisateur) request.getSession().getAttribute("utilisateur");
 	    	System.out.println(u.getPseudo());

@@ -25,10 +25,8 @@ public class ServletProfil extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
-		Utilisateur u = new Utilisateur(1,"Jojo","Jean","Pierre,","jp@gmail.com","06","rue cj","13090","aix","mmm",0,true);
-		// TODO envoyer l'utilisateur de la bdd qui correspond au clic effectuer 
 		try {
-			request.setAttribute("data", u);
+			request.setAttribute("data", (Utilisateur) request.getSession().getAttribute("utilisateur"));
 			System.out.println(request.getAttribute("data")+"gg");
 			rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
 			rd.forward(request, response);
