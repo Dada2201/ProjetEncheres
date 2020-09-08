@@ -1,3 +1,4 @@
+<%@page import="bo.Utilisateur"%> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,6 +12,8 @@
 </head>
 
 <body>
+<% Utilisateur u = (Utilisateur) session.getAttribute("utilisateur"); %>
+
     <header>
         <div class="container">
             <div class="row justify-content-between">
@@ -22,11 +25,11 @@
         <div class="row justify-content-center">
             <h1>Mon profil</h1>
         </div>
-        <form action="" method="post">
+        <form action="<%=request.getContextPath()%>/modificationProfil" method="post">
             <div class="row">
                 <div class="col">
                     <div class="form-group row">
-                        <label class="col-4">Pseudo :</label>
+                        <label class="col-4">Pseudo : </label>
                         <input type="text" class="form-control col-8">
                     </div>
                     <div class="form-group row">

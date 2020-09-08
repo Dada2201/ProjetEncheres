@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bll.UtilisateurManager;
+import bo.Utilisateur;
+import dal.BusinessException;
+
 /**
  * Servlet implementation class ServletModificationProfil
  */
@@ -30,7 +34,7 @@ public class ServletModificationProfil extends HttpServlet {
 		// TODO Auto-generated method stub
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
 		rd.forward(request, response);
-		System.out.println("modif");
+		   
 	}
 
 	/**
@@ -38,7 +42,23 @@ public class ServletModificationProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		// TODO Auto-generated method stub
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
+				rd.forward(request, response);
+				
+		if (request.getParameter("update_button") != null) {
+			System.out.println("modif");
+			//ici update
+	    } else if (request.getParameter("delete_button") != null) {
+	    	Utilisateur u = (Utilisateur) request.getSession().getAttribute("utilisateur");
+	    	System.out.println(u.getPseudo());
+	    	UtilisateurManager um = new UtilisateurManager();
+	    	try {
+				um.removeListe(u.getId());
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			} finally {}
+	    }
 	}
 
 }
