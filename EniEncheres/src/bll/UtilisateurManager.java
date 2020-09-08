@@ -19,9 +19,9 @@ public class UtilisateurManager {
 		BusinessException exception = new BusinessException();
 		
 		this.validerUtilisateur(utilisateur, exception);
-		System.out.println(utilisateur);
+
 		this.utilisateurDAO.insert(utilisateur);
-	System.out.println(utilisateur);
+
 		return utilisateur;
 	}	
 	
