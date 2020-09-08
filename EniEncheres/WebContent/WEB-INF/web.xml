@@ -1,60 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>EniEncheres</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
- 
-  <servlet>
-    <servlet-name>ServletAddUser</servlet-name>
-    <servlet-class>servlets.ServletAddUser</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletAddUser</servlet-name>
-    <url-pattern>/ajoutUtilisateur</url-pattern>
-  </servlet-mapping>
-  
-    <servlet>
-    <servlet-name>ServletProfil</servlet-name>
-    <servlet-class>servlets.ServletProfil</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletProfil</servlet-name>
-    <url-pattern>/profil</url-pattern>
-  </servlet-mapping>
- 
-     <servlet>
-    <servlet-name>ServletModificationProfil</servlet-name>
-    <servlet-class>servlets.ServletModificationProfil</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletModificationProfil</servlet-name>
-    <url-pattern>/modificationProfil</url-pattern>
-  </servlet-mapping>
-  
-    <servlet>
-    <servlet-name>ServletLogin</servlet-name>
-    <servlet-class>servlets.ServletLogin</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletLogin</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
-  
-    <servlet>
-    <servlet-name>ServletLogout</servlet-name>
-    <servlet-class>servlets.ServletLogout</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletLogout</servlet-name>
-    <url-pattern>/logout</url-pattern>
-  </servlet-mapping>
- 
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>EniEncheres</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
 
- 
+	<servlet>
+		<servlet-name>ServletAddUser</servlet-name>
+		<servlet-class>servlets.ServletAddUser</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletAddUser</servlet-name>
+		<url-pattern>/ajoutUtilisateur</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ServletProfil</servlet-name>
+		<servlet-class>servlets.ServletProfil</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletProfil</servlet-name>
+		<url-pattern>/profil</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ServletModificationProfil</servlet-name>
+		<servlet-class>servlets.ServletModificationProfil</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletModificationProfil</servlet-name>
+		<url-pattern>/modificationProfil</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ServletLogin</servlet-name>
+		<servlet-class>servlets.ServletLogin</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletLogin</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ServletLogout</servlet-name>
+		<servlet-class>servlets.ServletLogout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletLogout</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ServletHome</servlet-name>
+		<servlet-class>servlets.ServletHome</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletHome</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+
+
 </web-app>

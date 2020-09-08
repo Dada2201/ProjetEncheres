@@ -1,12 +1,9 @@
 package servlets;
 
-import java.io.Console;
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +59,6 @@ public class ServletAddUser extends HttpServlet {
 			
 			if(utilisateur == null) {
 				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, false));	
-				//request.setAttribute("utilisateur", utilisateur);	
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute("utilisateur", utilisateur);
 			}else {
