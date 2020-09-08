@@ -31,7 +31,6 @@ class CategorieDAOJdbcImpl implements CategorieDAO {
 			}
 			rs.close();
 			pstmt.close();
-			cnx.commit();
 		}
 		catch(Exception e)
 		{
