@@ -38,10 +38,6 @@ public class ServletAddUser extends HttpServlet {
 		try
 		{			
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
-
-			List<Utilisateur> oui = utilisateurManager.selectionTout();
-			
-			System.out.println(oui.toString());
 			
 			pseudo = request.getParameter("pseudo");
 			nom = request.getParameter("nom");
@@ -62,8 +58,6 @@ public class ServletAddUser extends HttpServlet {
 			}
 			
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);
-
-
 			
 			if(utilisateur == null) {
 				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, false));	

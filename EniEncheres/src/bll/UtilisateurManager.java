@@ -41,6 +41,10 @@ public class UtilisateurManager {
 		return this.utilisateurDAO.selectByPseudo(pseudo);		
 	}
 	
+	public Utilisateur selectionParPseudoMotDePasse(String pseudo, String motDePasse) throws BusinessException {
+		return this.utilisateurDAO.selectByPseudoPassword(pseudo, motDePasse);		
+	}
+	
 	private void validerUtilisateur (Utilisateur utilisateur, BusinessException businessException) {
 		if(utilisateur==null)
 		{

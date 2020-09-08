@@ -28,6 +28,16 @@
     <url-pattern>/profil</url-pattern>
   </servlet-mapping>
  
+  
+    <servlet>
+    <servlet-name>ServletLogin</servlet-name>
+    <servlet-class>servlets.ServletLogin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletLogin</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+ 
 
  
 </web-app>
