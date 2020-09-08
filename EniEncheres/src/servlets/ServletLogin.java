@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bll.UtilisateurManager;
 import bo.Utilisateur;
@@ -41,7 +42,9 @@ public class ServletLogin extends HttpServlet {
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudoMotDePasse(pseudo, motDePasse);
 			
 			if(utilisateur != null) {
-				request.setAttribute("data", utilisateur);		
+				request.setAttribute("data", utilisateur);	
+				HttpSession currentUserSession = request.getSession();
+				currentUserSession.setAttribute("utilisateur", utilisateur);
 			}else {
 				
 			}

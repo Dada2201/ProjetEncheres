@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bll.CodesResultatBLL;
 import bll.UtilisateurManager;
@@ -61,7 +62,9 @@ public class ServletAddUser extends HttpServlet {
 			
 			if(utilisateur == null) {
 				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, false));	
-				request.setAttribute("utilisateur", utilisateur);			
+				//request.setAttribute("utilisateur", utilisateur);	
+				HttpSession currentUserSession = request.getSession();
+				currentUserSession.setAttribute("utilisateur", utilisateur);
 			}else {
 				
 			}

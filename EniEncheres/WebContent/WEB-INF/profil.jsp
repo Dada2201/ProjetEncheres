@@ -11,6 +11,7 @@
     <script src="script.js"></script>
 </head>
 <body>
+<% Utilisateur u = (Utilisateur) session.getAttribute("utilisateur"); %>
 	<header>
         <div class="container">
             <div class="row justify-content-between">
@@ -21,28 +22,28 @@
     <form method="post" action="<%=request.getContextPath()%>/modificationProfil"> 
         <div class="container">
                     <div class="form-group row justify-content-center">
-                        <label>Pseudo : ${data.pseudo}</label>
+                        <label>Pseudo : <%= u.getPseudo() %></label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Prénom : ${data.prenom}</label>
+                        <label>Prénom : <%= u.getPrenom() %></label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Téléphone : ${data.telephone}</label>
+                        <label>Téléphone : <%= u.getTelephone() %></label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Code Postal : ${data.codePostal}</label>
+                        <label>Code Postal : <%= u.getCodePostal() %></label>
                     </div>          
                     <div class="form-group row justify-content-center">
-                        <label>Nom : ${data.nom}</label>
+                        <label>Nom : <%= u.getNom() %></label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Email : ${data.email}</label>
+                        <label>Email : <%= u.getEmail()%></label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Rue : ${data.rue}</label>
+                        <label>Rue : <%= u.getRue()%></label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Ville : ${data.ville}</label>
+                        <label>Ville : <%= u.getVille()%></label>
                     </div>
 
             <div class="mt-5 row justify-content-around">
