@@ -15,4 +15,6 @@ public interface UtilisateurDAO {
 	public void removeUtilisateur(int idUtilisateur) throws BusinessException;
 
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException;
+
+	public Utilisateur selectByPseudoPassword(String pseudo, String motDePasse) throws BusinessException;
 }

@@ -16,6 +16,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_ALL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs;";
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where no_utilisateur = ?;";
 	private static final String SELECT_BY_PSEUDO="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ?;";
+	private static final String SELECT_BY_PSEUDO_MOT_DE_PASSE="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ? and mot_de_passe = ?;";
 
 	@Override
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
@@ -89,6 +90,30 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Utilisateur utilisateur = utilisateurBuilder(rs);
+				return utilisateur;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+		return null;
+	}
+	
+	@Override
+	public Utilisateur selectByPseudoPassword(String pseudo, String motDePasse) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_MOT_DE_PASSE);
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, motDePasse);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
