@@ -20,35 +20,30 @@
     </header>
         <div class="container">
                     <div class="form-group row justify-content-center">
-                        <label>Pseudo : </label>
+                        <label>Pseudo : ${data.pseudo}</label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Prénom :</label>
+                        <label>Prénom : ${data.prenom}</label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Téléphone :</label>
+                        <label>Téléphone : ${data.telephone}</label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Code Postal :</label>
+                        <label>Code Postal : ${data.codePostal}</label>
+                    </div>          
+                    <div class="form-group row justify-content-center">
+                        <label>Nom : ${data.nom}</label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Mot de passe :</label>
-                    </div>                
-                    <div class="form-group row justify-content-center">
-                        <label>Nom : ${data.id}</label>
+                        <label>Email : ${data.email}</label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Email :</label>
+                        <label>Rue : ${data.rue}</label>
                     </div>
                     <div class="form-group row justify-content-center">
-                        <label>Rue :</label>
+                        <label>Ville : ${data.ville}</label>
                     </div>
-                    <div class="form-group row justify-content-center">
-                        <label>Ville :</label>
-                    </div>
-                    <div class="form-group row justify-content-center">
-                        <label>Confirmation :</label>
-                    </div>
+
             <div class="mt-5 row justify-content-around">
                  <button type="submit" class="btn btn-primary">Modifier</button> 
             </div>
