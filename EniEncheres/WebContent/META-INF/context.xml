@@ -6,8 +6,8 @@
 		type="javax.sql.DataSource"
 		username="root"
 		password="Pa$$word"
-		driverClassName="com.mysql.jdbc.Driver"
-		url="jdbc:mysql://localhost:3306/encheres"
+		driverClassName="com.mysql.cj.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/encheres?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=UTC"
 		
 		maxTotal="100"
 		maxIdle="30"

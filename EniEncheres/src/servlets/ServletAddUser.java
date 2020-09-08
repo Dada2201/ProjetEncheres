@@ -1,6 +1,8 @@
 package servlets;
 
+import java.io.Console;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +16,6 @@ import bll.UtilisateurManager;
 import bo.Utilisateur;
 import dal.BusinessException;
 
-@WebServlet("/salut")
 public class ServletAddUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public ServletAddUser() {
@@ -37,6 +38,10 @@ public class ServletAddUser extends HttpServlet {
 		try
 		{			
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
+
+			List<Utilisateur> oui = utilisateurManager.selectionTout();
+			
+			System.out.println(oui.toString());
 			
 			pseudo = request.getParameter("pseudo");
 			nom = request.getParameter("nom");
@@ -48,14 +53,17 @@ public class ServletAddUser extends HttpServlet {
 			ville = request.getParameter("ville");
 			motDePasse = request.getParameter("motDePasse");
 			confirmationMotDePasse = request.getParameter("confirmationMotDePasse");
+
 			
-			if(motDePasse != confirmationMotDePasse) {
+			if(!motDePasse.equals(confirmationMotDePasse)) {
 				BusinessException businessException = null;
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_MOT_DE_PASSE_ERREUR);
 				throw businessException;
 			}
-
+			
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);
+
+
 			
 			if(utilisateur == null) {
 				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, false));	
@@ -63,16 +71,13 @@ public class ServletAddUser extends HttpServlet {
 			}else {
 				
 			}
-			request.setAttribute("id", utilisateur.getId());
 		}
 		catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
-		rd.forward(request, response);
+		doGet(request, response);
 	}
 
 

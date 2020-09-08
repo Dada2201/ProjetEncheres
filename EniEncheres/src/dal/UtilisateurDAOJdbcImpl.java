@@ -18,7 +18,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ?;";
 
 	@Override
-	public void insert(Utilisateur utilisateur) throws BusinessException {
+	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
 		if(utilisateur == null)
 		{
 			BusinessException businessException = new BusinessException();
@@ -57,6 +57,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
 			throw businessException;
 		}	
+		return utilisateur;
 	}
 	
 	@Override

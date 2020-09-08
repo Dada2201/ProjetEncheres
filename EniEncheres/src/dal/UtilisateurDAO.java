@@ -6,7 +6,7 @@ import dal.BusinessException;
 
 public interface UtilisateurDAO {
 
-	public void insert(Utilisateur utilisateur) throws BusinessException;
+	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException;
 
 	public List<Utilisateur> selectAll() throws BusinessException;
 

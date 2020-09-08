@@ -131,7 +131,12 @@ public class Utilisateur  {
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-    
-    
+
+	@Override
+	public String toString() {
+		return "Utilisateur [id=" + id + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom + ", email="
+				+ email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal=" + codePostal + ", ville="
+				+ ville + ", motDePasse=" + motDePasse + ", credit=" + credit + ", isAdmin=" + isAdmin + "]";
+	}
 }
     				
