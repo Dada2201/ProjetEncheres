@@ -2,24 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!doctype html>
-<html lang="fr">
 
-<head>
-    <meta charset="utf-8">
-    <title>Titre de la page</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="script.js"></script>
-</head>
-
-<body>
-    <header>
-        <div class="container">
-            <div class="row justify-content-between">
-                <p>ENI-Encheres</p>
-            </div>
-        </div>
+<%@ include file="partial/header/notConnected.jsp" %>
     </header>
     <div class="container">
         <div class="row justify-content-center">
