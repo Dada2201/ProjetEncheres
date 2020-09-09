@@ -27,7 +27,6 @@ public class ServletProfil extends HttpServlet {
 		RequestDispatcher rd = null;
 		try {
 			request.setAttribute("data", (Utilisateur) request.getSession().getAttribute("utilisateur"));
-			System.out.println(request.getAttribute("data")+"gg");
 			rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
 			rd.forward(request, response);
 		}finally {

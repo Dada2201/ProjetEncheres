@@ -21,6 +21,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String SELECT_BY_ARTICLE="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_article = ?;";
 	private static final String REMOVE = "DELETE from LISTES where id=?";
 	private static final String SELECT_ALL="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres;";
+	private static final String UPDATE="UPDATE encheres.encheres SET no_utilisateur = ?, date_enchere = ?, montant_enchere = ? WHERE no_article = ?";
 
 
 	@Override
@@ -151,5 +152,24 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 			businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_ENCHERE_ERREUR);
 			throw businessException;
 		}
+	}
+
+	@Override
+	public void update(Enchere enchere) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE);
+			
+			pstmt.setLong(1, enchere.getUtilisateur().getId());
+			pstmt.setDate(2, new java.sql.Date(enchere.getDateEnchere().getTime()));
+			pstmt.setLong(3, enchere.getMontantEnchere());
+			pstmt.setLong(4, enchere.getArticle().getNoArticle());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_ENCHERE_ERREUR);
+			throw businessException;
+		}		
 	}
 }
