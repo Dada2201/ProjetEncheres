@@ -2,27 +2,20 @@ package servlets;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bll.ArticleManager;
 import bll.CategoriesManager;
-import bll.EnchereManager;
 import bll.RetraitManager;
-import bll.UtilisateurManager;
 import bo.Article;
 import bo.Categorie;
-import bo.Enchere;
 import bo.Retrait;
 import bo.Utilisateur;
 import dal.BusinessException;
@@ -67,7 +60,6 @@ public class ServletAddArticle extends HttpServlet {
 
 			CategoriesManager categorieManager = new CategoriesManager();
 			ArticleManager articleManager = new ArticleManager();
-			EnchereManager enchereManager = new EnchereManager();
 			RetraitManager retraitManager = new RetraitManager();
 			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
 			
@@ -86,10 +78,8 @@ public class ServletAddArticle extends HttpServlet {
 			Article article = new Article(0, nom, description, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere)
 					, prix, 0, utilisateur, categorie);
 			Retrait retrait = new Retrait(article, rue, codePostal, ville);
-			Enchere enchere = new Enchere(utilisateur, article, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), prix);
 
 			article = articleManager.ajouter(article, utilisateur, categorie);
-			enchereManager.ajouter(utilisateur, article, enchere);
 			retraitManager.ajouter(retrait);
 		}
 		catch (Exception e) {

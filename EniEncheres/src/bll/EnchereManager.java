@@ -56,4 +56,8 @@ public class EnchereManager {
 	public void removeEnchere(int idEnchere) throws BusinessException {
 		this.enchereDAO.remove(idEnchere);
 	}
+
+	public void update(Enchere enchere) throws BusinessException {
+		this.enchereDAO.update(enchere);
+	}
 }

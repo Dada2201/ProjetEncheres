@@ -38,7 +38,7 @@
                     <p>${article.description}</p>
                 </div>
                 <div class="form-group row">
-                    <p>CatÃ©gorie</p>
+                    <p>Catégorie</p>
                     <p>${categorie.libelle}</p>
                 </div>
                 <div class="form-group row">
@@ -46,8 +46,8 @@
                     <p>${enchere.montantEnchere} pts par ${utilisateurEnchere.pseudo}</p>
                 </div>
                 <div class="form-group row">
-                    <p>Mise Ã  prix :</p>
-                    <p>185 pts</p>
+                    <p>Mise à prix :</p>
+                    <p>${article.prixInitial} pts</p>
                 </div>
                 <div class="form-group row">
                     <p>Fin de l'enchère :</p>
@@ -56,19 +56,19 @@
                 <div class="form-group row">
                     <p>Retrait :</p>
                     <div>
-                        <p>10 allée des Alouettes</p>
-                        <p>44800 Saint Herblain</p>
+                        <p>${retrait.rue}</p>
+                        <p>${retrait.codePostal} ${retrait.ville}</p>
                     </div>
                 </div>
                 <div class="form-group row">
                     <p>Vendeur :</p>
                     <p>${utilisateurVendeur.pseudo}</p>
                 </div>
-                <div class="form-group row">
+                <form action="encherir" method="post" class="form-group row">
                     <p>Ma proposition :</p>
-                    <input type="number" />
-                    <button type="submit" class="btn btn-primary">Enchérir</button>
-                </div>
+                    <input type="number" name="prix" />
+                    <input type="submit" class="btn btn-primary" value="Enchérir" />
+                </form>
             </div>
         </div>
     </div>

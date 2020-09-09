@@ -48,4 +48,8 @@ public abstract class CodesResultatDAL {
 	public static final int SUPPRESSION_RETRAIT_ERREUR = 10013;
 
 	public static final int AJOUTER_RETRAIT_ECHEC = 10014;
+
+	public static final int UPDATE_UTILISATEUR_ERREUR = 10015;
+	
+	public static final int UPDATE_ENCHERE_ERREUR = 10016;
 }

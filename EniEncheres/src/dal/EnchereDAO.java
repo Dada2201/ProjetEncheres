@@ -17,4 +17,6 @@ public interface EnchereDAO {
 	public Enchere selectByArticle(int idArticle) throws BusinessException;
 
 	public void remove(int idEnchere) throws BusinessException;
+
+	public void update(Enchere enchere) throws BusinessException;
 }
