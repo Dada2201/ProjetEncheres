@@ -26,9 +26,17 @@ public class ServletHome extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
-		
+		Utilisateur u = (Utilisateur)request.getSession().getAttribute("utilisateur");
 		if(request.getSession().getAttribute("utilisateur") != null) {
 			request.setAttribute("logged", true);
+			request.setAttribute("logged", false);
+			EnchereManager em = new EnchereManager();
+			try {
+				request.setAttribute("listeEncheres",em.selectionParUtilisateur(u.getId()));
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else {
 			request.setAttribute("logged", false);
