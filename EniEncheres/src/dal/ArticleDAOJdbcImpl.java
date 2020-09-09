@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bll.CategoriesManager;
-import bll.RetraitManager;
 import bll.UtilisateurManager;
 import bo.Article;
 import bo.Categorie;

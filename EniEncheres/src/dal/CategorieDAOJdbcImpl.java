@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bll.UtilisateurManager;
-import bo.Article;
 import bo.Categorie;
-import bo.Utilisateur;
 
 class CategorieDAOJdbcImpl implements CategorieDAO {
 
