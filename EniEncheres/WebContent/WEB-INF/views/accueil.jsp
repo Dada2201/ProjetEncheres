@@ -1,7 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="partial/header/default.jspf" %>
 
 <body>
-	<%@ include file="partial/header/notConnected.jsp" %>
+
     <div class="container">
         <div class="row justify-content-center">
             <h1>Liste des enchères</h1>
@@ -16,7 +17,7 @@
                     <input type="text" class="form-control" placeholder="Le nom de l'aticle contient">
                 </div>
                 <div class="row form-group">
-                    <p>Catégories :</p>
+                    <p>Catï¿½gories :</p>
 
                 </div>
                 <div class="form-group row">
@@ -69,7 +70,7 @@
     <div class="container">
         <div class="row justify-content-around">
         	<c:forEach items="${listeEncheres}" var="enchere">
-				<%@ include file="partial/article.jsp" %>
+				<%@ include file="partial/article.jspf" %>
 			</c:forEach>
         </div>
     </div>
