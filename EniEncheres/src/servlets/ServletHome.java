@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bll.EnchereManager;
 import bll.UtilisateurManager;
 import bo.Utilisateur;
 import dal.BusinessException;
@@ -30,7 +31,14 @@ public class ServletHome extends HttpServlet {
 			request.setAttribute("logged", true);
 		}
 		else {
-			request.setAttribute("logged", true); //true for test, real value is false TODO
+			request.setAttribute("logged", false);
+			EnchereManager em = new EnchereManager();
+			try {
+				request.setAttribute("listeEncheres",em.selectionTout());
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		rd.forward(request, response);	}

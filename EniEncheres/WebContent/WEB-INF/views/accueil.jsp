@@ -54,7 +54,7 @@
         	<div class="row justify-content-around">
         		<div class="col-4">
       		  		<div class="radio">
-  						<label><input type="radio" id="achats" name="optradio">Achats</label>
+  						<label><input type="radio" id="achats" checked="true" name="optradio">Achats</label>
 					</div>
 	            	 <div class="checkbox">
 						  <label><input type="checkbox" id="encheresouvertes" value="">Enchères ouvertes</label>
@@ -71,13 +71,13 @@
   						<label><input type="radio" id="ventes" name="optradio">Mes ventes</label>
 					</div>				
 	            	 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesencours" value="">Mes ventes en cours</label>
+						  <label><input type="checkbox" id="ventesencours" value="" disabled>Mes ventes en cours</label>
 					 </div>
 					 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesnon" value="">Ventes non débutées</label>
+						  <label><input type="checkbox" id="ventesnon" value="" disabled>Ventes non débutées</label>
 					 </div>
 					 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesend" value="">Ventes terminées</label>
+						  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminées</label>
 					</div>
 				</div>
 			</div> 	
@@ -86,28 +86,19 @@
     
     <div class="container">
         <div class="row justify-content-around">
-            <div class="row border col-6 align-items-center justify-content-around">
+        	<c:forEach items="${listeEncheres}" var="enchere">
+    			<div class="row border col-6 align-items-center justify-content-around">
                 <div class="">
                     <img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="100px" weight="100px" />
                 </div>
                 <div>
-                    <p><u>PC Gamer pour travailler</u></p>
-                    <p>Prix: 210 points</p>
-                    <p>Fin de l'enchère: 10/08/2018</p>
-                    <p>Vendeur: jojo44</p>
+                    <p><u>${enchere.article.nomArticle}</u></p>
+                    <p>Prix : ${enchere.article.prixInitial}</p>
+                    <p>Fin de l'enchère: ${enchere.article.dateFin}</p>
+                    <p>Vendeur: ${enchere.article.utilisateur.pseudo}</p>
                 </div>
             </div>
-            <div class="row border col-6 align-items-center justify-content-around">
-                <div class="">
-                    <img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="100px" weight="100px" />
-                </div>
-                <div>
-                    <p><u>PC Gamer pour travailler</u></p>
-                    <p>Prix: 210 points</p>
-                    <p>Fin de l'enchère: 10/08/2018</p>
-                    <p>Vendeur: jojo44</p>
-                </div>
-            </div>
+			</c:forEach>
         </div>
     </div>
 </body>
@@ -118,7 +109,7 @@ $(document).ready(function(){
 		    $( "#encheresouvertes").prop("disabled", false);
 		    $( "#encheresouvertes").prop("checked", true);
 		    $( "#enchereswin").prop("disabled", false);
-		    $( "#encheresencours").prop("disable", false);
+		    $( "#encheresencours").prop("disabled", false);
 		    $( "#ventesnon").prop("disabled", true);
 		    $( "#ventesencours").prop("disabled", true);
 		    $( "#ventesend").attr("disabled", true);
@@ -134,7 +125,9 @@ $(document).ready(function(){
 			    $( "#encheresouvertes").prop("disabled", true);
 			    $( "#encheresouvertes").prop("checked", false);
 			    $( "#enchereswin").prop("disabled", true);
-			    $( "#encheresencours").attr("disable", true);
+			    $( "#encheresencours").prop("disabled", true);
+			    $( "#enchereswin").prop("checked", false);
+			    $( "#encheresencours").prop("checked", false);
 			    $( "#ventesend").prop('checked', false);
 			    $( "#ventesnon").prop('checked', false);
 			    $( "#ventesencours").prop('checked', true);
