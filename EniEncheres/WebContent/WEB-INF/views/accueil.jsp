@@ -99,17 +99,6 @@
                 </div>
             </div>
 			</c:forEach>
-            <div class="row border col-6 align-items-center justify-content-around">
-                <div class="">
-                    <img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="100px" weight="100px" />
-                </div>
-                <div>
-                    <p><u>PC Gamer pour travailler</u></p>
-                    <p>Prix: 210 points</p>
-                    <p>Fin de l'enchère: 10/08/2018</p>
-                    <p>Vendeur: jojo44</p>
-                </div>
-            </div>
         </div>
     </div>
 </body>
