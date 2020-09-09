@@ -34,7 +34,6 @@ abstract class ConnectionProvider {
 	 */
 	public static Connection getConnection() throws SQLException
 	{
-		ConnectionProvider.dataSource.getConnection().setAutoCommit(false);
 		return ConnectionProvider.dataSource.getConnection();
 	}
 }

@@ -16,7 +16,7 @@ import bo.Utilisateur;
 
 class EnchereDAOJdbcImpl implements EnchereDAO {
 
-	private static final String INSERT="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres;INSERT INTO encheres.encheres(no_utilisateur,no_article,date_enchere,montant_enchere)VALUES(?,?,?,?);";
+	private static final String INSERT="INSERT INTO encheres.encheres(no_utilisateur,no_article,date_enchere,montant_enchere)VALUES(?,?,?,?);";
 	private static final String SELECT_BY_UTILISATEUR="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_utilisateur = ?;";
 	private static final String SELECT_BY_ARTICLE="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_article = ?;";
 	private static final String REMOVE = "DELETE from LISTES where id=?";
@@ -25,19 +25,13 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	@Override
 	public void insert(Utilisateur utilisateur, Article article, Enchere enchere) throws BusinessException {
-		if(enchere==null)
-		{
-			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
-			throw businessException;
-		}
-		
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT);
 			pstmt.setInt(1, utilisateur.getId());
 			pstmt.setInt(2, article.getNoArticle());
-			pstmt.setDate(3, (Date) enchere.getDateEnchere());
+			pstmt.setDate(3, new java.sql.Date(enchere.getDateEnchere().getTime()));
 			pstmt.setInt(4, enchere.getMontantEnchere());
 			pstmt.executeUpdate();
 			pstmt.close();
@@ -57,6 +51,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 		List<Enchere> listeEnchere= new ArrayList<Enchere>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
@@ -83,6 +78,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 		List<Enchere> listeEnchere= new ArrayList<Enchere>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_UTILISATEUR);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
@@ -109,6 +105,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	public Enchere selectByArticle(int id) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ARTICLE);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
@@ -143,9 +140,11 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	public void remove(int id) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(REMOVE);
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
+			cnx.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();

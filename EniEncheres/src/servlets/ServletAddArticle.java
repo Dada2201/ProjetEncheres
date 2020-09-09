@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,10 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bll.ArticleManager;
 import bll.CategoriesManager;
+import bll.EnchereManager;
 import bll.UtilisateurManager;
 import bo.Article;
 import bo.Categorie;
+import bo.Enchere;
 import bo.Utilisateur;
 import dal.BusinessException;
 
@@ -43,7 +49,6 @@ public class ServletAddArticle extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/nouvelleVente.jsp");
 		rd.forward(request, response);
 	}
@@ -56,8 +61,12 @@ public class ServletAddArticle extends HttpServlet {
 		int prix;
 		try
 		{			
-			UtilisateurManager utilisateurManager = new UtilisateurManager();
-		
+
+			CategoriesManager categorieManager = new CategoriesManager();
+			ArticleManager articleManager = new ArticleManager();
+			EnchereManager enchereManager = new EnchereManager();
+			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
+			
 			nom = request.getParameter("nom");
 			description = request.getParameter("description");
 			photoArticle = request.getParameter("photoArticle");
@@ -68,24 +77,20 @@ public class ServletAddArticle extends HttpServlet {
 			ville = request.getParameter("ville");
 			prix = Integer.parseInt(request.getParameter("prix"));
 			categorieSelected = request.getParameter("categorie");
-
-			System.out.println(nom);
-			System.out.println(description);
-			System.out.println(photoArticle);
-			System.out.println(dateDebutEnchere);
-			System.out.println(dateFinEnchere);
-			System.out.println(rue);
-			System.out.println(codePostal);
-			System.out.println(ville);
-			System.out.println(prix);
-			System.out.println(categorieSelected);
 			
-			//Article article = new Article(0, nom, description, (Date)dateDebutEnchere, (Date)dateFinEnchere, prix, 0, (Utilisateur)request.getSession("utilisateur"), categorie);
+			Categorie categorie = categorieManager.selectionById(Integer.parseInt(categorieSelected));
+			
+			Article article = new Article(0, nom, description, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere)
+					, prix, 0, utilisateur, categorie);
+			Enchere enchere = new Enchere(utilisateur, article, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), prix);
+
+			article = articleManager.ajouter(article, utilisateur, categorie);
+			enchereManager.ajouter(utilisateur, article, enchere);
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/nouvelleVente.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		rd.forward(request, response);
 	}
 

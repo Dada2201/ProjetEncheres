@@ -22,6 +22,7 @@ class CategorieDAOJdbcImpl implements CategorieDAO {
 		List<Categorie> listeCategories = new ArrayList<Categorie>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
@@ -46,6 +47,7 @@ class CategorieDAOJdbcImpl implements CategorieDAO {
 	public Categorie selectById(int idArticle) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setLong(1, idArticle);
 			ResultSet rs = pstmt.executeQuery();

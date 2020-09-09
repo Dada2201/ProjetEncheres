@@ -30,6 +30,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, utilisateur.getPseudo());
 			pstmt.setString(2, utilisateur.getNom());
@@ -67,6 +68,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
@@ -92,6 +94,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public Utilisateur selectById(int id) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
@@ -118,6 +121,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public Utilisateur selectByPseudoPassword(String pseudo, String motDePasse) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_MOT_DE_PASSE);
 			pstmt.setString(1, pseudo);
 			pstmt.setString(2, motDePasse);
@@ -145,6 +149,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
 			pstmt.setString(1, pseudo);
 			ResultSet rs = pstmt.executeQuery();
@@ -177,6 +182,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void removeUtilisateur(int idUtilisateur) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE_LISTE);
 			pstmt.setInt(1, idUtilisateur);
 			pstmt.executeUpdate();
