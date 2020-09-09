@@ -72,7 +72,7 @@ public class ServletAddUser extends HttpServlet {
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
 		rd.forward(request, response);
-		doGet(request, response);
+
 	}
 
 
