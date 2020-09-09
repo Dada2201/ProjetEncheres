@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="fr">
 
@@ -27,27 +31,27 @@
             </div>
             <div class="col-8">
                 <div class="form-group row">
-                    <p>PC Gamer pour travailler</p>
+                    <p>${article.nomArticle}</p>
                 </div>
                 <div class="form-group row">
                     <p>Description :</p>
-                    <p>Bonjour je suis une description</p>
+                    <p>${article.description}</p>
                 </div>
                 <div class="form-group row">
-                    <p>Catégorie</p>
-                    <p>Informatique</p>
+                    <p>CatÃ©gorie</p>
+                    <p>${categorie.libelle}</p>
                 </div>
                 <div class="form-group row">
                     <p>Meilleure offre :</p>
-                    <p>210 pts par Bob</p>
+                    <p>${enchere.montantEnchere} pts par ${utilisateurEnchere.pseudo}</p>
                 </div>
                 <div class="form-group row">
-                    <p>Mise à prix :</p>
+                    <p>Mise Ã  prix :</p>
                     <p>185 pts</p>
                 </div>
                 <div class="form-group row">
                     <p>Fin de l'enchère :</p>
-                    <p>09/10/2018</p>
+                    <p><fmt:formatDate pattern = "dd/MM/yyyy" value = "${article.dateFin}" /></p>
                 </div>
                 <div class="form-group row">
                     <p>Retrait :</p>
@@ -58,7 +62,7 @@
                 </div>
                 <div class="form-group row">
                     <p>Vendeur :</p>
-                    <p>jojo44</p>
+                    <p>${utilisateurVendeur.pseudo}</p>
                 </div>
                 <div class="form-group row">
                     <p>Ma proposition :</p>
