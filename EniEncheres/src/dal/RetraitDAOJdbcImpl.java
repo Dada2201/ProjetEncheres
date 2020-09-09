@@ -22,6 +22,7 @@ class RetraitDAOJdbcImpl implements RetraitDAO {
         List<Retrait> listeRetraits = new ArrayList<Retrait>();
         try(Connection cnx = ConnectionProvider.getConnection())
         {
+			cnx.setAutoCommit(false);
             PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next())
@@ -47,6 +48,7 @@ class RetraitDAOJdbcImpl implements RetraitDAO {
     public Retrait selectByArticle(int idArticle) throws BusinessException {
         try(Connection cnx = ConnectionProvider.getConnection())
         {
+			cnx.setAutoCommit(false);
             PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
             pstmt.setLong(1, idArticle);
             ResultSet rs = pstmt.executeQuery();
@@ -73,6 +75,7 @@ class RetraitDAOJdbcImpl implements RetraitDAO {
     public void remove(int idArticle) throws BusinessException {
         try(Connection cnx = ConnectionProvider.getConnection())
         {
+			cnx.setAutoCommit(false);
             PreparedStatement pstmt = cnx.prepareStatement(REMOVE);
             pstmt.setLong(1, idArticle);
             pstmt.executeUpdate();
@@ -98,6 +101,7 @@ class RetraitDAOJdbcImpl implements RetraitDAO {
     public void ajouter(Retrait r) throws BusinessException {
         try(Connection cnx = ConnectionProvider.getConnection())
         {
+			cnx.setAutoCommit(false);
             PreparedStatement pstmt = cnx.prepareStatement(INSERT);
             pstmt.setInt(1, r.getArticle().getNoArticle());
             pstmt.setString(2, r.getRue());

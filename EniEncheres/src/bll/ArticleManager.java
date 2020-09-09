@@ -29,19 +29,23 @@ public class ArticleManager {
 		return this.articleDAO.selectById(idArticle);
 	}
 
-	public void ajouterParListe(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
+	public Article ajouter(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
 		
 		BusinessException exception = new BusinessException();
 		this.validerArticles(article,exception);
-				
+			
+		Article articleReturned = null;
+		
 		if(!exception.hasErreurs())
 		{
-			this.articleDAO.ajouter(article, utilisateur, categorie);
+			articleReturned = this.articleDAO.ajouter(article, utilisateur, categorie);
 		}
 		else
 		{
 			throw exception;
 		}
+		
+		return articleReturned;
 	}
 	
 

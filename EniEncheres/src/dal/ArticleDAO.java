@@ -13,7 +13,7 @@ public interface ArticleDAO {
 
 	public void remove(int idArticle) throws BusinessException;
 
-	public void ajouter(Article a, Utilisateur utilisateur, Categorie categorie) throws BusinessException;
+	public Article ajouter(Article a, Utilisateur utilisateur, Categorie categorie) throws BusinessException;
 
 	public Article selectById(int idArticle) throws BusinessException;
 }

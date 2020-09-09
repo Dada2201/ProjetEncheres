@@ -25,6 +25,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 		List<Article> listeArticles = new ArrayList<Article>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
@@ -50,6 +51,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	public Article selectById(int idArticle) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setLong(1, idArticle);
 			ResultSet rs = pstmt.executeQuery();
@@ -76,6 +78,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	public void remove(int idArticle) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(REMOVE);
 			pstmt.setLong(1, idArticle);
 			pstmt.executeUpdate();
@@ -101,19 +104,26 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void ajouter(Article a, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
+	public Article ajouter(Article a, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			PreparedStatement pstmt = cnx.prepareStatement(INSERT);
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, a.getNomArticle());
 			pstmt.setString(2, a.getDescription());
-			pstmt.setDate(3, (java.sql.Date) a.getDateDebut());
-			pstmt.setDate(4, (java.sql.Date) a.getDateFin());
+			pstmt.setDate(3, new java.sql.Date(a.getDateDebut().getTime()));
+			pstmt.setDate(4, new java.sql.Date(a.getDateFin().getTime()));
 			pstmt.setDouble(5, a.getPrixInitial());
 			pstmt.setDouble(6, a.getPrixVente());
 			pstmt.setDouble(7, utilisateur.getId());
 			pstmt.setDouble(8, categorie.getNoCategorie());
 			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next())
+			{
+				a.setNoArticle(rs.getInt(1));
+			}
+			rs.close();
 			pstmt.close();
 			cnx.commit();
 		}
@@ -124,5 +134,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			businessException.ajouterErreur(CodesResultatDAL.AJOUTER_ARTICLE_ECHEC);
 			throw businessException;
 		}
+		
+		return a;
 	}
 }
