@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="partial/header/default.jspf" %>
-
+<%@ include file="partial/head.jspf" %>
 <body>
 
     <div class="container">
