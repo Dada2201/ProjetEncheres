@@ -18,10 +18,12 @@ import javax.servlet.http.HttpSession;
 import bll.ArticleManager;
 import bll.CategoriesManager;
 import bll.EnchereManager;
+import bll.RetraitManager;
 import bll.UtilisateurManager;
 import bo.Article;
 import bo.Categorie;
 import bo.Enchere;
+import bo.Retrait;
 import bo.Utilisateur;
 import dal.BusinessException;
 
@@ -43,6 +45,7 @@ public class ServletAddArticle extends HttpServlet {
 		try {
 			List<Categorie> categories = categoriesManager.selectionTout();
 			request.setAttribute( "categories", categories);
+			System.out.println(categories);
 		}
 		catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
@@ -65,6 +68,7 @@ public class ServletAddArticle extends HttpServlet {
 			CategoriesManager categorieManager = new CategoriesManager();
 			ArticleManager articleManager = new ArticleManager();
 			EnchereManager enchereManager = new EnchereManager();
+			RetraitManager retraitManager = new RetraitManager();
 			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
 			
 			nom = request.getParameter("nom");
@@ -79,13 +83,14 @@ public class ServletAddArticle extends HttpServlet {
 			categorieSelected = request.getParameter("categorie");
 			
 			Categorie categorie = categorieManager.selectionById(Integer.parseInt(categorieSelected));
-			
 			Article article = new Article(0, nom, description, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere)
 					, prix, 0, utilisateur, categorie);
+			Retrait retrait = new Retrait(article, rue, codePostal, ville);
 			Enchere enchere = new Enchere(utilisateur, article, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), prix);
 
 			article = articleManager.ajouter(article, utilisateur, categorie);
 			enchereManager.ajouter(utilisateur, article, enchere);
+			retraitManager.ajouter(retrait);
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());

@@ -26,7 +26,7 @@ public class ServletLogin extends HttpServlet {
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
 		rd.forward(request, response);
 	}
@@ -43,7 +43,7 @@ public class ServletLogin extends HttpServlet {
 			pseudo = request.getParameter("pseudo");
 			motDePasse = request.getParameter("motDePasse");
 			
-			Utilisateur utilisateur = utilisateurManager.selectionParPseudoMotDePasse(pseudo, getMd5(motDePasse));
+			Utilisateur utilisateur = utilisateurManager.selectionParPseudoMotDePasse(pseudo, Utilisateur.getMd5(motDePasse));
 			
 			if(request.getParameter("souvenir") != null) {
 				Cookie cookieUtilisateur = new Cookie("utilisateur", utilisateur.getId().toString());
@@ -66,32 +66,4 @@ public class ServletLogin extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
 		rd.forward(request, response);
 	}
-
-	public static String getMd5(String input) 
-    { 
-        try { 
-  
-            // Static getInstance method is called with hashing MD5 
-            MessageDigest md = MessageDigest.getInstance("MD5"); 
-  
-            // digest() method is called to calculate message digest 
-            //  of an input digest() return array of byte 
-            byte[] messageDigest = md.digest(input.getBytes()); 
-  
-            // Convert byte array into signum representation 
-            BigInteger no = new BigInteger(1, messageDigest); 
-  
-            // Convert message digest into hex value 
-            String hashtext = no.toString(16); 
-            while (hashtext.length() < 32) { 
-                hashtext = "0" + hashtext; 
-            } 
-            return hashtext; 
-        }  
-  
-        // For specifying wrong message digest algorithms 
-        catch (NoSuchAlgorithmException e) { 
-            throw new RuntimeException(e); 
-        } 
-    } 
 }

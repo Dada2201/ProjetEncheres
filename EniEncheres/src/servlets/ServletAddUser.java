@@ -61,7 +61,7 @@ public class ServletAddUser extends HttpServlet {
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);
 			
 			if(utilisateur == null) {
-				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, getMd5(motDePasse), 0, false));	
+				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Utilisateur.getMd5(motDePasse), 0, false));	
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute("utilisateur", utilisateur);
 			}else {
@@ -76,32 +76,4 @@ public class ServletAddUser extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
 		rd.forward(request, response);
 	}
-
-	public static String getMd5(String input) 
-    { 
-        try { 
-  
-            // Static getInstance method is called with hashing MD5 
-            MessageDigest md = MessageDigest.getInstance("MD5"); 
-  
-            // digest() method is called to calculate message digest 
-            //  of an input digest() return array of byte 
-            byte[] messageDigest = md.digest(input.getBytes()); 
-  
-            // Convert byte array into signum representation 
-            BigInteger no = new BigInteger(1, messageDigest); 
-  
-            // Convert message digest into hex value 
-            String hashtext = no.toString(16); 
-            while (hashtext.length() < 32) { 
-                hashtext = "0" + hashtext; 
-            } 
-            return hashtext; 
-        }  
-  
-        // For specifying wrong message digest algorithms 
-        catch (NoSuchAlgorithmException e) { 
-            throw new RuntimeException(e); 
-        } 
-    } 
 }
