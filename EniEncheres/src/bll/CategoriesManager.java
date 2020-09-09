@@ -2,10 +2,7 @@ package bll;
 
 import java.util.List;
 
-import bo.Article;
 import bo.Categorie;
-import bo.Utilisateur;
-import dal.ArticleDAO;
 import dal.BusinessException;
 import dal.CategorieDAO;
 import dal.DAOFactory;

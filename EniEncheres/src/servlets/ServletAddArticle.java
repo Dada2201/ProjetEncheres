@@ -38,7 +38,6 @@ public class ServletAddArticle extends HttpServlet {
 		try {
 			List<Categorie> categories = categoriesManager.selectionTout();
 			request.setAttribute( "categories", categories);
-			System.out.println(categories);
 		}
 		catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());

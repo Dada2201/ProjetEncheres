@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bll.CodesResultatBLL;
 import bll.UtilisateurManager;
 import bo.Utilisateur;
 import dal.BusinessException;
@@ -42,17 +42,13 @@ public class ServletModificationProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
-				rd.forward(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
+		rd.forward(request, response);
 				
 		if (request.getParameter("update_button") != null) {
 			request.setCharacterEncoding("UTF-8");
 	    	UtilisateurManager um = new UtilisateurManager();
-	    	String pseudo, nom,prenom,email,telephone,rue,codePostal,ville,motDePasse,confirmationMotDePasse;
-	    	int no_utilisateur;
-	    	
+	    	String pseudo, nom,prenom,email,telephone,rue,codePostal,ville,motDePasse,confirmationMotDePasse;	    	
 	    	
 	    	pseudo = request.getParameter("pseudo");
 			nom = request.getParameter("nom");
@@ -64,6 +60,17 @@ public class ServletModificationProfil extends HttpServlet {
 			ville = request.getParameter("ville");
 			motDePasse = request.getParameter("mdpnouveau");
 			confirmationMotDePasse = request.getParameter("mdpconfirm");
+
+			
+			if(!motDePasse.equals(confirmationMotDePasse)) {
+				BusinessException businessException = null;
+				businessException.ajouterErreur(CodesResultatBLL.REGLE_MOT_DE_PASSE_ERREUR);
+				try {
+					throw businessException;
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+			}
 			
 			HttpSession currentUserSession = request.getSession();
 			Utilisateur currentUser = (Utilisateur) currentUserSession.getAttribute("utilisateur");
@@ -78,7 +85,6 @@ public class ServletModificationProfil extends HttpServlet {
 			
 	    } else if (request.getParameter("delete_button") != null) {
 	    	Utilisateur u = (Utilisateur) request.getSession().getAttribute("utilisateur");
-	    	System.out.println(u.getPseudo());
 	    	UtilisateurManager um = new UtilisateurManager();
 	    	try {
 				um.removeListe(u.getId());
