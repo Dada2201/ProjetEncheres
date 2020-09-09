@@ -32,7 +32,6 @@ public class ServletHome extends HttpServlet {
 			try {
 				request.setAttribute("listeEncheres",em.selectionTout());
 			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

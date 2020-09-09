@@ -1,24 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>Titre de la page</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="script.js"></script>
-</head>
-
-<body>
-    <header>
-        <div class="container">
-            <div class="row justify-content-between">
-                <p>ENI-Encheres</p>
-            </div>
-        </div>
-    </header>
+<%@ include file="partial/header/default.jsp" %>
     <div class="container">
         <div class="row justify-content-center">
             <h1>Mon profil</h1>
@@ -77,4 +59,4 @@
             </div>
         </form>
     </div>
-</body></html>
+<%@ include file="partial/footer.jsp" %>
