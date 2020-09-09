@@ -26,15 +26,20 @@ public class ServletHome extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		
+		if(request.getSession().getAttribute("utilisateur") != null) {
+			request.setAttribute("logged", true);
+		}
+		else {
+			request.setAttribute("logged", true); //true for test, real value is false TODO
+		}
 		
-		
-		rd.forward(request, response);
-	}
+		rd.forward(request, response);	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doGet(request, response);
+		doGet(request,response);
 	}
 
 

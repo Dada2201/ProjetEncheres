@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="fr">
 
@@ -6,6 +7,7 @@
     <title>Titre de la page</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="script.js"></script>
 </head>
 
@@ -46,8 +48,42 @@
             <div class="col-6">
                 <button class="h-50 w-50">Rechercher</button>
             </div>
+            
         </div>
+        <c:if test="${logged}">
+        	<div class="row justify-content-around">
+        		<div class="col-4">
+      		  		<div class="radio">
+  						<label><input type="radio" id="achats" name="optradio">Achats</label>
+					</div>
+	            	 <div class="checkbox">
+						  <label><input type="checkbox" id="encheresouvertes" value="">Enchères ouvertes</label>
+					 </div>
+					 <div class="checkbox">
+						  <label><input type="checkbox" id="encheresencours" value="">Mes enchères en cours</label>
+					 </div>
+					 <div class="checkbox">
+						  <label><input type="checkbox" id="enchereswin" value="">Mes enchères remportées</label>
+					</div>
+				</div>
+				<div class="col-4">
+      		  		<div class="radio">
+  						<label><input type="radio" id="ventes" name="optradio">Mes ventes</label>
+					</div>				
+	            	 <div class="checkbox">
+						  <label><input type="checkbox" id="ventesencours" value="">Mes ventes en cours</label>
+					 </div>
+					 <div class="checkbox">
+						  <label><input type="checkbox" id="ventesnon" value="">Ventes non débutées</label>
+					 </div>
+					 <div class="checkbox">
+						  <label><input type="checkbox" id="ventesend" value="">Ventes terminées</label>
+					</div>
+				</div>
+			</div> 	
+	</c:if>
     </div>
+    
     <div class="container">
         <div class="row justify-content-around">
             <div class="row border col-6 align-items-center justify-content-around">
@@ -75,5 +111,40 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#achats').click(function() {
+	   if($('#achats').is(':checked')) { 
+		    $( "#encheresouvertes").prop("disabled", false);
+		    $( "#encheresouvertes").prop("checked", true);
+		    $( "#enchereswin").prop("disabled", false);
+		    $( "#encheresencours").prop("disable", false);
+		    $( "#ventesnon").prop("disabled", true);
+		    $( "#ventesencours").prop("disabled", true);
+		    $( "#ventesend").attr("disabled", true);
+		    $( "#ventesend").prop('checked', false);
+		    $( "#ventesnon").prop('checked', false);
+		    $( "#ventesencours").prop('checked', false);
 
+
+		}
+	   });
+	$('#ventes').click(function(){
+		   if($('#ventes').is(':checked')){
+			    $( "#encheresouvertes").prop("disabled", true);
+			    $( "#encheresouvertes").prop("checked", false);
+			    $( "#enchereswin").prop("disabled", true);
+			    $( "#encheresencours").attr("disable", true);
+			    $( "#ventesend").prop('checked', false);
+			    $( "#ventesnon").prop('checked', false);
+			    $( "#ventesencours").prop('checked', true);
+			    $( "#ventesend").prop("disabled", false);
+			    $( "#ventesnon").prop("disabled", false);
+			    $( "#ventesencours").prop("disabled", false);
+	}
+	});
+
+
+})
+</script>
 </html>
