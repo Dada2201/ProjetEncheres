@@ -7,10 +7,10 @@
             	<div><a href="${pageContext.request.contextPath}"><span class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span class="ebuy-b">b</span><span class="ebuy-u">u</span><span class="ebuy-y">y</span></span><span></span></a>
                 <p>ENI-Encheres</p></div>
                 <div>
-                    <a href=""><u>Enchères</u></a>
-                    <a href=""><u>Vendre un article</u></a>
-                    <a href=""><u>Mon profil</u></a>
-                    <a href=""><u>Déconnexion</u></a>
+                    <a href="${pageContext.request.contextPath}"><u>Enchères</u></a>
+                    <a href="${pageContext.request.contextPath}/ajoutArticle"><u>Vendre un article</u></a>
+                    <a href="${pageContext.request.contextPath}/profil"><u>Mon profil</u></a>
+                    <a href="${pageContext.request.contextPath}/logout"><u>Déconnexion</u></a>
                 </div>
             </div>
         </div>
