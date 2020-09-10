@@ -55,6 +55,7 @@ public class ServletHome extends HttpServlet {
 			
 			
 			/// debut traitement
+			/// ID des checkbox :
 			/*	encheresouvertes
 				enchereswin
 				encheresencours
@@ -62,7 +63,25 @@ public class ServletHome extends HttpServlet {
 				ventesencours
 				ventesend
 			 */
-			if(checkboxList.contains("")) {
+			if(checkboxList.contains("encheresouvertes")) {
+				
+			}
+			if(checkboxList.contains("enchereswin")) {
+				
+			}
+			if(checkboxList.contains("encheresencours")) {
+				
+			}
+			if(checkboxList.contains("ventesnon")) {
+				
+			}
+			if(checkboxList.contains("ventesencours")) {
+				
+			}
+			if(checkboxList.contains("ventesend")) {
+				
+			}
+			if(checkboxList.contains("enchereswin")) {
 				
 			}
 		}
