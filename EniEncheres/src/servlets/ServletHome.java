@@ -54,6 +54,7 @@ public class ServletHome extends HttpServlet {
 		
 			//debug
 			for(int i=0 ;i< checkboxList.size();i++) {
+				System.out.println("--------");
 				System.out.println(checkboxList.get(i).toString());
 			}
 		}
