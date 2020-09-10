@@ -1,6 +1,10 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bll.EnchereManager;
 import dal.BusinessException;
@@ -39,8 +45,27 @@ public class ServletHome extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		String test = request.getParameter("test");		
-
+		
+		String s = request.getParameter("test");	
+		if(s !=null) {
+			ObjectMapper mapper = new ObjectMapper();
+			List checkboxList = mapper.readValue(s, List.class);
+			//debug
+			System.out.println("--------");for(int i=0 ;i< checkboxList.size();i++) {System.out.println(checkboxList.get(i).toString());}
+			
+			
+			/// debut traitement
+			/*	encheresouvertes
+				enchereswin
+				encheresencours
+			  	ventesnon
+				ventesencours
+				ventesend
+			 */
+			if(checkboxList.contains("")) {
+				
+			}
+		}
 		rd.forward(request, response);	
 	}
 	

@@ -2,7 +2,7 @@ $(document).ready(function(){
 	$('#achats').click(function() {
 	   if($('#achats').is(':checked')) { 
 		    $( "#encheresouvertes").prop("disabled", false);
-		    $( "#encheresouvertes").prop("checked", true);
+		    $( "#encheresouvertes").prop("checked", false);
 		    $( "#enchereswin").prop("disabled", false);
 		    $( "#encheresencours").prop("disabled", false);
 		    $( "#ventesnon").prop("disabled", true);
@@ -25,7 +25,7 @@ $(document).ready(function(){
 			    $( "#encheresencours").prop("checked", false);
 			    $( "#ventesend").prop('checked', false);
 			    $( "#ventesnon").prop('checked', false);
-			    $( "#ventesencours").prop('checked', true);
+			    $( "#ventesencours").prop('checked', false);
 			    $( "#ventesend").prop("disabled", false);
 			    $( "#ventesnon").prop("disabled", false);
 			    $( "#ventesencours").prop("disabled", false);
