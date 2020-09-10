@@ -1,4 +1,3 @@
-alert('i')
 $(document).ready(function() {
 	$(document).on( "click", "input[type='checkbox']", function(event) {	
 		var checkedCheckbox = [];
@@ -21,7 +20,6 @@ $(document).ready(function() {
 			checkedCheckbox.push($("#ventesend").attr('id'))
 		}	
 		var json = JSON.stringify(checkedCheckbox);
-		alert('o')
 		$.ajax({
 			url : 'ServletHome',
 			data : {

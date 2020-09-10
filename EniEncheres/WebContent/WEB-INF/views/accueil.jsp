@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="partial/head.jspf" %>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 
@@ -72,7 +71,6 @@
 					 <div class="checkbox">
 						  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminées</label>
 					</div>
-					<input id="prodId" name="prodId" type="text" value="xm234jq">
 					
 				</div>
 			</div> 
