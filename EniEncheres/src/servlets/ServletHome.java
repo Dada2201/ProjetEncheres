@@ -41,7 +41,6 @@ public class ServletHome extends HttpServlet {
 		}
 		String test = request.getParameter("test");		
 
-		System.out.println(test);
 		rd.forward(request, response);	
 	}
 	

@@ -4,17 +4,20 @@
 
 <div class="card border px-5">
   <div class="row align-items-center">
-    <div class="">
-     	<img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="100px" weight="100px" />
-    </div>
-    <div class="">
-      <div class="card-body">
-        <p class="card-title"><u>${enchere.article.nomArticle}</u></p>
-        <p>Prix : ${enchere.article.prixInitial}</p>
-        <p>Fin de l'enchère: <fmt:formatDate pattern = "dd/MM/yyyy" value = "${enchere.article.dateFin}" /></p>
-        <p>Vendeur: ${enchere.article.utilisateur.pseudo}</p>
-        <a href="${pageContext.request.contextPath}/encherir?enchere=${enchere.article.noArticle}" class="btn btn-primary stretched-link">Voir l'enchère</a>
-      </div>
-    </div>
+	  <div class="row align-items-center">
+	    <div>
+	     	<img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="100px" weight="100px" />
+	    </div>
+	    <div>
+	      <div class="card-body">
+	        <p class="card-title"><u>${enchere.article.nomArticle}</u></p>
+	        <p class="card-text">Prix : ${enchere.article.prixInitial}</p>
+	        <p class="card-text">Fin de l'enchère: <fmt:formatDate pattern = "dd/MM/yyyy" value = "${enchere.article.dateFin}" /></p>
+	        <p class="card-text">Vendeur: ${enchere.article.utilisateur.pseudo}</p>
+		        <a href="${pageContext.request.contextPath}/enchere?enchere=${enchere.article.noArticle}" class="stretched-link btn btn-primary">Voir l'enchère</a>
+	        </div>
+	      </div>
+	   </div>
+  	<a href="${pageContext.request.contextPath}/encherir?enchere=${enchere.article.noArticle}" class="stretched-link btn btn-primary stretched-link" style="position: relative;"><i class="fas fa-gavel"></i>Encherir</a>
   </div>
 </div>
