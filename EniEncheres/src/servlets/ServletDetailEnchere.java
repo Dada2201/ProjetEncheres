@@ -40,18 +40,25 @@ public class ServletDetailEnchere extends HttpServlet {
 			Retrait retrait = retraitManager.selectById(enchere.getArticle().getNoArticle());
 			request.setAttribute("enchere", enchere);
 			request.setAttribute("retrait", retrait);
-			if(enchere.getArticle().getDateDebut().compareTo(new Date()) > 0) {
-				h1 = "L'enchère n'a pas encore débuté";
-			}	
-			else if(enchere.getArticle().getDateFin().compareTo(new Date()) < 0){
-				if(enchere.getUtilisateur().getId().equals(((Utilisateur)request.getSession().getAttribute("utilisateur")).getId())) {
-					h1 = "Vous avez remporté l'enchère félicitations !";
-				}else {
-					h1 = "L'enchère à été remportéé par "+ enchere.getUtilisateur().getPseudo();
-				}
-			}
-			else if(enchere.getArticle().getDateDebut().compareTo(new Date()) < 0 || enchere.getArticle().getDateDebut().compareTo(new Date()) == 0) {
+			
+			Enchere.Statut statut = request.getSession().getAttribute("utilisateur") != null ? Enchere.getStatut(enchere, (Utilisateur)request.getSession().getAttribute("utilisateur")): Enchere.getStatut(enchere, null);
+			
+			switch (statut) {
+			case ENCOURS:
 				h1 = "L'enchère la plus haute pour le moment est de la part de " + enchere.getUtilisateur().getPseudo();
+				break;
+			case FINI:
+				h1 = "L'enchère à été remportéé par "+ enchere.getUtilisateur().getPseudo();
+				break;
+			case NOTREADY:
+				h1 = "L'enchère n'a pas encore débuté";
+				break;
+			case WIN:
+				h1 = "Vous avez remporté l'enchère félicitations !";
+				break;
+
+			default:
+				break;
 			}
 			
 			request.setAttribute("h1", h1);
