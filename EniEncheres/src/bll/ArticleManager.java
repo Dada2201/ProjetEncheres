@@ -3,7 +3,9 @@ package bll;
 import java.util.List;
 
 import bo.Article;
+import bo.Article.Statut;
 import bo.Categorie;
+import bo.Enchere;
 import bo.Utilisateur;
 import dal.ArticleDAO;
 import dal.BusinessException;
@@ -54,5 +56,9 @@ public class ArticleManager {
 		{
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLES_ERREUR);
 		}
+	}
+
+	public List<Enchere> selectionFiltre(List<Statut> arcticleStatut, Utilisateur utilisateur)  throws BusinessException{
+		return this.articleDAO.selectionFiltre(arcticleStatut, utilisateur);
 	}
 }

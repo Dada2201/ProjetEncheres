@@ -4,6 +4,7 @@ import java.util.List;
 
 import bo.Article;
 import bo.Enchere;
+import bo.Enchere.Statut;
 import bo.Utilisateur;
 
 public interface EnchereDAO {
@@ -19,4 +20,6 @@ public interface EnchereDAO {
 	public void remove(int idEnchere) throws BusinessException;
 
 	public void update(Enchere enchere) throws BusinessException;
+
+	public List<Enchere> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException;
 }

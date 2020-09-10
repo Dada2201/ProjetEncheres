@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import bll.ArticleManager;
 import bll.EnchereManager;
+import bo.Article;
 import bo.Enchere;
 import bo.Utilisateur;
 import dal.BusinessException;
@@ -35,18 +37,14 @@ public class ServletHome extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
-  
-		String today = "yyyy-MM-dd";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(today);
-		String date = simpleDateFormat.format(new Date());
 
-
-		EnchereManager emanager = new EnchereManager();
+		EnchereManager enchereManager = new EnchereManager();
+		ArticleManager articleManager = new ArticleManager();
+		
 		List<Enchere> listeEncheres = new ArrayList<>();
 		try {
-			listeEncheres = emanager.selectionTout();
+			listeEncheres = enchereManager.selectionTout();
 		} catch (BusinessException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
@@ -58,55 +56,48 @@ public class ServletHome extends HttpServlet {
 			request.setAttribute("listeEncheres",listeEncheres);
 		}
 		
-		List<Enchere> listeEncheresFiltre = new ArrayList<>();
 		String s = request.getParameter("test");	
 		if(s !=null) {
 			ObjectMapper mapper = new ObjectMapper();
 			List checkboxList = mapper.readValue(s, List.class);
 			//debug
 			System.out.println("--------");for(int i=0 ;i< checkboxList.size();i++) {System.out.println(checkboxList.get(i).toString());}
+
+			List<Enchere.Statut> encheresStatut = new ArrayList<>();
+			List<Article.Statut> arcticleStatut = new ArrayList<>();
 			
-			List<String> conditions = new ArrayList<>();
-			
-				if(checkboxList.contains("encheresouvertes")) {
-						conditions.add(">"+date);
-						listeEncheresFiltre.add(e);
-				}
-				if(checkboxList.contains("enchereswin")) {
-					if(e.getArticle().getDateFin().before(new Date()) && e.getUtilisateur() == (Utilisateur) request.getSession().getAttribute("utilisateur")){
-						conditions.add("<"+date);
-						conditions.add("=")
-						listeEncheresFiltre.add(e);
-					}
-				}
-				if(checkboxList.contains("encheresencours")) {
-					if(e.getUtilisateur() == (Utilisateur) request.getSession().getAttribute("utilisateur") && e.getArticle().getDateFin().after(today.getTime())) {
-						listeEncheresFiltre.add(e);
-					}
-				}
-				if(checkboxList.contains("ventesnon")) {
-					Utilisateur u =  (Utilisateur) request.getSession().getAttribute("utilisateur");
-					if(e.getArticle().getUtilisateur() == u && e.getArticle().getDateDebut().after(today.getTime())) {
-						listeEncheresFiltre.add(e);
-					}
-				}
-				if(checkboxList.contains("ventesencours")) {
-					Utilisateur u =  (Utilisateur) request.getSession().getAttribute("utilisateur");
-					if(e.getArticle().getUtilisateur() == u && e.getArticle().getDateDebut().after(today.getTime()) && e.getArticle().getDateFin().before(today.getTime())) {
-						listeEncheresFiltre.add(e);
-					}
-				}
-				if(checkboxList.contains("ventesend")) {
-					Utilisateur u =  (Utilisateur) request.getSession().getAttribute("utilisateur");
-					if(e.getArticle().getUtilisateur() == u  && e.getArticle().getDateFin().before(today.getTime())) {
-						listeEncheresFiltre.add(e);
-					}
-				}
+			if(checkboxList.contains("encheresouvertes")) {
+				encheresStatut.add(Enchere.Statut.OPEN);
 			}
-		for(int i=0;i<listeEncheresFiltre.size();i++) {
-			System.out.println(listeEncheresFiltre.get(i).getArticle().getNomArticle());
+			if(checkboxList.contains("enchereswin")) {
+				encheresStatut.add(Enchere.Statut.WIN);
+			}
+			if(checkboxList.contains("encheresencours")) {
+				encheresStatut.add(Enchere.Statut.EN_COURS);
+			}
+			if(checkboxList.contains("ventesnon")) {
+				arcticleStatut.add(Article.Statut.NOT_READY);
+			}
+			if(checkboxList.contains("ventesencours")) {
+				arcticleStatut.add(Article.Statut.EN_COURS);
+			}
+			if(checkboxList.contains("ventesend")) {
+				arcticleStatut.add(Article.Statut.CLOSE);
+			}
+
+			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
+			
+			try {
+				listeEncheres = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
 		}
-		request.setAttribute("listeEncheresF",listeEncheresFiltre);
+		
+		for(int i=0;i<listeEncheres.size();i++) {
+			System.out.println(listeEncheres.get(i).getArticle().getNomArticle());
+		}
+		request.setAttribute("listeEncheres",listeEncheres);
 		rd.forward(request, response);	
 	}
 	

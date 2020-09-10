@@ -4,14 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import bll.CategoriesManager;
 import bll.UtilisateurManager;
 import bo.Article;
 import bo.Categorie;
+import bo.Enchere;
 import bo.Utilisateur;
+import bo.Enchere.Statut;
 
 class ArticleDAOJdbcImpl implements ArticleDAO {
 
@@ -19,7 +23,13 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_BY_ID="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO encheres.articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)VALUES(?,?,?,?,?,?,?,?);";
-	private static final String SELECT_FILTRE="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM encheres.articles_vendus WHERE ";
+	private static final String SELECT_FILTRE="SELECT encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere FROM encheres.encheres INNER JOIN encheres.articles_vendus ON articles_vendus.no_article = encheres.no_article WHERE articles_vendus = ? AND (?)";
+
+	private static final String FILTER_EN_COURS = String.format("(%s BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_NOT_READY = String.format("(%s < articles_vendus.date_debut_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_CLOSE = String.format("(%s > articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+
+	
 	@Override
 	public List<Article> selectAll() throws BusinessException {
 		List<Article> listeArticles = new ArrayList<Article>();
@@ -136,5 +146,56 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 		
 		return a;
+	}	
+	
+	@Override
+	public List<Enchere> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur) throws BusinessException {
+		List<Enchere> listeEnchere= new ArrayList<Enchere>();
+		String filter = null;
+		
+		for (int i = 0; i < arcticleStatut.size(); i++) {
+			switch (arcticleStatut.get(i)) {
+			case EN_COURS:
+				filter += FILTER_EN_COURS;
+				break;
+			case NOT_READY:
+				filter += FILTER_NOT_READY;
+				break;
+			case CLOSE:
+				filter += FILTER_CLOSE;
+				break;
+			default:
+				break;
+			}
+			
+			if(arcticleStatut.size() != i && arcticleStatut.size()!=1) {
+				filter +=" OR ";
+			}
+		}
+		
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_FILTRE);
+			pstmt.setLong(1, utilisateur.getId());
+			pstmt.setString(2, filter);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Enchere enchere = EnchereDAOJdbcImpl.enchereBuilder(rs);
+				listeEnchere.add(enchere);
+			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ENCHERE_ECHEC);
+			throw businessException;
+		}
+		return listeEnchere;
 	}
 }

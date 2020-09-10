@@ -4,6 +4,7 @@ import java.util.List;
 
 import bo.Article;
 import bo.Enchere;
+import bo.Enchere.Statut;
 import bo.Utilisateur;
 import dal.BusinessException;
 import dal.DAOFactory;
@@ -59,5 +60,9 @@ public class EnchereManager {
 
 	public void update(Enchere enchere) throws BusinessException {
 		this.enchereDAO.update(enchere);
+	}
+
+	public List<Enchere> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException {
+		return this.enchereDAO.selectionFiltre(encheresStatut, utilisateur);
 	}
 }

@@ -14,6 +14,13 @@ public class Article {
 	private Utilisateur utilisateur;
 	private Categorie categorie;
 	
+	public static enum Statut{
+		NOT_READY,
+		EN_COURS,
+		CLOSE,
+		NULL
+	}
+	
 	public Article(int noArticle, String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial,
 			int prixVente, Utilisateur utilisateur, Categorie categorie) {
 		super();

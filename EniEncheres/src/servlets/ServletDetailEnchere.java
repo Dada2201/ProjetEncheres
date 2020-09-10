@@ -44,13 +44,13 @@ public class ServletDetailEnchere extends HttpServlet {
 			Enchere.Statut statut = request.getSession().getAttribute("utilisateur") != null ? Enchere.getStatut(enchere, (Utilisateur)request.getSession().getAttribute("utilisateur")): Enchere.getStatut(enchere, null);
 			
 			switch (statut) {
-			case ENCOURS:
+			case EN_COURS:
 				h1 = "L'enchère la plus haute pour le moment est de la part de " + enchere.getUtilisateur().getPseudo();
 				break;
 			case FINI:
 				h1 = "L'enchère à été remportéé par "+ enchere.getUtilisateur().getPseudo();
 				break;
-			case NOTREADY:
+			case NOT_READY:
 				h1 = "L'enchère n'a pas encore débuté";
 				break;
 			case WIN:

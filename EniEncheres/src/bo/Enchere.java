@@ -10,8 +10,9 @@ public class Enchere {
 	private int montantEnchere;
 	
 	public enum Statut{
-		NOTREADY,
-		ENCOURS,
+		NOT_READY,
+		OPEN,
+		EN_COURS,
 		FINI,
 		WIN,
 		NULL
@@ -23,6 +24,9 @@ public class Enchere {
 		this.article = article;
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
+	}
+
+	public Enchere() {
 	}
 
 	public Utilisateur getUtilisateur() {
@@ -65,7 +69,7 @@ public class Enchere {
 
 	public static Statut getStatut(Enchere enchere, Utilisateur currentUtilisateur) {
 		if(enchere.getArticle().getDateDebut().compareTo(new Date()) > 0) {
-			return Statut.NOTREADY;
+			return Statut.NOT_READY;
 		}	
 		else if(enchere.getArticle().getDateFin().compareTo(new Date()) < 0){
 			if(currentUtilisateur != null && enchere.getUtilisateur().getId().equals(currentUtilisateur.getId())) {
@@ -75,7 +79,7 @@ public class Enchere {
 			}
 		}
 		else if(enchere.getArticle().getDateDebut().compareTo(new Date()) < 0 || enchere.getArticle().getDateDebut().compareTo(new Date()) == 0) {
-			return Statut.ENCOURS;
+			return Statut.OPEN;
 		}
 		return Statut.NULL;
 	}
