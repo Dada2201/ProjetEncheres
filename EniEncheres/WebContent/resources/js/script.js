@@ -25,7 +25,7 @@ $(document).ready(function(){
 			    $( "#encheresencours").prop("checked", false);
 			    $( "#ventesend").prop('checked', false);
 			    $( "#ventesnon").prop('checked', false);
-			    $( "#ventesencours").prop('checked', true);
+			    $( "#ventesencours").prop('checked', false);
 			    $( "#ventesend").prop("disabled", false);
 			    $( "#ventesnon").prop("disabled", false);
 			    $( "#ventesencours").prop("disabled", false);
