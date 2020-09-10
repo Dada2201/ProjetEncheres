@@ -53,8 +53,9 @@ public class ServletHome extends HttpServlet {
 			List checkboxList = mapper.readValue(s, List.class);
 		
 			//debug
+			System.out.println("--------");
 			for(int i=0 ;i< checkboxList.size();i++) {
-				System.out.println("--------");
+				
 				System.out.println(checkboxList.get(i).toString());
 			}
 		}
