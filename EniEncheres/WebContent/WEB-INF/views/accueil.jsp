@@ -8,7 +8,7 @@
 	</c:if>
 <body>
 
-    <div class="container">
+    <div class="container py-5">
         <div class="row justify-content-center">
             <h1>Liste des enchères</h1>
         </div>
@@ -70,7 +70,6 @@
 				</div>
 			</div> 	
 	</c:if>
-    </div>
     
     <div class="container">
         <div class="row justify-content-around">
@@ -78,5 +77,6 @@
 				<%@ include file="partial/article.jspf" %>
 			</c:forEach>
         </div>
+    </div>
     </div>
 <%@ include file="partial/footer.jspf" %>

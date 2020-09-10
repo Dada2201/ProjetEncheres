@@ -1,13 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="../head.jspf" %>
-    <header>
-        <div class="container">
-            <div class="row justify-content-between">
-                <div><a href="${pageContext.request.contextPath}"><span class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span class="ebuy-b">b</span><span class="ebuy-u">u</span><span class="ebuy-y">y</span></span><span></span></a>
-                <p>ENI-Encheres</p>
-                </div>
-                <a href="${pageContext.request.contextPath}/login">S'inscrire - Se connecter</a>
-            </div>
-        </div>
-    </header>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a href="${pageContext.request.contextPath}"><span class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span class="ebuy-b">b</span><span class="ebuy-u">u</span><span class="ebuy-y">y</span></span><span></span></a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    </ul>
+    <ul class="form-inline my-2 my-lg-0">
+      <li class="nav-item mr-auto">
+        <a class="nav-link" href="${pageContext.request.contextPath}/login">S'inscrire - Se connecter</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</header>
