@@ -5,5 +5,6 @@
       <small>Copyright &copy; Damien / Alexandre</small>
     </div>
   </footer>
+	<script src="<c:url value="/resources/js/script.js" />"></script>
 </body>
 </html>

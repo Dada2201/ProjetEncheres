@@ -4,7 +4,9 @@
     <header>
         <div class="container">
             <div class="row justify-content-between">
+                <div><a href="${pageContext.request.contextPath}"><span class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span class="ebuy-b">b</span><span class="ebuy-u">u</span><span class="ebuy-y">y</span></span><span></span></a>
                 <p>ENI-Encheres</p>
+                </div>
                 <a href="login">S'inscrire - Se connecter</a>
             </div>
         </div>

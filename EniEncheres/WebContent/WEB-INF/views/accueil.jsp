@@ -1,6 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="partial/head.jspf" %>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<c:if test="${logged}">
+<%@ include file="partial/header/connected.jspf" %>
+	</c:if>
+<c:if test="${!logged}">
+<%@ include file="partial/header/notConnected.jspf" %>
+	</c:if>
 <body>
 
     <div class="container">
@@ -74,43 +82,4 @@
 			</c:forEach>
         </div>
     </div>
-</body>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('#achats').click(function() {
-	   if($('#achats').is(':checked')) { 
-		    $( "#encheresouvertes").prop("disabled", false);
-		    $( "#encheresouvertes").prop("checked", true);
-		    $( "#enchereswin").prop("disabled", false);
-		    $( "#encheresencours").prop("disabled", false);
-		    $( "#ventesnon").prop("disabled", true);
-		    $( "#ventesencours").prop("disabled", true);
-		    $( "#ventesend").attr("disabled", true);
-		    $( "#ventesend").prop('checked', false);
-		    $( "#ventesnon").prop('checked', false);
-		    $( "#ventesencours").prop('checked', false);
-
-
-		}
-	   });
-	$('#ventes').click(function(){
-		   if($('#ventes').is(':checked')){
-			    $( "#encheresouvertes").prop("disabled", true);
-			    $( "#encheresouvertes").prop("checked", false);
-			    $( "#enchereswin").prop("disabled", true);
-			    $( "#encheresencours").prop("disabled", true);
-			    $( "#enchereswin").prop("checked", false);
-			    $( "#encheresencours").prop("checked", false);
-			    $( "#ventesend").prop('checked', false);
-			    $( "#ventesnon").prop('checked', false);
-			    $( "#ventesencours").prop('checked', true);
-			    $( "#ventesend").prop("disabled", false);
-			    $( "#ventesnon").prop("disabled", false);
-			    $( "#ventesencours").prop("disabled", false);
-	}
-	});
-
-
-})
-</script>
-</html>
+<%@ include file="partial/footer.jspf" %>

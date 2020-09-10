@@ -4,7 +4,8 @@
     <header>
         <div class="container">
             <div class="row justify-content-between">
-                <p>ENI-Encheres</p>
+            	<div><a href="${pageContext.request.contextPath}"><span class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span class="ebuy-b">b</span><span class="ebuy-u">u</span><span class="ebuy-y">y</span></span><span></span></a>
+                <p>ENI-Encheres</p></div>
                 <div>
                     <a href=""><u>Enchères</u></a>
                     <a href=""><u>Vendre un article</u></a>
