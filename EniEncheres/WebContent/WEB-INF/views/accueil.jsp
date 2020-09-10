@@ -3,10 +3,11 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
+
 <c:if test="${logged}">
 <%@ include file="partial/header/connected.jspf" %>
 	</c:if>
-<c:if test="${!logged}">
+<c:if test="${logged}"> <!--  TODO change for test !logged or logged -->
 <%@ include file="partial/header/notConnected.jspf" %>
 	</c:if>
 <body>
@@ -42,6 +43,7 @@
             
         </div>
         <c:if test="${logged}">
+        	<form>
         	<div class="row justify-content-around">
         		<div class="col-4">
       		  		<div class="radio">
@@ -70,8 +72,11 @@
 					 <div class="checkbox">
 						  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminées</label>
 					</div>
+					<input id="prodId" name="prodId" type="text" value="xm234jq">
+					
 				</div>
-			</div> 	
+			</div> 
+			</form>	
 	</c:if>
     </div>
     

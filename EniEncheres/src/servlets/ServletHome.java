@@ -27,15 +27,11 @@ public class ServletHome extends HttpServlet {
 		
 		if(request.getSession().getAttribute("utilisateur") != null) {
 			request.setAttribute("logged", true);
-			EnchereManager em = new EnchereManager();
-			try {
-				request.setAttribute("listeEncheres",em.selectionTout());
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
+			//EnchereManager em = new EnchereManager();
+
 		}
 		else {
-			request.setAttribute("logged", false);
+			request.setAttribute("logged", true);
 			EnchereManager em = new EnchereManager();
 			try {
 				request.setAttribute("listeEncheres",em.selectionTout());
@@ -43,15 +39,16 @@ public class ServletHome extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-		rd.forward(request, response);	}
+		String test = request.getParameter("test");		
+
+		System.out.println(test);
+		rd.forward(request, response);	
+	}
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request,response);
+	
 	}
-
-
 }
