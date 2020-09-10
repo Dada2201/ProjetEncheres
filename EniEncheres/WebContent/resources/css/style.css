@@ -1,3 +1,20 @@
-#sticky-footer {
-  flex-shrink: none;
+* {
+	font-family: Helvetica,Sans-serif;
+}
+
+a, a:hover, a:focus {
+    text-decoration: none !important;
+}
+
+.ebuy-e {
+	color: #CC0000;
+}
+.ebuy-b {
+	color: #0000FF;
+}
+.ebuy-u {
+	color: #FFA500;
+}
+.ebuy-y {
+	color: #008000;
 }
