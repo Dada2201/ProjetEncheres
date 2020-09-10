@@ -4,9 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="partial/header/notConnected.jspf" %>
-    <div class="container py-5">
+    <div class="container py-5">">
         <div class="row justify-content-center">
-			<h1>${h1}</h1>
+            <h1>Détail vente</h1>
         </div>
         <div class="row">
             <div class="col-4">
@@ -14,27 +14,27 @@
             </div>
             <div class="col-8">
                 <div class="form-group row">
-                    <p>${enchere.article.nomArticle}</p>
+                    <p>${article.nomArticle}</p>
                 </div>
                 <div class="form-group row">
                     <p>Description :</p>
-                    <p>${enchere.article.description}</p>
+                    <p>${article.description}</p>
                 </div>
                 <div class="form-group row">
                     <p>Catégorie</p>
-                    <p>${enchere.article.categorie.libelle}</p>
+                    <p>${categorie.libelle}</p>
                 </div>
                 <div class="form-group row">
                     <p>Meilleure offre :</p>
-                    <p>${enchere.montantEnchere} pts par ${enchere.utilisateur.pseudo}</p>
+                    <p>${enchere.montantEnchere} pts par ${utilisateurEnchere.pseudo}</p>
                 </div>
                 <div class="form-group row">
                     <p>Mise à prix :</p>
-                    <p>${enchere.article.prixInitial} pts</p>
+                    <p>${article.prixInitial} pts</p>
                 </div>
                 <div class="form-group row">
                     <p>Fin de l'enchère :</p>
-                    <p><fmt:formatDate pattern = "dd/MM/yyyy" value = "${enchere.article.dateFin}" /></p>
+                    <p><fmt:formatDate pattern = "dd/MM/yyyy" value = "${article.dateFin}" /></p>
                 </div>
                 <div class="form-group row">
                     <p>Retrait :</p>
@@ -45,8 +45,13 @@
                 </div>
                 <div class="form-group row">
                     <p>Vendeur :</p>
-                    <p>${enchere.article.utilisateur.pseudo}</p>
+                    <p>${utilisateurVendeur.pseudo}</p>
                 </div>
+                <form action="encherir" method="post" class="form-group row">
+                    <p>Ma proposition :</p>
+                    <input type="number" name="prix" />
+                    <input type="submit" class="btn btn-primary" value="Enchérir" />
+                </form>
             </div>
         </div>
     </div>
