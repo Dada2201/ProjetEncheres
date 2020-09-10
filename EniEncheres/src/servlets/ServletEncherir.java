@@ -51,7 +51,7 @@ public class ServletEncherir extends HttpServlet {
 			e.printStackTrace();
 		}		
     	
-    	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/detailVente.jsp");	
+    	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/encherirVente.jsp");	
 
 		rd.forward(request, response);
 	}
