@@ -1,13 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="row border col-6 align-items-center justify-content-around">
-     <div class="">
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<div class="card border px-5">
+  <div class="row align-items-center">
+    <div class="">
      	<img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="100px" weight="100px" />
-     </div>
-     <div>
-        <p><u>${enchere.article.nomArticle}</u></p>
+    </div>
+    <div class="">
+      <div class="card-body">
+        <p class="card-title"><u>${enchere.article.nomArticle}</u></p>
         <p>Prix : ${enchere.article.prixInitial}</p>
-        <p>Fin de l'enchère: ${enchere.article.dateFin}</p>
+        <p>Fin de l'enchère: <fmt:formatDate pattern = "dd/MM/yyyy" value = "${enchere.article.dateFin}" /></p>
         <p>Vendeur: ${enchere.article.utilisateur.pseudo}</p>
-	</div>
+        <a href="${pageContext.request.contextPath}/encherir?enchere=${enchere.article.noArticle}" class="btn btn-primary stretched-link">Voir l'enchère</a>
+      </div>
+    </div>
+  </div>
 </div>

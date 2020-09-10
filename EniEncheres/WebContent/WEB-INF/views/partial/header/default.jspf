@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ include file="../head.jspf" %>
+    <%@ include file="../head.jspf" %>    
     <header>
-        <div class="container">
-            <div class="row justify-content-between">
-                <div><a href="${pageContext.request.contextPath}"><span class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span class="ebuy-b">b</span><span class="ebuy-u">u</span><span class="ebuy-y">y</span></span><span></span></a>        
-                <p>ENI-Encheres</p></div>   
-            </div>
-        </div>
-    </header>
+    <nav class="navbar navbar-expand navbar-light bg-dark">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <a href="${pageContext.request.contextPath}"><span class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span class="ebuy-b">b</span><span class="ebuy-u">u</span><span class="ebuy-y">y</span></span><span></span></a>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    </ul>
+  </div>
+</nav>
+</header>

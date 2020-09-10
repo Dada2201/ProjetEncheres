@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="partial/header/notConnected.jspf" %>
-    <div class="container">
+    <div class="container py-5">">
         <div class="row justify-content-center">
             <h1>Détail vente</h1>
         </div>
