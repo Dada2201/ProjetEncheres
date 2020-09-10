@@ -2,7 +2,7 @@ $(document).ready(function(){
 	$('#achats').click(function() {
 	   if($('#achats').is(':checked')) { 
 		    $( "#encheresouvertes").prop("disabled", false);
-		    $( "#encheresouvertes").prop("checked", true);
+		    $( "#encheresouvertes").prop("checked", false);
 		    $( "#enchereswin").prop("disabled", false);
 		    $( "#encheresencours").prop("disabled", false);
 		    $( "#ventesnon").prop("disabled", true);

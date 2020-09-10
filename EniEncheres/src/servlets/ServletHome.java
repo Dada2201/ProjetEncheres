@@ -47,16 +47,23 @@ public class ServletHome extends HttpServlet {
 		}
 		
 		String s = request.getParameter("test");	
-
 		if(s !=null) {
 			ObjectMapper mapper = new ObjectMapper();
 			List checkboxList = mapper.readValue(s, List.class);
-		
 			//debug
-			System.out.println("--------");
-			for(int i=0 ;i< checkboxList.size();i++) {
+			System.out.println("--------");for(int i=0 ;i< checkboxList.size();i++) {System.out.println(checkboxList.get(i).toString());}
+			
+			
+			/// debut traitement
+			/*	encheresouvertes
+				enchereswin
+				encheresencours
+			  	ventesnon
+				ventesencours
+				ventesend
+			 */
+			if(checkboxList.contains("")) {
 				
-				System.out.println(checkboxList.get(i).toString());
 			}
 		}
 		rd.forward(request, response);	
