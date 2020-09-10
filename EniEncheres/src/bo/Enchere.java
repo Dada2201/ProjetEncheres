@@ -9,6 +9,14 @@ public class Enchere {
 	private Date dateEnchere;
 	private int montantEnchere;
 	
+	public enum Statut{
+		NOTREADY,
+		ENCOURS,
+		FINI,
+		WIN,
+		NULL
+	}
+	
 	public Enchere(Utilisateur utilisateur, Article article, Date dateEnchere, int montantEnchere) {
 		super();
 		this.utilisateur = utilisateur;
@@ -53,5 +61,22 @@ public class Enchere {
 	public String toString() {
 		return "Enchere [utilisateur=" + utilisateur + ", article=" + article + ", dateEnchere=" + dateEnchere
 				+ ", montantEnchere=" + montantEnchere + "]";
+	}
+
+	public static Statut getStatut(Enchere enchere, Utilisateur currentUtilisateur) {
+		if(enchere.getArticle().getDateDebut().compareTo(new Date()) > 0) {
+			return Statut.NOTREADY;
+		}	
+		else if(enchere.getArticle().getDateFin().compareTo(new Date()) < 0){
+			if(currentUtilisateur != null && enchere.getUtilisateur().getId().equals(currentUtilisateur.getId())) {
+				return Statut.WIN;
+			}else {
+				return Statut.FINI;
+			}
+		}
+		else if(enchere.getArticle().getDateDebut().compareTo(new Date()) < 0 || enchere.getArticle().getDateDebut().compareTo(new Date()) == 0) {
+			return Statut.ENCOURS;
+		}
+		return Statut.NULL;
 	}
 }
