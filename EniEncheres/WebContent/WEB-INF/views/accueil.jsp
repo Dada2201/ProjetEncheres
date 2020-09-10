@@ -3,7 +3,7 @@
 <c:if test="${logged}">
 <%@ include file="partial/header/connected.jspf" %>
 	</c:if>
-<c:if test="${logged}"> <!--  TODO change for test !logged or logged -->
+<c:if test="${!logged}"> <!--  TODO change for test !logged or logged -->
 <%@ include file="partial/header/notConnected.jspf" %>
 
 	</c:if>
@@ -74,7 +74,7 @@
 			</form>	
 	</c:if>
     </div>
-    
+          <c:out value = "${listeEncheres.toString()}"/>
     <div class="container">
         <div class="row justify-content-around">
         	<c:forEach items="${listeEncheres}" var="enchere">

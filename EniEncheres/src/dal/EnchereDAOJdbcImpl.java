@@ -21,7 +21,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String REMOVE = "DELETE from LISTES where id=?";
 	private static final String SELECT_ALL="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres;";
 	private static final String UPDATE="UPDATE encheres.encheres SET no_utilisateur = ?, date_enchere = ?, montant_enchere = ? WHERE no_article = ?";
-
+	
 
 	@Override
 	public void insert(Utilisateur utilisateur, Article article, Enchere enchere) throws BusinessException {
