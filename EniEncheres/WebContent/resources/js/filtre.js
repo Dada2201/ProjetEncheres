@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	
 	$(document).on( "click", "input[type='checkbox']", function(event) {	
 		var checkedCheckbox = [];
 		if($("#encheresouvertes").is(':checked')) {

@@ -1,17 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
 
 <c:if test="${logged}">
 <%@ include file="partial/header/connected.jspf" %>
 	</c:if>
 <c:if test="${logged}"> <!--  TODO change for test !logged or logged -->
 <%@ include file="partial/header/notConnected.jspf" %>
+
 	</c:if>
 <body>
 
-    <div class="container py-5">
+    <div class="container">
         <div class="row justify-content-center">
             <h1>Liste des enchères</h1>
         </div>
@@ -71,11 +69,11 @@
 					 <div class="checkbox">
 						  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminées</label>
 					</div>
-					
 				</div>
 			</div> 
 			</form>	
 	</c:if>
+    </div>
     
     <div class="container">
         <div class="row justify-content-around">
@@ -83,6 +81,5 @@
 				<%@ include file="partial/article.jspf" %>
 			</c:forEach>
         </div>
-    </div>
     </div>
 <%@ include file="partial/footer.jspf" %>
