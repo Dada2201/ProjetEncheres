@@ -51,6 +51,8 @@ public class ServletLogin extends HttpServlet {
 				request.setAttribute("data", utilisateur);	
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute("utilisateur", utilisateur);
+				// 5 minutes
+				currentUserSession.setMaxInactiveInterval(300);
 			}else {
 				throw new BusinessException();
 			}
