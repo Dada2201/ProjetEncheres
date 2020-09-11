@@ -101,8 +101,13 @@ public class ServletHome extends HttpServlet {
 		System.out.println(listeEncheres);
 		request.setAttribute("listeEncheres",listeEncheres);
         response.getWriter().print("jjjjjjjjjjjjjjjjjjjjjj");
-
-		rd.forward(request, response);	
+        
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(listeArticles);
+        System.out.println(json);
+        response.setContentType("application/json");
+        response.getWriter().write(json.toString());
+        rd.forward(request, response);	
 	}
 	
 	/**
