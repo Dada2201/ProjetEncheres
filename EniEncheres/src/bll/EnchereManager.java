@@ -39,11 +39,15 @@ public class EnchereManager {
 		return this.enchereDAO.selectAll();
 	}
 	
-	public Enchere selectionParArticle(int idArticle) throws BusinessException{
+	public List<Enchere> selectionParArticle(int idArticle) throws BusinessException{
 		return this.enchereDAO.selectByArticle(idArticle);
 	}
 	
-	public Enchere selectionParUtilisateur(int idUtilisateur) throws BusinessException{
+	public Enchere selectionParArticleUtilisateur(int idArticle, int idUtilisateur) throws BusinessException{
+		return this.enchereDAO.selectByArticleUtilisateur(idArticle, idUtilisateur);
+	}
+	
+	public List<Enchere> selectionParUtilisateur(int idUtilisateur) throws BusinessException{
 		return this.enchereDAO.selectByArticle(idUtilisateur);
 	}
 		
@@ -58,8 +62,8 @@ public class EnchereManager {
 		this.enchereDAO.remove(idEnchere);
 	}
 
-	public void update(Enchere enchere) throws BusinessException {
-		this.enchereDAO.update(enchere);
+	public void update(Enchere enchere, Article article) throws BusinessException {
+		this.enchereDAO.update(enchere, article);
 	}
 
 	public List<Article> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException {

@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group row">
                     <p>Catégorie</p>
-                    <p>${categorie.libelle}</p>
+                    <p>${article.categorie.libelle}</p>
                 </div>
                 <div class="form-group row">
                     <p>Meilleure offre :</p>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group row">
                     <p>Vendeur :</p>
-                    <p>${utilisateurVendeur.pseudo}</p>
+                    <p>${article.utilisateur.pseudo}</p>
                 </div>
                 <form action="encherir" method="post" class="form-group row">
                     <p>Ma proposition :</p>

@@ -18,9 +18,10 @@ import bo.Utilisateur;
 
 class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String STRING_UTILISATEUR = "numero_utilisateur";
-	private static final String INSERT="INSERT INTO encheres.encheres(no_utilisateur,no_article,date_enchere,montant_enchere)VALUES(?,?,?,?);";
+	private static final String INSERT="INSERT INTO encheres.encheres(no_utilisateur,no_article,date_enchere,montant_enchere)VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE date_enchere = ? ,montant_enchere = ?;";
 	private static final String SELECT_BY_UTILISATEUR="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_utilisateur = ?;";
 	private static final String SELECT_BY_ARTICLE="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_article = ?;";
+	private static final String SELECT_BY_ARTICLE_UTILISATEUR="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_article = ? AND no_utilisateur = ?;";
 	private static final String REMOVE = "DELETE from LISTES where id=?";
 	private static final String SELECT_ALL="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres;";
 	private static final String SELECT_FILTRE="SELECT articles_vendus.no_article, articles_vendus.nom_article, articles_vendus.description, articles_vendus.date_debut_encheres, articles_vendus.date_fin_encheres, prix_initial, articles_vendus.prix_vente, articles_vendus.no_utilisateur, articles_vendus.no_categorie FROM encheres.encheres INNER JOIN encheres.articles_vendus ON articles_vendus.no_article = encheres.no_article WHERE %s;";
@@ -41,6 +42,8 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 			pstmt.setInt(2, article.getNoArticle());
 			pstmt.setDate(3, new java.sql.Date(enchere.getDateEnchere().getTime()));
 			pstmt.setInt(4, enchere.getMontantEnchere());
+			pstmt.setDate(5, new java.sql.Date(enchere.getDateEnchere().getTime()));
+			pstmt.setInt(6, enchere.getMontantEnchere());
 			pstmt.executeUpdate();
 			pstmt.close();
 			cnx.commit();
@@ -109,13 +112,15 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 		return listeEnchere;
 	}
 	
+
 	@Override
-	public Enchere selectByArticle(int id) throws BusinessException {
+	public Enchere selectByArticleUtilisateur(int idArticle, int idUtilisateur) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			cnx.setAutoCommit(false);
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ARTICLE);
-			pstmt.setInt(1, id);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ARTICLE_UTILISATEUR);
+			pstmt.setInt(1, idArticle);
+			pstmt.setInt(2, idUtilisateur);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -136,10 +141,37 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 		return null;
 	}
 	
+	@Override
+	public List<Enchere> selectByArticle(int id) throws BusinessException {
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ARTICLE);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Enchere enchere = enchereBuilder(rs);
+				listeEnchere.add(enchere);
+			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ENCHERE_ECHEC);
+			throw businessException;
+		}
+		return listeEnchere;
+	}
+	
 	Enchere enchereBuilder(ResultSet rs) throws BusinessException, NumberFormatException, SQLException {
-		ArticleManager articleManager = new ArticleManager();
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		Enchere enchere = new Enchere(utilisateurManager.selectionParId(Integer.parseInt(rs.getString("no_utilisateur"))), articleManager.selectById(Integer.parseInt(rs.getString("no_article")))
+		Enchere enchere = new Enchere(utilisateurManager.selectionParId(Integer.parseInt(rs.getString("no_utilisateur")))
 				, rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
 		return enchere;
 	}
@@ -162,7 +194,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
-	public void update(Enchere enchere) throws BusinessException {
+	public void update(Enchere enchere, Article article) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(UPDATE);
@@ -170,7 +202,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 			pstmt.setLong(1, enchere.getUtilisateur().getId());
 			pstmt.setDate(2, new java.sql.Date(enchere.getDateEnchere().getTime()));
 			pstmt.setLong(3, enchere.getMontantEnchere());
-			pstmt.setLong(4, enchere.getArticle().getNoArticle());
+			pstmt.setLong(4, article.getNoArticle());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

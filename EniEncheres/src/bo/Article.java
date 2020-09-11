@@ -1,6 +1,7 @@
 package bo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Article {
 
@@ -13,6 +14,7 @@ public class Article {
 	private int prixVente;
 	private Utilisateur utilisateur;
 	private Categorie categorie;
+	private List<Enchere> encheres;
 	
 	public static enum Statut{
 		NOT_READY,
@@ -106,6 +108,29 @@ public class Article {
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
+
+	public List<Enchere> getEncheres() {
+		return encheres;
+	}
+
+	public void setEncheres(List<Enchere> encheres) {
+		this.encheres = encheres;
+	}
 	
-	
+	public static Enchere.Statut getStatut(Article article, Utilisateur currentUtilisateur, Utilisateur utilisateurEnchere){
+		if(article.getDateDebut().compareTo(new Date()) > 0) {
+			return Enchere.Statut.NOT_READY;
+		}	
+		else if(article.getDateFin().compareTo(new Date()) < 0){
+			if(currentUtilisateur != null && utilisateurEnchere.getId().equals(currentUtilisateur.getId())) {
+				return Enchere.Statut.WIN;
+			}else {
+				return Enchere.Statut.FINI;
+			}
+		}
+		else if(article.getDateDebut().compareTo(new Date()) < 0 || article.getDateDebut().compareTo(new Date()) == 0) {
+			return Enchere.Statut.OPEN;
+		}
+		return Enchere.Statut.NULL;
+	}
 }
