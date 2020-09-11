@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bll.ArticleManager;
 import bll.EnchereManager;
 import bll.RetraitManager;
+import bo.Article;
 import bo.Enchere;
 import bo.Retrait;
 import bo.Utilisateur;
@@ -33,15 +35,17 @@ public class ServletDetailEnchere extends HttpServlet {
 		
     	EnchereManager enchereManager = new EnchereManager();
     	RetraitManager retraitManager = new RetraitManager();
+    	ArticleManager articleManager = new ArticleManager();
     	String h1 = null;
     	
     	try {
-			Enchere enchere = enchereManager.selectionParArticle(Integer.parseInt(request.getParameter("enchere")));
-			Retrait retrait = retraitManager.selectById(enchere.getArticle().getNoArticle());
+			Article article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+			Retrait retrait = retraitManager.selectById(article.getNoArticle());
+			Enchere enchere = enchereManager.selectionParArticle(article.getNoArticle()).get(0);
 			request.setAttribute("enchere", enchere);
 			request.setAttribute("retrait", retrait);
 			
-			Enchere.Statut statut = request.getSession().getAttribute("utilisateur") != null ? Enchere.getStatut(enchere, (Utilisateur)request.getSession().getAttribute("utilisateur")): Enchere.getStatut(enchere, null);
+			Enchere.Statut statut = request.getSession().getAttribute("utilisateur") != null ? Article.getStatut(article, (Utilisateur)request.getSession().getAttribute("utilisateur"), enchere.getUtilisateur()): Article.getStatut(article, null, enchere.getUtilisateur());
 			
 			switch (statut) {
 			case EN_COURS:

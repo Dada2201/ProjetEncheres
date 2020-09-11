@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bll.ArticleManager;
 import bll.EnchereManager;
 import bll.RetraitManager;
+import bo.Article;
 import bo.Enchere;
 import bo.Retrait;
 import bo.Utilisateur;
@@ -22,7 +24,7 @@ import dal.BusinessException;
 public class ServletEncherir extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	Enchere enchere = null;
+	Article article = null;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,15 +37,16 @@ public class ServletEncherir extends HttpServlet {
 		
     	EnchereManager enchereManager = new EnchereManager();
     	RetraitManager retraitManager = new RetraitManager();
+    	ArticleManager articleManager = new ArticleManager();
+    	
+    	Enchere enchere = null;
     	
     	try {
-			this.enchere = enchereManager.selectionParArticle(Integer.parseInt(request.getParameter("enchere")));
-			Retrait retrait = retraitManager.selectById(this.enchere.getArticle().getNoArticle());
-			request.setAttribute("article", this.enchere.getArticle());
-			request.setAttribute("enchere", this.enchere);
-			request.setAttribute("categorie", this.enchere.getArticle().getCategorie());
-			request.setAttribute("utilisateurVendeur", this.enchere.getArticle().getUtilisateur());
-			request.setAttribute("utilisateurEnchere", this.enchere.getUtilisateur());
+    		this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+    		enchere = enchereManager.selectionParArticle(this.article.getNoArticle()).get(0);
+			Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
+			request.setAttribute("article", this.article);
+			request.setAttribute("enchere", enchere);
 			request.setAttribute("retrait", retrait);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -65,17 +68,15 @@ public class ServletEncherir extends HttpServlet {
 
     	EnchereManager enchereManager = new EnchereManager();
 
-		this.enchere.setDateEnchere(new Date());
-		this.enchere.setMontantEnchere(Integer.parseInt(request.getParameter("prix")));
-		this.enchere.setUtilisateur(utilisateur);
+    	Enchere enchere = new Enchere((Utilisateur)request.getSession().getAttribute("utilisateur"), new Date(), Integer.parseInt(request.getParameter("prix")));
 
 		try {
-			enchereManager.update(this.enchere);
+			enchereManager.ajouter(utilisateur, this.article, enchere);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
 
-		response.sendRedirect("encherir?enchere="+this.enchere.getArticle().getNoArticle());
+		response.sendRedirect("encherir?enchere="+this.article.getNoArticle());
 	}
 
 }
