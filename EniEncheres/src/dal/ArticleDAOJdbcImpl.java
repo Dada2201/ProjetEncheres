@@ -23,7 +23,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_BY_ID="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO encheres.articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)VALUES(?,?,?,?,?,?,?,?);";
-	private static final String SELECT_FILTRE="SELECT encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere FROM encheres.encheres INNER JOIN encheres.articles_vendus ON articles_vendus.no_article = encheres.no_article WHERE articles_vendus.no_utilisateur = ? AND (%s)";
+	private static final String SELECT_FILTRE="SELECT articles_vendus.no_article, articles_vendus.nom_article, articles_vendus.description, articles_vendus.date_debut_encheres, articles_vendus.date_fin_encheres, prix_initial, articles_vendus.prix_vente, articles_vendus.no_utilisateur, articles_vendus.no_categorie FROM articles_vendus WHERE articles_vendus.no_utilisateur = ? AND (%s)";
 
 	private static final String FILTER_EN_COURS = String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_NOT_READY = String.format("(DATEDIFF('%s' , articles_vendus.date_debut_encheres) < 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -104,7 +104,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 	}
 	
-	private Article articleBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
+	static Article articleBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		CategoriesManager categoriesManager = new CategoriesManager();
 		Article article = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
@@ -149,8 +149,8 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	}	
 	
 	@Override
-	public List<Enchere> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur) throws BusinessException {
-		List<Enchere> listeEnchere= new ArrayList<Enchere>();
+	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur) throws BusinessException {
+		List<Article> listeArticle= new ArrayList<Article>();
 		String filter = "";
 		
 		for (int i = 0; i < arcticleStatut.size(); i++) {
@@ -180,8 +180,8 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
-				Enchere enchere = EnchereDAOJdbcImpl.enchereBuilder(rs);
-				listeEnchere.add(enchere);
+				Article article = articleBuilder(rs);
+				listeArticle.add(article);
 			}
 			rs.close();
 			pstmt.close();
@@ -194,6 +194,6 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_ENCHERE_ECHEC);
 			throw businessException;
 		}
-		return listeEnchere;
+		return listeArticle;
 	}
 }

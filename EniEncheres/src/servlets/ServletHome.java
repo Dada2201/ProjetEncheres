@@ -40,7 +40,8 @@ public class ServletHome extends HttpServlet {
 
 		EnchereManager enchereManager = new EnchereManager();
 		ArticleManager articleManager = new ArticleManager();
-		
+
+		List<Article> listeArticles = new ArrayList<>();
 		List<Enchere> listeEncheres = new ArrayList<>();
 		try {
 			listeEncheres = enchereManager.selectionTout();
@@ -88,7 +89,11 @@ public class ServletHome extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
 			
 			try {
-				listeEncheres = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
+				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
+			
+				System.out.println(listeArticles);
+				request.setAttribute("listeArticles",listeArticles);
+				
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
@@ -96,6 +101,7 @@ public class ServletHome extends HttpServlet {
 		System.out.println(listeEncheres);
 		request.setAttribute("listeEncheres",listeEncheres);
         response.getWriter().print("jjjjjjjjjjjjjjjjjjjjjj");
+
 		rd.forward(request, response);	
 	}
 	
