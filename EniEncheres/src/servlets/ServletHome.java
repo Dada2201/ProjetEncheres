@@ -93,10 +93,7 @@ public class ServletHome extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-		for(int i=0;i<listeEncheres.size();i++) {
-			System.out.println(listeEncheres.get(i).getArticle().getNomArticle());
-		}
+		System.out.println(listeEncheres);
 		request.setAttribute("listeEncheres",listeEncheres);
 		rd.forward(request, response);	
 	}
