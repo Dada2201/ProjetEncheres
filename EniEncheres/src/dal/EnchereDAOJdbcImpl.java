@@ -23,12 +23,12 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String SELECT_BY_ARTICLE="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_article = ?;";
 	private static final String REMOVE = "DELETE from LISTES where id=?";
 	private static final String SELECT_ALL="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres;";
-	private static final String SELECT_FILTRE="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres INNER JOIN WHERE ?;";
+	private static final String SELECT_FILTRE="SELECT encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere FROM encheres.encheres INNER JOIN encheres.articles_vendus ON articles_vendus.no_article = encheres.no_article WHERE %s;";
 	private static final String UPDATE="UPDATE encheres.encheres SET no_utilisateur = ?, date_enchere = ?, montant_enchere = ? WHERE no_article = ?";
 
-	private static final String FILTER_OPEN= String.format("(%s BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	private static final String FILTER_EN_COURS=String.format("(no_utilisateur = %s AND %s BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	private static final String FILTER_WIN=String.format("(no_utilisateur = %s AND %s > articles_vendus.date_fin_encheres)", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_OPEN= String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_EN_COURS=String.format("(encheres.no_utilisateur = %s AND '%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_WIN=String.format("(encheres.no_utilisateur = %s AND DATEDIFF('%s' , articles_vendus.date_fin_encheres) >0 )", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	
 	@Override
 	public void insert(Utilisateur utilisateur, Article article, Enchere enchere) throws BusinessException {
@@ -182,7 +182,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	@Override
 	public List<Enchere> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException {
 		List<Enchere> listeEnchere= new ArrayList<Enchere>();
-		String filter = null;
+		String filter = "";
 		
 		for (int i = 0; i < encheresStatut.size(); i++) {
 			switch (encheresStatut.get(i)) {
@@ -198,17 +198,17 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 			default:
 				break;
 			}
-			
-			if(encheresStatut.size() != i && encheresStatut.size()!=1) {
+			if(encheresStatut.size() != (i+1) && encheresStatut.size()!=1) {
 				filter +=" OR ";
 			}
 		}
-		
+				
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			cnx.setAutoCommit(false);
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_FILTRE);
-			pstmt.setString(1, filter);
+			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
+			System.out.println(pstmt);
+
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
