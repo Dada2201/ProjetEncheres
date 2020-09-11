@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -95,6 +95,7 @@ public class ServletHome extends HttpServlet {
 		}
 		System.out.println(listeEncheres);
 		request.setAttribute("listeEncheres",listeEncheres);
+        response.getWriter().print("jjjjjjjjjjjjjjjjjjjjjj");
 		rd.forward(request, response);	
 	}
 	
