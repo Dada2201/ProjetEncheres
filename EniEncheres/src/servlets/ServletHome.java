@@ -36,15 +36,18 @@ public class ServletHome extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 
 		EnchereManager enchereManager = new EnchereManager();
 		ArticleManager articleManager = new ArticleManager();
+		
+		List<Enchere.Statut> encheresStatut = new ArrayList<>();
+		List<Article.Statut> arcticleStatut = new ArrayList<>();
 
 		List<Article> listeArticles = new ArrayList<>();
 		List<Enchere> listeEncheres = new ArrayList<>();
 		try {
-			listeEncheres = enchereManager.selectionTout();
+			encheresStatut.add(Enchere.Statut.EN_COURS);
+			listeArticles = enchereManager.selectionFiltre(encheresStatut, null);
 		} catch (BusinessException e2) {
 			e2.printStackTrace();
 		}
@@ -63,9 +66,6 @@ public class ServletHome extends HttpServlet {
 			List checkboxList = mapper.readValue(s, List.class);
 			//debug
 			System.out.println("--------");for(int i=0 ;i< checkboxList.size();i++) {System.out.println(checkboxList.get(i).toString());}
-
-			List<Enchere.Statut> encheresStatut = new ArrayList<>();
-			List<Article.Statut> arcticleStatut = new ArrayList<>();
 			
 			if(checkboxList.contains("encheresouvertes")) {
 				encheresStatut.add(Enchere.Statut.OPEN);
@@ -74,7 +74,7 @@ public class ServletHome extends HttpServlet {
 				encheresStatut.add(Enchere.Statut.WIN);
 			}
 			if(checkboxList.contains("encheresencours")) {
-				encheresStatut.add(Enchere.Statut.EN_COURS);
+				encheresStatut.add(Enchere.Statut.EN_COURS_UTILISATEUR);
 			}
 			if(checkboxList.contains("ventesnon")) {
 				arcticleStatut.add(Article.Statut.NOT_READY);
@@ -97,6 +97,7 @@ public class ServletHome extends HttpServlet {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
+			
 		}
 		System.out.println(listeEncheres);
 		request.setAttribute("listeEncheres",listeEncheres);
@@ -107,7 +108,9 @@ public class ServletHome extends HttpServlet {
         System.out.println(json);
         response.setContentType("application/json");
         response.getWriter().write(json.toString());
-        rd.forward(request, response);	
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
+		rd.forward(request, response);	
 	}
 	
 	/**

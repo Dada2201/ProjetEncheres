@@ -13,9 +13,10 @@ public class Enchere {
 		NOT_READY,
 		OPEN,
 		EN_COURS,
+		EN_COURS_UTILISATEUR,
 		FINI,
 		WIN,
-		NULL
+		NULL, 
 	}
 	
 	public Enchere(Utilisateur utilisateur, Article article, Date dateEnchere, int montantEnchere) {
