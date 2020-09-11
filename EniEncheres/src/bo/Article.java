@@ -15,6 +15,7 @@ public class Article {
 	private Utilisateur utilisateur;
 	private Categorie categorie;
 	private List<Enchere> encheres;
+	private Statut statut;
 	
 	public static enum Statut{
 		NOT_READY,
@@ -132,5 +133,13 @@ public class Article {
 			return Enchere.Statut.OPEN;
 		}
 		return Enchere.Statut.NULL;
+	}
+
+	public Statut getStatut() {
+		return statut;
+	}
+
+	public void setStatut(Statut statut) {
+		this.statut = statut;
 	}
 }

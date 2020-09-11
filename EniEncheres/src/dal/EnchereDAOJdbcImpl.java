@@ -242,7 +242,6 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 		{
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
-			System.out.println(pstmt);
 
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
