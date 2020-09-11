@@ -75,11 +75,56 @@
 	</c:if>
     </div>
 
-    <div class="container">
+
+
+
+    <div id="liste" class="container">
         <div class="row justify-content-around">
         	<c:forEach items="${listeArticles}" var="article">
 				<%@ include file="partial/article.jspf" %>
 			</c:forEach>
         </div>
     </div>
+    
+    	<script>
+	
+	var checkedCheckbox = [];
+	
+	$(document).on( "click", "input[type='checkbox']", function(event) {	
+	if($("#encheresouvertes").is(':checked')) {
+		checkedCheckbox.push($("#encheresouvertes").attr('id'))
+    }
+	if($("#enchereswin").is(':checked')) {
+		checkedCheckbox.push($("#enchereswin").attr('id'))
+    }
+	if($("#encheresencours").is(':checked')) {
+		checkedCheckbox.push($("#encheresencours").attr('id'))
+    }
+	if($("#ventesnon").is(':checked')) {
+		checkedCheckbox.push($("#ventesnon").attr('id'))
+    }
+	if($("#ventesencours").is(':checked')) {
+		checkedCheckbox.push($("#ventesencours").attr('id'))
+    }
+	if($("#ventesend").is(':checked')) {
+		checkedCheckbox.push($("#ventesend").attr('id'))
+	}
+	
+	var json = JSON.stringify(checkedCheckbox);
+	var liste = null;
+	checkedCheckbox.length = 0;
+	
+                $.ajax({
+                    url: 'ServletHome?test='+json,
+                    type: 'GET',
+                    success: function (data) {
+						liste = "";
+                    	liste = $(data).filter('#liste').html();
+						$('#liste').filter(function() { return $(this).val() == ""; });
+		            	$('#liste').html(liste);
+                    }
+                });
+	});
+	json = null;
+        </script>
 <%@ include file="partial/footer.jspf" %>

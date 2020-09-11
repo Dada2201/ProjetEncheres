@@ -46,8 +46,50 @@ public class ServletHome extends HttpServlet {
 		List<Article> listeArticles = new ArrayList<>();
 		List<Enchere> listeEncheres = new ArrayList<>();
 		try {
-			encheresStatut.add(Enchere.Statut.EN_COURS);
-			listeArticles = enchereManager.selectionFiltre(encheresStatut, null);
+			  if(request.getSession().getAttribute("utilisateur") == null) {
+	                encheresStatut.add(Enchere.Statut.EN_COURS);
+	                listeArticles = enchereManager.selectionFiltre(encheresStatut, null);
+	            }else {
+	            	String s = request.getParameter("test");	
+	        		if(s !=null) {
+	        			ObjectMapper mapper = new ObjectMapper();
+	        			List checkboxList = mapper.readValue(s, List.class);
+	        			//debug
+	        			System.out.println("--------");for(int i=0 ;i< checkboxList.size();i++) {System.out.println(checkboxList.get(i).toString());}
+	        			
+	        			if(checkboxList.contains("encheresouvertes")) {
+	        				encheresStatut.add(Enchere.Statut.OPEN);
+	        			}
+	        			if(checkboxList.contains("enchereswin")) {
+	        				encheresStatut.add(Enchere.Statut.WIN);
+	        			}
+	        			if(checkboxList.contains("encheresencours")) {
+	        				encheresStatut.add(Enchere.Statut.EN_COURS_UTILISATEUR);
+	        			}
+	        			if(checkboxList.contains("ventesnon")) {
+	        				arcticleStatut.add(Article.Statut.NOT_READY);
+	        			}
+	        			if(checkboxList.contains("ventesencours")) {
+	        				arcticleStatut.add(Article.Statut.EN_COURS);
+	        			}
+	        			if(checkboxList.contains("ventesend")) {
+	        				arcticleStatut.add(Article.Statut.CLOSE);
+	        			}
+
+	        			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
+	        			
+	        			try {
+	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
+	        				System.out.println(listeArticles);
+	        				request.setAttribute("listeArticles",listeArticles);
+	        				
+	        			} catch (BusinessException e) {
+	        				e.printStackTrace();
+	        			}
+	        			
+	        		}
+	            }
+
 		} catch (BusinessException e2) {
 			e2.printStackTrace();
 		}
@@ -59,56 +101,10 @@ public class ServletHome extends HttpServlet {
 			request.setAttribute("logged", false);
 			request.setAttribute("listeEncheres",listeEncheres);
 		}
-		
-		String s = request.getParameter("test");	
-		if(s !=null) {
-			ObjectMapper mapper = new ObjectMapper();
-			List checkboxList = mapper.readValue(s, List.class);
-			//debug
-			System.out.println("--------");for(int i=0 ;i< checkboxList.size();i++) {System.out.println(checkboxList.get(i).toString());}
-			
-			if(checkboxList.contains("encheresouvertes")) {
-				encheresStatut.add(Enchere.Statut.OPEN);
-			}
-			if(checkboxList.contains("enchereswin")) {
-				encheresStatut.add(Enchere.Statut.WIN);
-			}
-			if(checkboxList.contains("encheresencours")) {
-				encheresStatut.add(Enchere.Statut.EN_COURS_UTILISATEUR);
-			}
-			if(checkboxList.contains("ventesnon")) {
-				arcticleStatut.add(Article.Statut.NOT_READY);
-			}
-			if(checkboxList.contains("ventesencours")) {
-				arcticleStatut.add(Article.Statut.EN_COURS);
-			}
-			if(checkboxList.contains("ventesend")) {
-				arcticleStatut.add(Article.Statut.CLOSE);
-			}
-
-			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
-			
-			try {
-				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
-			
-				System.out.println(listeArticles);
-				request.setAttribute("listeArticles",listeArticles);
-				
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
-			
-		}
+	
 		System.out.println(listeEncheres);
 		request.setAttribute("listeEncheres",listeEncheres);
-        response.getWriter().print("jjjjjjjjjjjjjjjjjjjjjj");
         
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(listeArticles);
-        System.out.println(json);
-        response.setContentType("application/json");
-        response.getWriter().write(json.toString());
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		rd.forward(request, response);	
 	}
