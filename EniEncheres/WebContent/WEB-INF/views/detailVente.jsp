@@ -14,15 +14,15 @@
             </div>
             <div class="col-8">
                 <div class="form-group row">
-                    <p>${enchere.article.nomArticle}</p>
+                    <p>${article.nomArticle}</p>
                 </div>
                 <div class="form-group row">
                     <p>Description :</p>
-                    <p>${enchere.article.description}</p>
+                    <p>${article.description}</p>
                 </div>
                 <div class="form-group row">
                     <p>Catégorie</p>
-                    <p>${enchere.article.categorie.libelle}</p>
+                    <p>${article.categorie.libelle}</p>
                 </div>
                 <div class="form-group row">
                     <p>Meilleure offre :</p>
@@ -30,11 +30,11 @@
                 </div>
                 <div class="form-group row">
                     <p>Mise à prix :</p>
-                    <p>${enchere.article.prixInitial} pts</p>
+                    <p>${article.prixInitial} pts</p>
                 </div>
                 <div class="form-group row">
                     <p>Fin de l'enchère :</p>
-                    <p><fmt:formatDate pattern = "dd/MM/yyyy" value = "${enchere.article.dateFin}" /></p>
+                    <p><fmt:formatDate pattern = "dd/MM/yyyy" value = "${article.dateFin}" /></p>
                 </div>
                 <div class="form-group row">
                     <p>Retrait :</p>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group row">
                     <p>Vendeur :</p>
-                    <p>${enchere.article.utilisateur.pseudo}</p>
+                    <p>${article.utilisateur.pseudo}</p>
                 </div>
             </div>
         </div>

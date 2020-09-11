@@ -7,6 +7,7 @@ public class Enchere {
 	private Utilisateur utilisateur;
 	private Date dateEnchere;
 	private int montantEnchere;
+	private Statut statut;
 	
 	public enum Statut{
 		NOT_READY,
@@ -56,5 +57,13 @@ public class Enchere {
 	public String toString() {
 		return "Enchere [utilisateur=" + utilisateur  + ", dateEnchere=" + dateEnchere
 				+ ", montantEnchere=" + montantEnchere + "]";
+	}
+
+	public Statut getStatut() {
+		return statut;
+	}
+
+	public void setStatut(Statut statut) {
+		this.statut = statut;
 	}
 }

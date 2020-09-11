@@ -44,6 +44,7 @@ public class ServletDetailEnchere extends HttpServlet {
 			Enchere enchere = enchereManager.selectionParArticle(article.getNoArticle()).get(0);
 			request.setAttribute("enchere", enchere);
 			request.setAttribute("retrait", retrait);
+			request.setAttribute("article", article);
 			
 			Enchere.Statut statut = request.getSession().getAttribute("utilisateur") != null ? Article.getStatut(article, (Utilisateur)request.getSession().getAttribute("utilisateur"), enchere.getUtilisateur()): Article.getStatut(article, null, enchere.getUtilisateur());
 			
