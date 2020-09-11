@@ -74,7 +74,7 @@ public class ServletHome extends HttpServlet {
 				encheresStatut.add(Enchere.Statut.WIN);
 			}
 			if(checkboxList.contains("encheresencours")) {
-				encheresStatut.add(Enchere.Statut.EN_COURS);
+				encheresStatut.add(Enchere.Statut.EN_COURS_UTILISATEUR);
 			}
 			if(checkboxList.contains("ventesnon")) {
 				arcticleStatut.add(Article.Statut.NOT_READY);

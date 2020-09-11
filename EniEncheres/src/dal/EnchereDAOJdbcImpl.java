@@ -27,7 +27,8 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String UPDATE="UPDATE encheres.encheres SET no_utilisateur = ?, date_enchere = ?, montant_enchere = ? WHERE no_article = ?";
 
 	private static final String FILTER_OPEN= String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	private static final String FILTER_EN_COURS=String.format("(encheres.no_utilisateur = %s AND '%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_EN_COURS_UTILISATEUR=String.format("(encheres.no_utilisateur = %s AND '%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_EN_COURS=String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_WIN=String.format("(encheres.no_utilisateur = %s AND DATEDIFF('%s' , articles_vendus.date_fin_encheres) >0 )", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	
 	@Override
@@ -189,8 +190,11 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 			case OPEN:
 				filter += EnchereDAOJdbcImpl.FILTER_OPEN;
 				break;
+			case EN_COURS_UTILISATEUR:
+				filter += EnchereDAOJdbcImpl.FILTER_EN_COURS_UTILISATEUR.replace(STRING_UTILISATEUR, utilisateur.getId().toString());
+				break;
 			case EN_COURS:
-				filter += EnchereDAOJdbcImpl.FILTER_EN_COURS.replace(STRING_UTILISATEUR, utilisateur.getId().toString());
+				filter += EnchereDAOJdbcImpl.FILTER_EN_COURS;
 				break;
 			case WIN:
 				filter += EnchereDAOJdbcImpl.FILTER_WIN.replace(STRING_UTILISATEUR, utilisateur.getId().toString());
