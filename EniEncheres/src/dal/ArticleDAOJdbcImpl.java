@@ -175,6 +175,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, utilisateur.getId());
 			ResultSet rs = pstmt.executeQuery();
+			 System.out.println(pstmt);
 			while(rs.next())
 			{
 				Article article = articleBuilder(rs);
