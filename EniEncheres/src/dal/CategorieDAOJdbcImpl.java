@@ -11,8 +11,8 @@ import bo.Categorie;
 
 class CategorieDAOJdbcImpl implements CategorieDAO {
 
-	private static final String SELECT_ALL="SELECT no_categorie, libelle FROM encheres.categories";
-	private static final String SELECT_BY_ID="SELECT no_categorie, libelle FROM encheres.categories WHERE no_categorie = ?";
+	private static final String SELECT_ALL="SELECT categories.no_categorie, categories.libelle FROM encheres.categories";
+	private static final String SELECT_BY_ID="SELECT categories.no_categorie, categories.libelle FROM encheres.categories WHERE categories.no_categorie = ?";
 
 	@Override
 	public List<Categorie> selectAll() throws BusinessException {
@@ -67,8 +67,8 @@ class CategorieDAOJdbcImpl implements CategorieDAO {
 		return null;
 	}
 	
-	private Categorie categorieBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
-		Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+	static Categorie categorieBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
+		Categorie categorie = new Categorie(rs.getInt("categories.no_categorie"), rs.getString("categories.libelle"));
 		return categorie;
 	}
 }

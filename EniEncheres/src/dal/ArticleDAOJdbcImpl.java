@@ -9,21 +9,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import bll.CategoriesManager;
-import bll.UtilisateurManager;
 import bo.Article;
 import bo.Categorie;
-import bo.Enchere;
 import bo.Utilisateur;
-import bo.Enchere.Statut;
 
 class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private static final String SELECT_ALL="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM encheres.articles_vendus";
-	private static final String SELECT_BY_ID="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM encheres.articles_vendus WHERE no_article = ?";
+	private static final String SELECT_ALL="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur";
+	private static final String SELECT_BY_ID="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
+	private static final String SELECT_FILTRE="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_utilisateur = ? AND (%s)";
+
+	
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO encheres.articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)VALUES(?,?,?,?,?,?,?,?);";
-	private static final String SELECT_FILTRE="SELECT articles_vendus.no_article, articles_vendus.nom_article, articles_vendus.description, articles_vendus.date_debut_encheres, articles_vendus.date_fin_encheres, prix_initial, articles_vendus.prix_vente, articles_vendus.no_utilisateur, articles_vendus.no_categorie FROM articles_vendus WHERE articles_vendus.no_utilisateur = ? AND (%s)";
 
 	private static final String FILTER_EN_COURS = String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_NOT_READY = String.format("(DATEDIFF('%s' , articles_vendus.date_debut_encheres) < 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -105,11 +103,10 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	}
 	
 	static Article articleBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		CategoriesManager categoriesManager = new CategoriesManager();
-		Article article = new Article(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
-				rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), 
-				utilisateurManager.selectionParId(Integer.parseInt(rs.getString("no_utilisateur"))), categoriesManager.selectionById(Integer.parseInt(rs.getString("no_categorie"))));
+		Article article = new Article(rs.getInt("articles_vendus.no_article"), rs.getString("articles_vendus.nom_article"), rs.getString("articles_vendus.description"), 
+				rs.getDate("articles_vendus.date_debut_encheres"), rs.getDate("articles_vendus.date_fin_encheres"), rs.getInt("articles_vendus.prix_initial"), rs.getInt("articles_vendus.prix_vente"), 
+				UtilisateurDAOJdbcImpl.utilisateurBuilder(rs), 
+				CategorieDAOJdbcImpl.categorieBuilder(rs));
 		return article;
 	}
 

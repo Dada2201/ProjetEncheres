@@ -172,9 +172,11 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return null;
 	}
 	
-	private Utilisateur utilisateurBuilder(ResultSet rs) throws SQLException {
-		Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"),
-				rs.getString("telephone"), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"), rs.getInt("credit"), rs.getBoolean("administrateur") );
+	static Utilisateur utilisateurBuilder(ResultSet rs) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur(rs.getInt("utilisateurs.no_utilisateur"), rs.getString("utilisateurs.pseudo"), rs.getString("utilisateurs.nom"),
+				rs.getString("utilisateurs.prenom"), rs.getString("utilisateurs.email"), rs.getString("utilisateurs.telephone"), rs.getString("utilisateurs.rue"),
+				rs.getString("utilisateurs.code_postal"), rs.getString("utilisateurs.ville"), rs.getString("utilisateurs.mot_de_passe"),
+				rs.getInt("utilisateurs.credit"), rs.getBoolean("utilisateurs.administrateur") );
 		return utilisateur;
 	}
 

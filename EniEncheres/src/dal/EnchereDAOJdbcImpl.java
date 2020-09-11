@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import bll.ArticleManager;
-import bll.UtilisateurManager;
 import bo.Article;
 import bo.Enchere;
 import bo.Enchere.Statut;
@@ -18,13 +16,15 @@ import bo.Utilisateur;
 
 class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String STRING_UTILISATEUR = "numero_utilisateur";
+	
+	private static final String SELECT_BY_UTILISATEUR="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur inner join categories ON articles_vendus.no_categorie = categories.no_categorie WHERE utilisateurs.no_utilisateur = ?;";
+	private static final String SELECT_BY_ARTICLE="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur inner join categories ON articles_vendus.no_categorie = categories.no_categorie WHERE encheres.no_article = ?;";
+	private static final String SELECT_BY_ARTICLE_UTILISATEUR="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur inner join categories ON articles_vendus.no_categorie = categories.no_categorie WHERE no_article = ? AND no_utilisateur = ?;";
+	private static final String SELECT_ALL="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur inner join categories ON articles_vendus.no_categorie = categories.no_categorie;";
+	private static final String SELECT_FILTRE="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur, articles_vendus.no_article, articles_vendus.nom_article, articles_vendus.description, articles_vendus.date_debut_encheres, articles_vendus.date_fin_encheres, prix_initial, articles_vendus.prix_vente, articles_vendus.no_utilisateur, articles_vendus.no_categorie FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur INNER JOIN encheres.articles_vendus ON articles_vendus.no_article = encheres.no_article inner join categories ON articles_vendus.no_categorie = categories.no_categorie WHERE %s;";
+	
 	private static final String INSERT="INSERT INTO encheres.encheres(no_utilisateur,no_article,date_enchere,montant_enchere)VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE date_enchere = ? ,montant_enchere = ?;";
-	private static final String SELECT_BY_UTILISATEUR="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_utilisateur = ?;";
-	private static final String SELECT_BY_ARTICLE="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_article = ?;";
-	private static final String SELECT_BY_ARTICLE_UTILISATEUR="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres WHERE no_article = ? AND no_utilisateur = ?;";
 	private static final String REMOVE = "DELETE from LISTES where id=?";
-	private static final String SELECT_ALL="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM encheres.encheres;";
-	private static final String SELECT_FILTRE="SELECT articles_vendus.no_article, articles_vendus.nom_article, articles_vendus.description, articles_vendus.date_debut_encheres, articles_vendus.date_fin_encheres, prix_initial, articles_vendus.prix_vente, articles_vendus.no_utilisateur, articles_vendus.no_categorie FROM encheres.encheres INNER JOIN encheres.articles_vendus ON articles_vendus.no_article = encheres.no_article WHERE %s;";
 	private static final String UPDATE="UPDATE encheres.encheres SET no_utilisateur = ?, date_enchere = ?, montant_enchere = ? WHERE no_article = ?";
 
 	private static final String FILTER_OPEN= String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -170,9 +170,8 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 	
 	Enchere enchereBuilder(ResultSet rs) throws BusinessException, NumberFormatException, SQLException {
-		UtilisateurManager utilisateurManager = new UtilisateurManager();
-		Enchere enchere = new Enchere(utilisateurManager.selectionParId(Integer.parseInt(rs.getString("no_utilisateur")))
-				, rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
+		Enchere enchere = new Enchere(UtilisateurDAOJdbcImpl.utilisateurBuilder(rs)
+				, rs.getDate("encheres.date_enchere"), rs.getInt("encheres.montant_enchere"));
 		return enchere;
 	}
 

@@ -12,8 +12,8 @@ import bo.Retrait;
 
 class RetraitDAOJdbcImpl implements RetraitDAO {
 
-    private static final String SELECT_ALL="SELECT no_article, rue, code_postal, ville FROM encheres.retraits";
-    private static final String SELECT_BY_ID="SELECT no_article, rue, code_postal, ville FROM encheres.retraits WHERE no_article = ?";
+    private static final String SELECT_ALL="SELECT retraits.no_article, retraits.rue, retraits.code_postal, retraits.ville, articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur inner join retraits on retraits.no_article = articles_vendus.no_article;";
+    private static final String SELECT_BY_ID="SELECT retraits.no_article, retraits.rue, retraits.code_postal, retraits.ville, articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur inner join retraits on retraits.no_article = articles_vendus.no_article WHERE articles_vendus.no_article = ?";
     private static final String REMOVE = "DELETE FROM encheres.retraits WHERE no_article = ?";
     private static final String INSERT = "INSERT INTO encheres.retraits (no_article,rue,code_postal,ville)VALUES(?,?,?,?);";
 
@@ -92,8 +92,7 @@ class RetraitDAOJdbcImpl implements RetraitDAO {
     }
     
     private Retrait retraitBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
-        ArticleManager articleManager = new ArticleManager();
-        Retrait retrait = new Retrait(articleManager.selectById(Integer.parseInt(rs.getString("no_article"))), rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+        Retrait retrait = new Retrait(ArticleDAOJdbcImpl.articleBuilder(rs), rs.getString("retraits.rue"), rs.getString("retraits.code_postal"), rs.getString("retraits.ville"));
         return retrait;
     }
 
