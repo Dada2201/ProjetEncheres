@@ -10,14 +10,14 @@
 	    </div>
 	    <div>
 	      <div class="card-body">
-	        <p class="card-title"><u>${enchere.article.nomArticle}</u></p>
-	        <p class="card-text">Prix : ${enchere.article.prixInitial}</p>
-	        <p class="card-text">Fin de l'enchère: <fmt:formatDate pattern = "dd/MM/yyyy" value = "${enchere.article.dateFin}" /></p>
-	        <p class="card-text">Vendeur: ${enchere.article.utilisateur.pseudo}</p>
-		        <a href="${pageContext.request.contextPath}/enchere?enchere=${enchere.article.noArticle}" class="stretched-link btn btn-primary">Voir l'enchère</a>
+	        <p class="card-title"><u>${article.nomArticle}</u></p>
+	        <p class="card-text">Prix : ${article.prixInitial}</p>
+	        <p class="card-text">Fin de l'enchère: <fmt:formatDate pattern = "dd/MM/yyyy" value = "${article.dateFin}" /></p>
+	        <p class="card-text">Vendeur: ${article.utilisateur.pseudo}</p>
+		        <a href="${pageContext.request.contextPath}/enchere?enchere=${article.noArticle}" class="stretched-link btn btn-primary">Voir l'enchère</a>
 	        </div>
 	      </div>
 	   </div>
-  	<a href="${pageContext.request.contextPath}/encherir?enchere=${enchere.article.noArticle}" class="stretched-link btn btn-primary stretched-link" style="position: relative;"><i class="fas fa-gavel"></i>Encherir</a>
+  	<a href="${pageContext.request.contextPath}/encherir?enchere=${article.noArticle}" class="stretched-link btn btn-primary stretched-link" style="position: relative;"><i class="fas fa-gavel"></i>Encherir</a>
   </div>
 </div>

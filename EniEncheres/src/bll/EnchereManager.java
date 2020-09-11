@@ -62,7 +62,7 @@ public class EnchereManager {
 		this.enchereDAO.update(enchere);
 	}
 
-	public List<Enchere> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException {
+	public List<Article> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException {
 		return this.enchereDAO.selectionFiltre(encheresStatut, utilisateur);
 	}
 }

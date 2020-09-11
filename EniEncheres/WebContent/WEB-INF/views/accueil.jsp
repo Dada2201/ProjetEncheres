@@ -74,10 +74,10 @@
 			</form>	
 	</c:if>
     </div>
-          <c:out value = "${listeEncheres.toString()}"/>
+
     <div class="container">
         <div class="row justify-content-around">
-        	<c:forEach items="${listeEncheres}" var="enchere">
+        	<c:forEach items="${listeArticles}" var="article">
 				<%@ include file="partial/article.jspf" %>
 			</c:forEach>
         </div>
