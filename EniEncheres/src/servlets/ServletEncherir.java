@@ -14,6 +14,7 @@ import bll.ArticleManager;
 import bll.EnchereManager;
 import bll.RetraitManager;
 import bo.Article;
+import bo.Common;
 import bo.Enchere;
 import bo.Retrait;
 import bo.Utilisateur;
@@ -64,11 +65,11 @@ public class ServletEncherir extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    	Utilisateur utilisateur = ((Utilisateur)request.getSession().getAttribute("utilisateur"));
+    	Utilisateur utilisateur = ((Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME));
 
     	EnchereManager enchereManager = new EnchereManager();
 
-    	Enchere enchere = new Enchere((Utilisateur)request.getSession().getAttribute("utilisateur"), new Date(), Integer.parseInt(request.getParameter("prix")));
+    	Enchere enchere = new Enchere((Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME), new Date(), Integer.parseInt(request.getParameter("prix")));
 
 		try {
 			enchereManager.ajouter(utilisateur, this.article, enchere);

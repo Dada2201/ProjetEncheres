@@ -4,12 +4,15 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bo.Common;
 import bo.Utilisateur;
 
+@WebServlet("/profil")
 /**
  * Servlet implementation class ServletProfil
  */
@@ -26,8 +29,8 @@ public class ServletProfil extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
-			request.setAttribute("data", (Utilisateur) request.getSession().getAttribute("utilisateur"));
-			rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
+			request.setAttribute(Common.UTILISATEUR_NAME, (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
+			rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
 			rd.forward(request, response);
 		}finally {
 			

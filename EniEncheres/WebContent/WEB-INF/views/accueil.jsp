@@ -9,7 +9,7 @@
 	</c:if>
 <body>
 
-    <div class="container">
+    <div class="container py-5">
         <div class="row justify-content-center">
             <h1>Liste des enchères</h1>
         </div>
@@ -22,10 +22,7 @@
                     </div>
                     <input type="text" class="form-control" placeholder="Le nom de l'aticle contient">
                 </div>
-                <div class="row form-group">
-                    <p>Catï¿½gories :</p>
-
-                </div>
+                
                 <div class="form-group row">
                     <label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
                     <div class="col-9"> <select class="form-control">
@@ -34,8 +31,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <button class="h-50 w-50">Rechercher</button>
+           <div class="col-6 row justify-content-center align-self-center">
+                <button class="btn btn-primary">Rechercher</button>
             </div>
             
         </div>

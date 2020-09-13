@@ -19,4 +19,6 @@ public interface ArticleDAO {
 	public Article selectById(int idArticle) throws BusinessException;
 
 	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Utilisateur utilisateur) throws BusinessException;
+
+	public Article update(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException;
 }

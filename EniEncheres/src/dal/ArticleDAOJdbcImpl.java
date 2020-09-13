@@ -22,6 +22,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO encheres.articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)VALUES(?,?,?,?,?,?,?,?);";
+	private static final String UPDATE = "UPDATE encheres.articles_vendus SET articles_vendus.nom_article = ?, articles_vendus.description = ?, articles_vendus.date_debut_encheres = ?, articles_vendus.date_fin_encheres = ?, articles_vendus.prix_initial = ?, articles_vendus.prix_vente = ?, articles_vendus.no_categorie = ? WHERE no_article = ?; ";
 
 	private static final String FILTER_EN_COURS = String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_NOT_READY = String.format("(DATEDIFF('%s' , articles_vendus.date_debut_encheres) < 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -124,6 +125,41 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDouble(6, a.getPrixVente());
 			pstmt.setDouble(7, utilisateur.getId());
 			pstmt.setDouble(8, categorie.getNoCategorie());
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if(rs.next())
+			{
+				a.setNoArticle(rs.getInt(1));
+			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.AJOUTER_ARTICLE_ECHEC);
+			throw businessException;
+		}
+		
+		return a;
+	}
+
+	@Override
+	public Article update(Article a, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, a.getNomArticle());
+			pstmt.setString(2, a.getDescription());
+			pstmt.setDate(3, new java.sql.Date(a.getDateDebut().getTime()));
+			pstmt.setDate(4, new java.sql.Date(a.getDateFin().getTime()));
+			pstmt.setDouble(5, a.getPrixInitial());
+			pstmt.setDouble(6, a.getPrixVente());
+			pstmt.setDouble(7, categorie.getNoCategorie());
+			pstmt.setDouble(8, a.getNoArticle());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if(rs.next())

@@ -13,4 +13,6 @@ public interface RetraitDAO {
 	public void ajouter(Retrait retrait) throws BusinessException;
 
 	public Retrait selectByArticle(int idArticle) throws BusinessException;
+
+	public void update(Retrait retrait) throws BusinessException;
 }
