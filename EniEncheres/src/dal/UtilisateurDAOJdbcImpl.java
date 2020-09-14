@@ -17,6 +17,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_ALL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs;";
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where no_utilisateur = ?;";
 	private static final String SELECT_BY_PSEUDO="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ?;";
+	private static final String SELECT_BY_EMAIL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where email = ?;";
 	private static final String SELECT_BY_PSEUDO_MOT_DE_PASSE="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ? and mot_de_passe = ?;";
 
 	@Override
@@ -152,6 +153,33 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
 			pstmt.setString(1, pseudo);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Utilisateur utilisateur = utilisateurBuilder(rs);
+				return utilisateur;
+			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_UTILISATEUR_ECHEC);
+			throw businessException;
+		}
+		return null;
+	}
+	
+	@Override
+	public Utilisateur selectByEmail(String email) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_EMAIL);
+			pstmt.setString(1, email);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{

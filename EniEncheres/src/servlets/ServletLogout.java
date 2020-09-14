@@ -27,17 +27,15 @@ public class ServletLogout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cookie[] cookies = request.getCookies();
 		HttpSession session = request.getSession();
-		Utilisateur utilisateurSession = (Utilisateur)session.getAttribute(Common.UTILISATEUR_NAME);
-		if(utilisateurSession!=null) {
-			if(cookies != null) {
-		        for (Cookie cookie : cookies) {
-		        	if(cookie.getName().equals(Common.UTILISATEUR_NAME)) {	
-		        		cookie.setValue(null);
-		        		cookie.setMaxAge(-1);
-		        	}
-		        }
-			}
-			session.removeAttribute(Common.UTILISATEUR_NAME);
+		session.removeAttribute(Common.UTILISATEUR_NAME);
+		if(cookies != null) {
+	        for (Cookie cookie : cookies) {
+	        	if(cookie.getName().equals(Common.UTILISATEUR_NAME)) {	
+	        		Cookie cookieRemove = new Cookie(Common.UTILISATEUR_NAME, "");
+	        		cookieRemove.setMaxAge(0);
+	        		response.addCookie(cookieRemove);
+	        	}
+	        }
 		}
 		response.sendRedirect(request.getContextPath());
 	}
