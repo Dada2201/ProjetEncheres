@@ -31,7 +31,7 @@ public class ServletLogout extends HttpServlet {
 		if(utilisateurSession!=null) {
 			if(cookies != null) {
 		        for (Cookie cookie : cookies) {
-		        	if(cookie.getValue().equals(utilisateurSession.getId().toString())) {	
+		        	if(cookie.getName().equals(Common.UTILISATEUR_NAME)) {	
 		        		cookie.setValue(null);
 		        		cookie.setMaxAge(-1);
 		        	}
@@ -39,8 +39,7 @@ public class ServletLogout extends HttpServlet {
 			}
 			session.removeAttribute(Common.UTILISATEUR_NAME);
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
-		rd.forward(request, response);
+		response.sendRedirect(request.getContextPath());
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

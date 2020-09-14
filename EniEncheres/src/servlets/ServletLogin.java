@@ -46,6 +46,7 @@ public class ServletLogin extends HttpServlet {
 				e.printStackTrace();
 			}
 		}else {
+			request.setAttribute("title", "Connexion");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
 			rd.forward(request, response);	
 		}
@@ -85,6 +86,7 @@ public class ServletLogin extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		request.setAttribute("title", "Profil");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
 		rd.forward(request, response);
 	}

@@ -25,6 +25,7 @@ public class ServletAddUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("title", "Ajout d'un utilisateur");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
 		rd.forward(request, response);
 	}

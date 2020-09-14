@@ -21,53 +21,28 @@ import bo.Utilisateur;
 import dal.BusinessException;
 
 
-@WebServlet("/enchere")
-public class ServletDetailEnchere extends HttpServlet {
+@WebServlet("/vente")
+public class ServletDetailVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletDetailEnchere() {
+    public ServletDetailVente() {
         super();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-    	EnchereManager enchereManager = new EnchereManager();
     	RetraitManager retraitManager = new RetraitManager();
     	ArticleManager articleManager = new ArticleManager();
     	String h1 = null;
     	
     	try {
-			Article article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+			Article article = articleManager.selectById(Integer.parseInt(request.getParameter("idArticle")));
 			Retrait retrait = retraitManager.selectById(article.getNoArticle());
-			Enchere enchere = enchereManager.selectionParArticle(article.getNoArticle()).get(0);
-			request.setAttribute("enchere", enchere);
 			request.setAttribute("retrait", retrait);
 			request.setAttribute("article", article);
-			
-			Enchere.Statut statut = request.getSession().getAttribute(Common.UTILISATEUR_NAME) != null ? Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME), enchere.getUtilisateur()): Article.getStatut(article, null, enchere.getUtilisateur());
-			
-			switch (statut) {
-			case EN_COURS:
-				h1 = "L'enchère la plus haute pour le moment est de la part de " + enchere.getUtilisateur().getPseudo();
-				break;
-			case FINI:
-				h1 = "L'enchère à été remportéé par "+ enchere.getUtilisateur().getPseudo();
-				break;
-			case NOT_READY:
-				h1 = "L'enchère n'a pas encore débuté";
-				break;
-			case WIN:
-				h1 = "Vous avez remporté l'enchère félicitations !";
-				break;
-
-			default:
-				break;
-			}
-			
-			request.setAttribute("h1", h1);
 			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -75,7 +50,7 @@ public class ServletDetailEnchere extends HttpServlet {
 			e.printStackTrace();
 		}		
 
-		request.setAttribute("title", "Détail d'un article");
+		request.setAttribute("title", "Détail d'une enchère");
     	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/detailEnchere.jsp");	
 		rd.forward(request, response);
 	}

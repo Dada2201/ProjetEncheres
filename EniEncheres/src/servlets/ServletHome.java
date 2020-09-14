@@ -100,9 +100,9 @@ public class ServletHome extends HttpServlet {
 			request.setAttribute("listeEncheres",listeEncheres);
 		}
 	
-		System.out.println(listeEncheres);
 		request.setAttribute("listeEncheres",listeEncheres);
-        
+
+		request.setAttribute("title", "Accueil");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		rd.forward(request, response);	
 	}
