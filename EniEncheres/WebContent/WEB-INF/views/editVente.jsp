@@ -69,6 +69,7 @@
                     <div class="mt-5 row justify-content-between">
                         <input type="submit" class="btn btn-primary" value="Enregistrer"/>
                         <a href="accueil" class="btn btn-primary">Annuler</a>
+                        <a href="cancelArticle?idArticle=${article.noArticle }" class="btn btn-primary">Annuler la vente</a>
                     </div>
                 </div>
             </form>

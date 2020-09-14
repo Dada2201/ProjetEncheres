@@ -55,6 +55,7 @@ public class ServletEditArticle extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		request.setAttribute("title", "Modifier un article");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/editVente.jsp");
 		rd.forward(request, response);
 	}

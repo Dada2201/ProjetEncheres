@@ -45,6 +45,8 @@ public class ServletAddArticle extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		
+		request.setAttribute("title", "Ajout d'un article");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/nouvelleVente.jsp");
 		rd.forward(request, response);
 	}

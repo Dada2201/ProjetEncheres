@@ -3,7 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:if test="${logged}">
 <%@ include file="partial/header/connected.jspf" %>
+	</c:if>
+<c:if test="${!logged}"> <!--  TODO change for test !logged or logged -->
+<%@ include file="partial/header/notConnected.jspf" %>
+</c:if>
     <div class="container py-5">
         <div class="row justify-content-center">
 			<h1>${h1}</h1>
@@ -23,6 +28,10 @@
                 <div class="form-group row">
                     <p>Catégorie</p>
                     <p>${article.categorie.libelle}</p>
+                </div>
+                <div class="form-group row">
+                    <p>Meilleure offre :</p>
+                    <p>${enchere.montantEnchere} pts par ${enchere.utilisateur.pseudo}</p>
                 </div>
                 <div class="form-group row">
                     <p>Mise à prix :</p>
