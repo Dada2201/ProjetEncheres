@@ -12,24 +12,6 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jspf</welcome-file>
 	</welcome-file-list>
-
-	<servlet>
-		<servlet-name>ServletAddUser</servlet-name>
-		<servlet-class>servlets.ServletAddUser</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletAddUser</servlet-name>
-		<url-pattern>/ajoutUtilisateur</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>ServletLogin</servlet-name>
-		<servlet-class>servlets.ServletLogin</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ServletLogin</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
 <servlet-mapping>
    <servlet-name>default</servlet-name>
    <url-pattern>*.css</url-pattern>
@@ -37,5 +19,25 @@
 <servlet-mapping>
    <servlet-name>default</servlet-name>
    <url-pattern>*.js</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+   <servlet-name>default</servlet-name>
+   <url-pattern>*.ico</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+   <servlet-name>default</servlet-name>
+   <url-pattern>*.png</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+   <servlet-name>default</servlet-name>
+   <url-pattern>*.PNG</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+   <servlet-name>default</servlet-name>
+   <url-pattern>*.jpg</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+   <servlet-name>default</servlet-name>
+   <url-pattern>*.jpeg</url-pattern>
 </servlet-mapping>
 </web-app>

@@ -1,11 +1,13 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -79,6 +81,22 @@ public class ServletHome extends HttpServlet {
 	        			
 	        			try {
 	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
+	        				
+	        				for (Article article : listeArticles) {
+	        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
+
+								if(f.exists() && !f.isDirectory()) {
+		        					article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
+								}else {
+									article.setImg("resources\\img\\articles\\article.png");	
+								}
+								if(checkboxList.contains("ventesend") || checkboxList.contains("ventesencours") || checkboxList.contains("ventesnon")) {
+									article.setStatut(Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
+								}else {
+									article.setStatut(Enchere.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
+								}
+							}
+	        				
 	        				request.setAttribute("listeArticles",listeArticles);
 	        				
 	        			} catch (BusinessException e) {
