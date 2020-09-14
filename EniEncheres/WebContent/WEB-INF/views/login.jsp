@@ -18,7 +18,7 @@
                         <input type="checkbox" class="form-check-input" name="souvenir">
                         <label class="form-check-label">Se souvenir de moi</label>
                     </div>
-                    <a href="">Mot de passe oublié</a>
+                    <a href="${pageContext.request.contextPath}/editPassword">Mot de passe oublié</a>
                 </div>
             </div>
         </form>

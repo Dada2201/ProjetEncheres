@@ -63,5 +63,9 @@ public class UtilisateurManager {
 		}
 	}
 	
+	public Utilisateur selectionParEmail(String email) throws BusinessException {
+		return this.utilisateurDAO.selectByEmail(email);		
+	}
+	
 	
 }
