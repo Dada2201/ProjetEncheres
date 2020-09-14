@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import bll.ArticleManager;
 import bll.EnchereManager;
 import bo.Article;
+import bo.Common;
 import bo.Enchere;
 import bo.Utilisateur;
 import dal.BusinessException;
@@ -46,7 +47,7 @@ public class ServletHome extends HttpServlet {
 		List<Article> listeArticles = new ArrayList<>();
 		List<Enchere> listeEncheres = new ArrayList<>();
 		try {
-			  if(request.getSession().getAttribute("utilisateur") == null) {
+			  if(request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {
 	                encheresStatut.add(Enchere.Statut.EN_COURS);
 	                listeArticles = enchereManager.selectionFiltre(encheresStatut, null);
 	            }else {
@@ -54,9 +55,7 @@ public class ServletHome extends HttpServlet {
 	        		if(s !=null) {
 	        			ObjectMapper mapper = new ObjectMapper();
 	        			List checkboxList = mapper.readValue(s, List.class);
-	        			//debug
-	        			System.out.println("--------");for(int i=0 ;i< checkboxList.size();i++) {System.out.println(checkboxList.get(i).toString());}
-	        			
+        			
 	        			if(checkboxList.contains("encheresouvertes")) {
 	        				encheresStatut.add(Enchere.Statut.OPEN);
 	        			}
@@ -76,11 +75,10 @@ public class ServletHome extends HttpServlet {
 	        				arcticleStatut.add(Article.Statut.CLOSE);
 	        			}
 
-	        			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute("utilisateur");
+	        			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 	        			
 	        			try {
 	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
-	        				System.out.println(listeArticles);
 	        				request.setAttribute("listeArticles",listeArticles);
 	        				
 	        			} catch (BusinessException e) {
@@ -94,7 +92,7 @@ public class ServletHome extends HttpServlet {
 			e2.printStackTrace();
 		}
 		
-		if(request.getSession().getAttribute("utilisateur") != null) {
+		if(request.getSession().getAttribute(Common.UTILISATEUR_NAME) != null) {
 			request.setAttribute("logged", true);
 		}
 		else {

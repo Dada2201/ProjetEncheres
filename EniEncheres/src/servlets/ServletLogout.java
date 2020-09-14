@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bo.Common;
 import bo.Utilisateur;
 
 @WebServlet("/logout")
@@ -26,7 +27,7 @@ public class ServletLogout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cookie[] cookies = request.getCookies();
 		HttpSession session = request.getSession();
-		Utilisateur utilisateurSession = (Utilisateur)session.getAttribute("utilisateur");
+		Utilisateur utilisateurSession = (Utilisateur)session.getAttribute(Common.UTILISATEUR_NAME);
 		if(utilisateurSession!=null) {
 			if(cookies != null) {
 		        for (Cookie cookie : cookies) {
@@ -36,7 +37,7 @@ public class ServletLogout extends HttpServlet {
 		        	}
 		        }
 			}
-			session.removeAttribute("utilisateur");
+			session.removeAttribute(Common.UTILISATEUR_NAME);
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		rd.forward(request, response);

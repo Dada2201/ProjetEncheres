@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import bll.CodesResultatBLL;
 import bll.UtilisateurManager;
+import bo.Common;
 import bo.Utilisateur;
 import dal.BusinessException;
 
@@ -58,7 +59,7 @@ public class ServletAddUser extends HttpServlet {
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);
 			
 			if(utilisateur == null) {
-				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Utilisateur.getMd5(motDePasse), 0, false));	
+				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Common.getMd5(motDePasse), 0, false));	
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute("utilisateur", utilisateur);
 				// 5 minutes
@@ -72,7 +73,7 @@ public class ServletAddUser extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
 		rd.forward(request, response);
 	}
 }

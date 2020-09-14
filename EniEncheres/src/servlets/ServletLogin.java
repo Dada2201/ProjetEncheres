@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bll.UtilisateurManager;
+import bo.Common;
 import bo.Utilisateur;
 import dal.BusinessException;
 
@@ -24,8 +25,30 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
-		rd.forward(request, response);
+
+		UtilisateurManager utilisateurManager = new UtilisateurManager();
+		String cookie = Common.getCookie(request, Common.UTILISATEUR_NAME);
+		
+		if(cookie != null && Common.getCookie(request, Common.UTILISATEUR_NAME) != null) {
+			Utilisateur utilisateur;
+			try {
+				utilisateur = utilisateurManager.selectionParId(Integer.parseInt(cookie));
+				HttpSession currentUserSession = request.getSession();
+				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
+				System.out.println(utilisateur);
+				// 5 minutes
+				currentUserSession.setMaxInactiveInterval(300);
+				
+				response.sendRedirect(request.getContextPath());
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+		}else {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
+			rd.forward(request, response);	
+		}
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,17 +63,17 @@ public class ServletLogin extends HttpServlet {
 			pseudo = request.getParameter("pseudo");
 			motDePasse = request.getParameter("motDePasse");
 			
-			Utilisateur utilisateur = utilisateurManager.selectionParPseudoMotDePasse(pseudo, Utilisateur.getMd5(motDePasse));
+			Utilisateur utilisateur = utilisateurManager.selectionParPseudoMotDePasse(pseudo, Common.getMd5(motDePasse));
 			
 			if(request.getParameter("souvenir") != null) {
-				Cookie cookieUtilisateur = new Cookie("utilisateur", utilisateur.getId().toString());
+				Cookie cookieUtilisateur = new Cookie(Common.UTILISATEUR_NAME, utilisateur.getId().toString());
 				response.addCookie(cookieUtilisateur);
 			}
 			
 			if(utilisateur != null) {
 				request.setAttribute("data", utilisateur);	
 				HttpSession currentUserSession = request.getSession();
-				currentUserSession.setAttribute("utilisateur", utilisateur);
+				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
 			}else {
@@ -62,7 +85,7 @@ public class ServletLogin extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
 		rd.forward(request, response);
 	}
 }

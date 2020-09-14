@@ -21,15 +21,14 @@ import bo.Retrait;
 import bo.Utilisateur;
 import dal.BusinessException;
 
-@WebServlet("/ajoutArticle")
-public class ServletAddArticle extends HttpServlet {
+@WebServlet("/editArticle")
+public class ServletEditArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private CategoriesManager categoriesManager;
-	
-    public ServletAddArticle() {
+	Article article = null;
+		
+    public ServletEditArticle() {
         super();
-    	this.categoriesManager = new CategoriesManager();
     }
 
     /**
@@ -37,15 +36,26 @@ public class ServletAddArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+
+			CategoriesManager categoriesManager = new CategoriesManager();
+			ArticleManager articleManager = new ArticleManager();
+			RetraitManager retraitManager = new RetraitManager();
+			
+			this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+
 			List<Categorie> categories = categoriesManager.selectionTout();
-			request.setAttribute( "categories", categories);
+			Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
+
+			request.setAttribute("article", this.article);
+			request.setAttribute("categories", categories);
+			request.setAttribute("retrait", retrait);			
 		}
 		catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/nouvelleVente.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/editVente.jsp");
 		rd.forward(request, response);
 	}
 	/**
@@ -74,19 +84,28 @@ public class ServletAddArticle extends HttpServlet {
 			prix = Integer.parseInt(request.getParameter("prix"));
 			categorieSelected = request.getParameter("categorie");
 			
+			
 			Categorie categorie = categorieManager.selectionById(Integer.parseInt(categorieSelected));
-			Article article = new Article(0, nom, description, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere)
-					, prix, 0, utilisateur, categorie);
+			
+
+			this.article.setNomArticle(nom);
+			this.article.setDescription(description);
+			this.article.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere));
+			this.article.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere));
+			this.article.setPrixInitial(prix);
+			this.article.setCategorie(categorie);
+
 			Retrait retrait = new Retrait(article, rue, codePostal, ville);
 
-			article = articleManager.ajouter(article, utilisateur, categorie);
-			retraitManager.ajouter(retrait);
+			articleManager.update(article, utilisateur, categorie);
+			retraitManager.update(retrait);
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
-		rd.forward(request, response);
+
+		System.out.println(this.article);
+		response.sendRedirect("enchere?enchere="+this.article.getNoArticle());
 	}
 
 

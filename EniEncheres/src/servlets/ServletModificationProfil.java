@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,9 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import bll.CodesResultatBLL;
 import bll.UtilisateurManager;
+import bo.Common;
 import bo.Utilisateur;
 import dal.BusinessException;
 
+@WebServlet("/modificationProfil")
 /**
  * Servlet implementation class ServletModificationProfil
  */
@@ -25,15 +28,14 @@ public class ServletModificationProfil extends HttpServlet {
      */
     public ServletModificationProfil() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
+		request.setAttribute(Common.UTILISATEUR_NAME, (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
 		rd.forward(request, response);
 		   
 	}
@@ -42,7 +44,7 @@ public class ServletModificationProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
 		rd.forward(request, response);
 				
 		if (request.getParameter("update_button") != null) {
@@ -73,7 +75,7 @@ public class ServletModificationProfil extends HttpServlet {
 			}
 			
 			HttpSession currentUserSession = request.getSession();
-			Utilisateur currentUser = (Utilisateur) currentUserSession.getAttribute("utilisateur");
+			Utilisateur currentUser = (Utilisateur) currentUserSession.getAttribute(Common.UTILISATEUR_NAME);
 			
 			Utilisateur updatedUser = new Utilisateur(currentUser.getId(),pseudo,nom,prenom,email,telephone,rue,codePostal,ville,motDePasse,currentUser.getCredit(),currentUser.getIsAdmin());
 			try {
@@ -81,10 +83,10 @@ public class ServletModificationProfil extends HttpServlet {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
-			currentUserSession.setAttribute("utilisateur", updatedUser);
+			currentUserSession.setAttribute(Common.UTILISATEUR_NAME, updatedUser);
 			
 	    } else if (request.getParameter("delete_button") != null) {
-	    	Utilisateur u = (Utilisateur) request.getSession().getAttribute("utilisateur");
+	    	Utilisateur u = (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 	    	UtilisateurManager um = new UtilisateurManager();
 	    	try {
 				um.removeListe(u.getId());

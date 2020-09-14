@@ -14,6 +14,7 @@ import bll.ArticleManager;
 import bll.EnchereManager;
 import bll.RetraitManager;
 import bo.Article;
+import bo.Common;
 import bo.Enchere;
 import bo.Retrait;
 import bo.Utilisateur;
@@ -46,7 +47,7 @@ public class ServletDetailEnchere extends HttpServlet {
 			request.setAttribute("retrait", retrait);
 			request.setAttribute("article", article);
 			
-			Enchere.Statut statut = request.getSession().getAttribute("utilisateur") != null ? Article.getStatut(article, (Utilisateur)request.getSession().getAttribute("utilisateur"), enchere.getUtilisateur()): Article.getStatut(article, null, enchere.getUtilisateur());
+			Enchere.Statut statut = request.getSession().getAttribute(Common.UTILISATEUR_NAME) != null ? Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME), enchere.getUtilisateur()): Article.getStatut(article, null, enchere.getUtilisateur());
 			
 			switch (statut) {
 			case EN_COURS:

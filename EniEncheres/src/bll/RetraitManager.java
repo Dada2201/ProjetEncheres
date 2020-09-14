@@ -27,6 +27,10 @@ public class RetraitManager {
 		return this.retraitDAO.selectByArticle(idArticle);
 	}
 
+	public void update(Retrait retrait) throws BusinessException{
+		this.retraitDAO.update(retrait);
+	}
+
 	public Retrait ajouter(Retrait retrait) throws BusinessException {
 		
 		BusinessException exception = new BusinessException();
