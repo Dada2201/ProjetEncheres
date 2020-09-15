@@ -72,6 +72,10 @@ public class Enchere {
 			}
 		}
 		
+		if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())){
+			return Article.Statut.CLOSE;
+		}
+		
 		return Article.Statut.EN_COURS_ENCHERE;
 	}
 

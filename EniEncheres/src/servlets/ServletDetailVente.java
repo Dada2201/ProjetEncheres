@@ -42,7 +42,26 @@ public class ServletDetailVente extends HttpServlet {
 			Article article = articleManager.selectById(Integer.parseInt(request.getParameter("idArticle")));
 			Retrait retrait = retraitManager.selectById(article.getNoArticle());
 			request.setAttribute("retrait", retrait);
-			request.setAttribute("article", article);
+			request.setAttribute("article", article);			
+			
+			Article.Statut statut = Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME));
+			
+			switch (statut) {
+			case NOT_READY:
+				h1 = "L'enchère n'a pas encore débuté !";
+				break;
+			case CLOSE:
+				h1 = "L'enchère à été remportéé par "+ article.getEncheres().get(0).getUtilisateur().getPseudo() + " !";
+				break;
+			case EN_COURS:
+				h1 = "L'enchère est en cours !";
+				break;
+
+			default:
+				break;
+			}
+						
+			request.setAttribute("h1", h1);
 			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
