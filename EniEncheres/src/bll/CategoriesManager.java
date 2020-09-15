@@ -19,7 +19,7 @@ public class CategoriesManager {
 		return this.categorieDAO.selectAll();
 	}
 	
-	public Categorie selectionById(int idArticle) throws BusinessException{
-		return this.categorieDAO.selectById(idArticle);
+	public Categorie selectionById(int idCategorie) throws BusinessException{
+		return this.categorieDAO.selectById(idCategorie);
 	}
 }

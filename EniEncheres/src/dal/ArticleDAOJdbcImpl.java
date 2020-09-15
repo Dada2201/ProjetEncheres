@@ -14,6 +14,7 @@ import bo.Categorie;
 import bo.Utilisateur;
 
 class ArticleDAOJdbcImpl implements ArticleDAO {
+	private static final String STRING_CATEGORIE = "numero_categorie";
 
 	private static final String SELECT_ALL="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur";
 	private static final String SELECT_BY_ID="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
@@ -27,7 +28,8 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String FILTER_EN_COURS = String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_NOT_READY = String.format("(DATEDIFF('%s' , articles_vendus.date_debut_encheres) < 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_CLOSE = String.format("(DATEDIFF('%s', articles_vendus.date_fin_encheres) > 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	
+	private static final String FILTER_CATEGORIE=String.format("(categories.no_categorie = %s)", STRING_CATEGORIE);
+
 	@Override
 	public List<Article> selectAll() throws BusinessException {
 		List<Article> listeArticles = new ArrayList<Article>();
@@ -181,7 +183,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	}	
 	
 	@Override
-	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur) throws BusinessException {
+	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
 		List<Article> listeArticle= new ArrayList<Article>();
 		String filter = "";
 		
@@ -202,6 +204,13 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			if(arcticleStatut.size() != (i+1) && arcticleStatut.size()!=1) {
 				filter +=" OR ";
 			}
+		}
+		
+		if(filter.equals("") && categorie != null) {
+			filter = FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie()));
+		}
+		else if(!filter.equals("") && categorie != null) {
+			filter += " OR " + FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie()));
 		}
 		
 		try(Connection cnx = ConnectionProvider.getConnection())

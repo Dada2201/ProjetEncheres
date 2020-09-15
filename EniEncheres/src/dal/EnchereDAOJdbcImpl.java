@@ -10,17 +10,20 @@ import java.util.Date;
 import java.util.List;
 
 import bo.Article;
+import bo.Categorie;
 import bo.Enchere;
 import bo.Enchere.Statut;
 import bo.Utilisateur;
 
 class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String STRING_UTILISATEUR = "numero_utilisateur";
+	private static final String STRING_CATEGORIE = "numero_categorie";
 	
 	private static final String SELECT_BY_UTILISATEUR="SELECT encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur WHERE utilisateurs.no_utilisateur = ?;";
 	private static final String SELECT_BY_ARTICLE="SELECT encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur WHERE encheres.no_article = ?;";
 	private static final String SELECT_BY_ARTICLE_UTILISATEUR="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur inner join categories ON articles_vendus.no_categorie = categories.no_categorie WHERE no_article = ? AND no_utilisateur = ?;";
-	private static final String SELECT_ALL="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur inner join categories ON articles_vendus.no_categorie = categories.no_categorie;";
+	private static final String SELECT_ALL="SELECT encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur";
+	private static final String SELECT_ARTICLE="SELECT articles_vendus.no_article, articles_vendus.nom_article, articles_vendus.description, articles_vendus.date_debut_encheres, articles_vendus.date_fin_encheres, prix_initial, articles_vendus.prix_vente, articles_vendus.no_utilisateur, articles_vendus.no_categorie, categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM encheres.encheres INNER JOIN articles_vendus on encheres.no_article = articles_vendus.no_article INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur inner join categories ON articles_vendus.no_categorie = categories.no_categorie;";
 	private static final String SELECT_FILTRE="SELECT categories.no_categorie, categories.libelle, encheres.no_utilisateur, encheres.no_article, encheres.date_enchere, encheres.montant_enchere, utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur, articles_vendus.no_article, articles_vendus.nom_article, articles_vendus.description, articles_vendus.date_debut_encheres, articles_vendus.date_fin_encheres, prix_initial, articles_vendus.prix_vente, articles_vendus.no_utilisateur, articles_vendus.no_categorie FROM encheres.encheres INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur INNER JOIN encheres.articles_vendus ON articles_vendus.no_article = encheres.no_article inner join categories ON articles_vendus.no_categorie = categories.no_categorie WHERE %s;";
 	
 	private static final String INSERT="INSERT INTO encheres.encheres(no_utilisateur,no_article,date_enchere,montant_enchere)VALUES(?,?,?,?) ON DUPLICATE KEY UPDATE date_enchere = ? ,montant_enchere = ?;";
@@ -31,6 +34,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String FILTER_EN_COURS_UTILISATEUR=String.format("(encheres.no_utilisateur = %s AND '%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_EN_COURS=String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_WIN=String.format("(encheres.no_utilisateur = %s AND DATEDIFF('%s' , articles_vendus.date_fin_encheres) >0 )", STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_CATEGORIE=String.format("(categories.no_categorie = %s)", STRING_CATEGORIE);
 	
 	@Override
 	public void insert(Utilisateur utilisateur, Article article, Enchere enchere) throws BusinessException {
@@ -212,7 +216,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
-	public List<Article> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException {
+	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
 		List<Article> listeArticle= new ArrayList<Article>();
 		String filter = "";
 		
@@ -237,12 +241,46 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 				filter +=" OR ";
 			}
 		}
+		
+		if(filter.equals("") && categorie != null) {
+			filter = FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie()));
+		}
+		else if(!filter.equals("") && categorie != null) {
+			filter += " OR " + FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie()));
+		}
 				
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				Article article = ArticleDAOJdbcImpl.articleBuilder(rs);
+				listeArticle.add(article);
+			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ENCHERE_ECHEC);
+			throw businessException;
+		}
+		return listeArticle;
+	}
+
+	@Override
+	public List<Article> selectArticles() throws BusinessException {
+		List<Article> listeArticle= new ArrayList<Article>();
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ARTICLE);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
