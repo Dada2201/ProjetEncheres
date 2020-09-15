@@ -61,7 +61,7 @@ public class Enchere {
 	
 	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur){
 		if(currentUtilisateur != null) {
-			if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin()) && article.getEncheres().get(0).getUtilisateur().getId().equals(currentUtilisateur.getId())){
+			if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin()) && article.getEncheres()!=null && article.getEncheres().size()!=0 && article.getEncheres().get(0).getUtilisateur().getId().equals(currentUtilisateur.getId())){
 				return Article.Statut.WIN_ENCHERE;
 			}
 			

@@ -154,4 +154,12 @@ public class Article {
 	public void setStatut(Statut statut) {
 		this.statut = statut;
 	}
+
+	@Override
+	public String toString() {
+		return "Article [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", prixInitial=" + prixInitial + ", prixVente="
+				+ prixVente + ", utilisateur=" + utilisateur + ", categorie=" + categorie + ", encheres=" + encheres
+				+ ", statut=" + statut + ", img=" + img + "]";
+	}
 }
