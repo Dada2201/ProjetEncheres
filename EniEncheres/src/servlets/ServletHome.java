@@ -66,7 +66,8 @@ public class ServletHome extends HttpServlet {
 		List<Article> listeArticles = new ArrayList<>();
 		List<Enchere> listeEncheres = new ArrayList<>();
 		try {
-			  if(request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {
+			  if(request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {	        			
+
 	                encheresStatut.add(Enchere.Statut.EN_COURS);
 	                listeArticles = enchereManager.selectionArticles();
 	                
@@ -81,11 +82,25 @@ public class ServletHome extends HttpServlet {
 					}
     				request.setAttribute("listeArticles",listeArticles);
 	            }else {
-	            	
+					Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
+					
 	            	String categorie = request.getParameter("categorie");
-	            	System.out.println(categorie);
 	            	if(categorie != null) {
-	            		 categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));
+	            		categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));        					
+        				if(arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) {
+        					listeArticles = articleManager.selectionFiltre(new ArrayList<Article.Statut>(), categorieFiltre, utilisateur);
+        					listeArticles.addAll(enchereManager.selectionFiltre(new ArrayList<Enchere.Statut>(), categorieFiltre, utilisateur));
+        				}	                
+        				for (Article article : listeArticles) {
+        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
+
+    						if(f.exists() && !f.isDirectory()) {
+            					article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
+    						}else {
+    							article.setImg("resources\\img\\articles\\article.png");	
+    						}
+    					}
+        				request.setAttribute("listeArticles",listeArticles);
 	            	}
 	            	
 	            	String s = request.getParameter("test");	
@@ -111,11 +126,9 @@ public class ServletHome extends HttpServlet {
 	        			if(checkboxList.contains("ventesend")) {
 	        				arcticleStatut.add(Article.Statut.CLOSE);
 	        			}
-
-	        			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 	        			
 	        			try {
-	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur) : (arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) ? articleManager.selectionFiltre(null, categorieFiltre, utilisateur) : null;
+	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur) : null;
 	        				
 	        				for (Article article : listeArticles) {
 	        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
@@ -137,7 +150,6 @@ public class ServletHome extends HttpServlet {
 	        			} catch (BusinessException e) {
 	        				e.printStackTrace();
 	        			}
-	        			
 	        		}
 	            }
 

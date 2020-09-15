@@ -33,7 +33,6 @@ $(document).ready(function() {
 	});
 	
 	$('#categories').on('change', function() {
-		console.log(this.value);
 		$.ajax({
 			url : 'ServletHome',
 			data : {

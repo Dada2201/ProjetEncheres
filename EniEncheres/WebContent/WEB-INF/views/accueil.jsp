@@ -96,11 +96,6 @@
 			</div>
 		</div>
 
-	</div>
-
-
-
-
 	<div id="liste" class="container">
 		<div class="row justify-content-around">
 			<c:forEach items="${listeArticles}" var="article">
@@ -108,10 +103,28 @@
 			</c:forEach>
 		</div>
 	</div>
+	</div>
+
+
+
+
 
 	<script>
 		var checkedCheckbox = [];
 
+		
+		$('#categories').on('change', function() {
+			$.ajax({
+				url : 'ServletHome',
+				data : {
+					categorie : this.value
+				},
+				success : function(responseText) {
+
+				}
+			});
+			});
+		
 		$(document).on("click", "input[type='checkbox']", function(event) {
 			if ($("#encheresouvertes").is(':checked')) {
 				checkedCheckbox.push($("#encheresouvertes").attr('id'))

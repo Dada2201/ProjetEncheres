@@ -219,26 +219,27 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
 		List<Article> listeArticle= new ArrayList<Article>();
 		String filter = "";
-		
-		for (int i = 0; i < encheresStatut.size(); i++) {
-			switch (encheresStatut.get(i)) {
-			case OPEN:
-				filter += EnchereDAOJdbcImpl.FILTER_OPEN;
-				break;
-			case EN_COURS_UTILISATEUR:
-				filter += EnchereDAOJdbcImpl.FILTER_EN_COURS_UTILISATEUR.replace(STRING_UTILISATEUR, utilisateur.getId().toString());
-				break;
-			case EN_COURS:
-				filter += EnchereDAOJdbcImpl.FILTER_EN_COURS;
-				break;
-			case WIN:
-				filter += EnchereDAOJdbcImpl.FILTER_WIN.replace(STRING_UTILISATEUR, utilisateur.getId().toString());
-				break;
-			default:
-				break;
-			}
-			if(encheresStatut.size() != (i+1) && encheresStatut.size()!=1) {
-				filter +=" OR ";
+		if(encheresStatut != null) {
+			for (int i = 0; i < encheresStatut.size(); i++) {
+				switch (encheresStatut.get(i)) {
+				case OPEN:
+					filter += EnchereDAOJdbcImpl.FILTER_OPEN;
+					break;
+				case EN_COURS_UTILISATEUR:
+					filter += EnchereDAOJdbcImpl.FILTER_EN_COURS_UTILISATEUR.replace(STRING_UTILISATEUR, utilisateur.getId().toString());
+					break;
+				case EN_COURS:
+					filter += EnchereDAOJdbcImpl.FILTER_EN_COURS;
+					break;
+				case WIN:
+					filter += EnchereDAOJdbcImpl.FILTER_WIN.replace(STRING_UTILISATEUR, utilisateur.getId().toString());
+					break;
+				default:
+					break;
+				}
+				if(encheresStatut.size() != (i+1) && encheresStatut.size()!=1) {
+					filter +=" OR ";
+				}
 			}
 		}
 		
