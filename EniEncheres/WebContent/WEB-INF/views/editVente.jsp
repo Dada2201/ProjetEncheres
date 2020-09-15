@@ -8,10 +8,10 @@
             <h1>Nouvelle vente</h1>
         </div>
         <div class="row">
-            <div class="col-4">
-                <img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="250px" weight="250px" />
+            <div class="col-md-4">
+                <img id="imgOut" src="${article.img}" height="250px" weight="250px" />
             </div>
-            <form class="col-8" action="editArticle" method="post">
+            <form class="col-md-8" action="editArticle" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Article :</label>
                     <input type="text" value="${article.nomArticle}" required name="nom"/>
@@ -23,8 +23,8 @@
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Catégories </label>
                     <div class="col-9"> 
-                    	<select class="form-control" name="categorie">
-                    		<option value="${article.categorie.noCategorie}" selected>${article.categorie.libelle}</option>
+                    	<select class="form-control" required name="categorie">
+                    		<option value="${article.categorie.noCategorie}" selected disable hidden>${article.categorie.libelle}</option>
 							<c:forEach var="c" items="${categories}">
 								<option value='<c:out value="${c.noCategorie}"/>'><c:out value="${c.libelle}"/></option>
 							</c:forEach>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Photo de l'article</label>
-                    <input type="file" accept="image/png, image/jpeg" name="photoArticle"/>
+                    <input id="imgIn" type="file" accept="image/png, image/jpeg, image/jpg" name="photoArticle"/>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Mise à prix :</label>
@@ -76,3 +76,21 @@
         </div>
     </div>
 <%@ include file="partial/footer.jspf" %>
+
+<script>
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imgOut').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#imgIn").change(function(){
+    readURL(this);
+});
+</script>

@@ -1,15 +1,18 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import bll.ArticleManager;
 import bll.CategoriesManager;
@@ -22,6 +25,9 @@ import bo.Utilisateur;
 import dal.BusinessException;
 
 @WebServlet("/editArticle")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+maxFileSize = 1024 * 1024 * 5,
+maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ServletEditArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,6 +48,14 @@ public class ServletEditArticle extends HttpServlet {
 			RetraitManager retraitManager = new RetraitManager();
 			
 			this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+			
+			File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+this.article.getNoArticle()+".png");
+
+			if(f.exists() && !f.isDirectory()) {
+				this.article.setImg("resources\\img\\articles\\"+this.article.getNoArticle()+".png");
+			}else {
+				this.article.setImg("resources\\img\\articles\\article.png");	
+			}
 
 			List<Categorie> categories = categoriesManager.selectionTout();
 			Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
@@ -64,15 +78,30 @@ public class ServletEditArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String nom, description, categorieSelected, photoArticle, dateDebutEnchere, dateFinEnchere, rue, codePostal, ville;
-		int prix;
+		String nom, description, categorieSelected, photoArticle, dateDebutEnchere, dateFinEnchere, rue, codePostal, ville, prix;
 		try
 		{			
-
 			CategoriesManager categorieManager = new CategoriesManager();
 			ArticleManager articleManager = new ArticleManager();
 			RetraitManager retraitManager = new RetraitManager();
 			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
+
+	        Part part = request.getPart("photoArticle");
+	        String nomFichier = Common.getNomFichier(part);
+
+	        if (nomFichier != null && !nomFichier.isEmpty()) {			
+	        	File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+this.article.getNoArticle()+".png");
+
+				if(f.exists() && !f.isDirectory()) {
+					if(f.delete()) {
+						System.out.println("ddd");
+					}
+				}
+	             nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
+	                    .substring(nomFichier.lastIndexOf('\\') + 1);
+
+	            Common.ecrireFichier(part, article.getNoArticle()+".png", getServletContext().getRealPath("/")+"resources\\img\\articles\\");
+	        }
 			
 			nom = request.getParameter("nom");
 			description = request.getParameter("description");
@@ -82,18 +111,15 @@ public class ServletEditArticle extends HttpServlet {
 			rue = request.getParameter("rue");
 			codePostal = request.getParameter("codePostal");
 			ville = request.getParameter("ville");
-			prix = Integer.parseInt(request.getParameter("prix"));
+			prix = request.getParameter("prix");
 			categorieSelected = request.getParameter("categorie");
-			
-			
 			Categorie categorie = categorieManager.selectionById(Integer.parseInt(categorieSelected));
-			
 
 			this.article.setNomArticle(nom);
 			this.article.setDescription(description);
 			this.article.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere));
 			this.article.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere));
-			this.article.setPrixInitial(prix);
+			this.article.setPrixInitial(Integer.parseInt(prix));
 			this.article.setCategorie(categorie);
 
 			Retrait retrait = new Retrait(article, rue, codePostal, ville);
@@ -105,8 +131,7 @@ public class ServletEditArticle extends HttpServlet {
 			System.err.println(e.getMessage());
 		}
 
-		System.out.println(this.article);
-		response.sendRedirect("enchere?enchere="+this.article.getNoArticle());
+		response.sendRedirect("article?idArticle="+this.article.getNoArticle());
 	}
 
 

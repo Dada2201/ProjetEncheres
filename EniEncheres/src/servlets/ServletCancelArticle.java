@@ -53,16 +53,10 @@ public class ServletCancelArticle extends HttpServlet {
 			Article article = articleManager.selectById(idArticle);
 
 			if(article.getUtilisateur().getId().equals(((Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)).getId())) {
-				
-				System.out.println(":)");
-				
-				System.out.println(":)");
+								
 				enchereManager.removeEnchere(article.getNoArticle());
-				System.out.println(":)");
 				retraitManager.removeArticle(article.getNoArticle());
-				System.out.println(":)");
 				articleManager.removeArticle(idArticle);
-				System.out.println(":)");
 				response.sendRedirect(request.getContextPath());
 			}
 			else
