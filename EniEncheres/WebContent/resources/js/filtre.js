@@ -31,4 +31,17 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$('#categories').on('change', function() {
+		$.ajax({
+			url : 'ServletHome',
+			data : {
+				categorie : this.value
+			},
+			success : function(responseText) {
+				alert(data)
+			}
+		});
+		});
+	
 });

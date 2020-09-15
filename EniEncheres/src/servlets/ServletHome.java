@@ -45,10 +45,11 @@ public class ServletHome extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		List<Categorie> listeCategories = new ArrayList<>();
+		Categorie categorieFiltre = null;
 		try {
-			List<Categorie> categories = categoriesManager.selectionTout();
-			request.setAttribute( "categories", categories);
+			listeCategories = categoriesManager.selectionTout();
+			request.setAttribute( "categories", listeCategories);
 		}
 		catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
@@ -69,6 +70,18 @@ public class ServletHome extends HttpServlet {
 	                encheresStatut.add(Enchere.Statut.EN_COURS);
 	                listeArticles = enchereManager.selectionFiltre(encheresStatut, null);
 	            }else {
+	            	
+	            	String categorie = request.getParameter("categorie");
+	            	System.out.println("categorie : "+categorie);
+	            	if(categorie != null) {
+	            		CategoriesManager cm = new CategoriesManager();
+	            		for(int i=0; i<listeCategories.size() ;i++) {
+	            			if(listeCategories.get(i).getNoCategorie() == Integer.valueOf(categorie)) {
+	            				categorieFiltre = listeCategories.get(i);
+	            			}
+	            		}
+	            	}
+	            	
 	            	String s = request.getParameter("test");	
 	        		if(s !=null) {
 	        			ObjectMapper mapper = new ObjectMapper();
@@ -96,7 +109,7 @@ public class ServletHome extends HttpServlet {
 	        			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 	        			
 	        			try {
-	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
+	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur,categorieFiltre) : null;
 	        				
 	        				for (Article article : listeArticles) {
 	        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");

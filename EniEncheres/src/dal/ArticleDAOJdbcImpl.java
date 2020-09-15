@@ -17,7 +17,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private static final String SELECT_ALL="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur";
 	private static final String SELECT_BY_ID="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
-	private static final String SELECT_FILTRE="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_utilisateur = ? AND (%s)";
+	private static final String SELECT_FILTRE="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_utilisateur = ? AND articles_vendus.no_categorie = ? AND (%s)";
 
 	
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
@@ -27,7 +27,6 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String FILTER_EN_COURS = String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_NOT_READY = String.format("(DATEDIFF('%s' , articles_vendus.date_debut_encheres) < 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_CLOSE = String.format("(DATEDIFF('%s', articles_vendus.date_fin_encheres) > 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-
 	
 	@Override
 	public List<Article> selectAll() throws BusinessException {
@@ -182,7 +181,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	}	
 	
 	@Override
-	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur) throws BusinessException {
+	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur,Categorie categorie) throws BusinessException {
 		List<Article> listeArticle= new ArrayList<Article>();
 		String filter = "";
 		
@@ -210,6 +209,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, utilisateur.getId());
+			pstmt.setLong(2, categorie.getNoCategorie());
 			System.out.println(pstmt);
 			ResultSet rs = pstmt.executeQuery();
 			 System.out.println(pstmt);
