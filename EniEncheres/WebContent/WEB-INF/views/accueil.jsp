@@ -182,7 +182,7 @@
 				type : 'GET',
 				success : function(data) {
 					liste = "";
-					liste = $(data).filter('#liste').html();
+					liste = $(data).find('#liste').html();
 					$('#liste').filter(function() {
 						return $(this).val() == "";
 					});
