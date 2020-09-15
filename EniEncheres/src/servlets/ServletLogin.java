@@ -29,17 +29,17 @@ public class ServletLogin extends HttpServlet {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		String cookie = Common.getCookie(request, Common.UTILISATEUR_NAME);
 		
-		if(cookie != null && Common.getCookie(request, Common.UTILISATEUR_NAME) != null) {
+		if(cookie != null) {
 			Utilisateur utilisateur;
 			try {
 				utilisateur = utilisateurManager.selectionParId(Integer.parseInt(cookie));
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
-				System.out.println(utilisateur);
+				System.out.println("test");
+				System.out.println(utilisateur.toString());
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
-				
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect("/WEB-INF/views/accueil.jsp");
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (BusinessException e) {
@@ -71,14 +71,19 @@ public class ServletLogin extends HttpServlet {
 				response.addCookie(cookieUtilisateur);
 			}
 			
-			if(utilisateur != null) {
+			if(utilisateur.getId() > 0){
 				request.setAttribute("data", utilisateur);	
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
+				request.setAttribute("title", "Profil");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
+				rd.forward(request, response);
 			}else {
-				throw new BusinessException();
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/error404.jsp");
+				rd.forward(request, response);
+				//throw new BusinessException();
 			}
 		}
 		catch (BusinessException e) {
@@ -86,8 +91,5 @@ public class ServletLogin extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		request.setAttribute("title", "Profil");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
-		rd.forward(request, response);
 	}
 }

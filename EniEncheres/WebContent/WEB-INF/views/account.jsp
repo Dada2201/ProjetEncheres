@@ -11,11 +11,11 @@
                 <div class="col">
                     <div class="form-group row">
                         <label class="col-4">Pseudo :</label>
-                        <input type="text" class="form-control col-8" name="pseudo" required>
+                        <input type="text" class="form-control col-8" name="pseudo" maxlength="30" required>
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Prénom :</label>
-                        <input type="text" class="form-control col-8" name ="prenom" required>
+                        <input type="text" class="form-control col-8" name ="prenom" maxlength="30" required>
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Téléphone :</label>
@@ -23,33 +23,33 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Code Postal :</label>
-                        <input type="text" class="form-control col-8" name="codePostal" required>
+                        <input type="text" class="form-control col-8" maxlength="10" name="codePostal" required>
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Mot de passe :</label>
-                        <input type="password" class="form-control col-8" name="motDePasse" required>
+                        <input type="password" class="form-control col-8" maxlength="255" name="motDePasse" required>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group row">
                         <label class="col-4">Nom :</label>
-                        <input type="text" class="form-control col-8" name="nom" required>
+                        <input type="text" class="form-control col-8" name="nom" maxlength="30" required>
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Email :</label>
-                        <input type="email" class="form-control col-8" name="email" required>
+                        <input type="email" class="form-control col-8" maxlength="20" name="email" required>
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Rue :</label>
-                        <input type="text" class="form-control col-8" name="rue" required>
+                        <input type="text" class="form-control col-8" maxlength="30" name="rue" required>
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Ville :</label>
-                        <input type="text" class="form-control col-8" name="ville" required>
+                        <input type="text" class="form-control col-8" maxlength="30" name="ville" required>
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Confirmation :</label>
-                        <input type="password" class="form-control col-8" name="confirmationMotDePasse" required>
+                        <input type="password" class="form-control col-8" maxlength="255" name="confirmationMotDePasse" required>
                     </div>
                 </div>
             </div>
