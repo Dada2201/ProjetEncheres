@@ -67,11 +67,15 @@ public class EnchereManager {
 		this.enchereDAO.update(enchere, article);
 	}
 
-	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre, Utilisateur utilisateur) throws BusinessException {
-		return this.enchereDAO.selectionFiltre(encheresStatut, categorieFiltre, utilisateur);
+	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre, Utilisateur utilisateur, int page) throws BusinessException {
+		return this.enchereDAO.selectionFiltre(encheresStatut, categorieFiltre, utilisateur, page);
 	}
 
-	public List<Article> selectionArticles() throws BusinessException{
-		return this.enchereDAO.selectArticles();
+	public List<Article> selectionArticles(int page) throws BusinessException{
+		return this.enchereDAO.selectArticles(page);
+	}
+	
+	public int getNbRows() throws BusinessException {
+		return this.enchereDAO.foundRows();
 	}
 }

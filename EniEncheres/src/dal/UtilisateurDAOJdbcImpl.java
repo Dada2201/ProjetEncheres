@@ -19,7 +19,8 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ?;";
 	private static final String SELECT_BY_EMAIL="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where email = ?;";
 	private static final String SELECT_BY_PSEUDO_MOT_DE_PASSE="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ? and mot_de_passe = ?;";
-
+	
+	
 	@Override
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
 		if(utilisateur == null)

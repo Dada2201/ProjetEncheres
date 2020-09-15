@@ -5,7 +5,6 @@ import java.util.List;
 import bo.Article;
 import bo.Article.Statut;
 import bo.Categorie;
-import bo.Enchere;
 import bo.Utilisateur;
 
 public interface ArticleDAO {
@@ -18,7 +17,9 @@ public interface ArticleDAO {
 
 	public Article selectById(int idArticle) throws BusinessException;
 
-	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Categorie categorieFiltre, Utilisateur utilisateur) throws BusinessException;
+	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Categorie categorieFiltre, Utilisateur utilisateur, int page) throws BusinessException;
 
 	public Article update(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException;
+
+	public int foundRows() throws BusinessException;
 }

@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ public class Common {
 
 	public final static String UTILISATEUR_NAME = "utilisateur";
     public static final int TAILLE_TAMPON = 10240;
+	public static final int NB_ITEMS_PAGE = 6;
 	
 	public static String getCookie(HttpServletRequest request, String name) {
 		Cookie[] cookies = request.getCookies();
@@ -89,5 +91,15 @@ public class Common {
             }
         }
         return null;
-    }   
+    }
+
+	public static void setImg(Article article, ServletContext servletContext) {	        					
+		File f = new File(servletContext.getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
+
+		if(f.exists() && !f.isDirectory()) {
+			article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
+		}else {
+			article.setImg("resources\\img\\articles\\article.png");	
+		}
+	}   
 }

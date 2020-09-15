@@ -11,15 +11,16 @@ import java.util.List;
 
 import bo.Article;
 import bo.Categorie;
+import bo.Common;
 import bo.Utilisateur;
 
 class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String STRING_CATEGORIE = "numero_categorie";
 
-	private static final String SELECT_ALL="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur";
-	private static final String SELECT_BY_ID="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
-	private static final String SELECT_FILTRE="SELECT  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_utilisateur = ? AND (%s)";
-
+	private static final String SELECT_ALL="SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur LIMIT "+Common.NB_ITEMS_PAGE+ " OFFSET ?";
+	private static final String SELECT_BY_ID="SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
+	private static final String SELECT_FILTRE="SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_utilisateur = ? AND (%s) LIMIT "+Common.NB_ITEMS_PAGE+ " OFFSET ?";
+	private static final String SELECT_ROWS="select found_rows() as nbRows;";
 	
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO encheres.articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)VALUES(?,?,?,?,?,?,?,?);";
@@ -183,7 +184,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	}	
 	
 	@Override
-	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Categorie categorie, Utilisateur utilisateur) throws BusinessException {
+	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Categorie categorie, Utilisateur utilisateur, int page) throws BusinessException {
 		List<Article> listeArticle= new ArrayList<Article>();
 		String filter = "";
 		if(arcticleStatut != null) {
@@ -219,6 +220,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, utilisateur.getId());
+			pstmt.setLong(2, page*Common.NB_ITEMS_PAGE);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -237,5 +239,30 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw businessException;
 		}
 		return listeArticle;
+	}
+
+	@Override
+	public int foundRows() throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ROWS);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				return rs.getInt("nbRows");
+			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ENCHERE_ECHEC);
+			throw businessException;
+		}
+		return 0;
 	}
 }

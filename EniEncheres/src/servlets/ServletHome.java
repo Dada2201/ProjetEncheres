@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.GenericServlet;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
 import bll.ArticleManager;
 import bll.CategoriesManager;
@@ -65,23 +65,24 @@ public class ServletHome extends HttpServlet {
 		List<Article.Statut> arcticleStatut = new ArrayList<>();
 
 		List<Article> listeArticles = new ArrayList<>();
-		List<Enchere> listeEncheres = new ArrayList<>();
+		int nbRows = 0;
+    	String page = request.getParameter("page");
+		
 		try {
 			  if(request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {	        			
 
 	                encheresStatut.add(Enchere.Statut.EN_COURS);
-	                listeArticles = enchereManager.selectionArticles();
+	                System.out.println(page);
+	                listeArticles = enchereManager.selectionArticles(page !=null ? Integer.parseInt(page) : 0);
+    				nbRows = enchereManager.getNbRows();
 	                
 	                for (Article article : listeArticles) {
-    					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
-
-						if(f.exists() && !f.isDirectory()) {
-        					article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
-						}else {
-							article.setImg("resources\\img\\articles\\article.png");	
-						}
+    					Common.setImg(article, getServletContext());
 					}
-    				request.setAttribute("listeArticles",listeArticles);
+	                request.setAttribute("listeArticles",listeArticles);
+	                request.setAttribute("nbItems",nbRows);
+    				
+    				
 	            }else {
 					Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 					
@@ -89,20 +90,16 @@ public class ServletHome extends HttpServlet {
 	            	if(categorie != null) {
 	            		categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));        					
         				if(arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) {
-        					listeArticles = articleManager.selectionFiltre(new ArrayList<Article.Statut>(), categorieFiltre, utilisateur);
-        					listeArticles.addAll(enchereManager.selectionFiltre(new ArrayList<Enchere.Statut>(), categorieFiltre, utilisateur));
+        					listeArticles = articleManager.selectionFiltre(new ArrayList<Article.Statut>(), categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0);
+            				nbRows = articleManager.getNbRows();
+        					listeArticles.addAll(enchereManager.selectionFiltre(new ArrayList<Enchere.Statut>(), categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0));
+            				nbRows += enchereManager.getNbRows();
         				}	                
         				for (Article article : listeArticles) {
-        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
-
-    						if(f.exists() && !f.isDirectory()) {
-            					article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
-    						}else {
-    							article.setImg("resources\\img\\articles\\article.png");	
-    						}
+        					Common.setImg(article, getServletContext());
     					}
-        				System.out.println(listeArticles.toString());
         				request.setAttribute("listeArticles",listeArticles);
+    	                request.setAttribute("nbItems",nbRows);
 	            	}
 	            	
 	            	String s = request.getParameter("test");	
@@ -130,24 +127,20 @@ public class ServletHome extends HttpServlet {
 	        			}
 	        			
 	        			try {
-	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur) : null;
+	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0) : null;
+	        				nbRows = encheresStatut.size() != 0 ? enchereManager.getNbRows() : arcticleStatut.size() != 0 ? articleManager.getNbRows() : null;
 	        				
 	        				for (Article article : listeArticles) {
-	        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
-
-								if(f.exists() && !f.isDirectory()) {
-		        					article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
-								}else {
-									article.setImg("resources\\img\\articles\\article.png");	
-								}
-								if(checkboxList.contains("ventesend") || checkboxList.contains("ventesencours") || checkboxList.contains("ventesnon")) {
-									article.setStatut(Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
-								}else {
-									article.setStatut(Enchere.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
-								}
+	        					Common.setImg(article, getServletContext());
+	        					if(checkboxList.contains("ventesend") || checkboxList.contains("ventesencours") || checkboxList.contains("ventesnon")) {
+	        						article.setStatut(Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
+	        					}else {
+	        						article.setStatut(Enchere.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
+	        					}
 							}
 	        				
 	        				request.setAttribute("listeArticles",listeArticles);
+	    	                request.setAttribute("nbItems",nbRows);
 	        				
 	        			} catch (BusinessException e) {
 	        				e.printStackTrace();
@@ -164,11 +157,8 @@ public class ServletHome extends HttpServlet {
 		}
 		else {
 			request.setAttribute("logged", false);
-			request.setAttribute("listeEncheres",listeEncheres);
 		}
 	
-		request.setAttribute("listeEncheres",listeEncheres);
-
 		request.setAttribute("title", "Accueil");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		rd.forward(request, response);	
