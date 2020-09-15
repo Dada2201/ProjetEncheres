@@ -72,7 +72,6 @@ public class ServletHome extends HttpServlet {
 			  if(request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {	        			
 
 	                encheresStatut.add(Enchere.Statut.EN_COURS);
-	                System.out.println(page);
 	                listeArticles = enchereManager.selectionArticles(page !=null ? Integer.parseInt(page) : 0);
     				nbRows = enchereManager.getNbRows();
 	                
@@ -133,9 +132,10 @@ public class ServletHome extends HttpServlet {
 	        				for (Article article : listeArticles) {
 	        					Common.setImg(article, getServletContext());
 	        					if(checkboxList.contains("ventesend") || checkboxList.contains("ventesencours") || checkboxList.contains("ventesnon")) {
-	        						article.setStatut(Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
+	        						article.setStatut(Article.getStatut(article, utilisateur));
 	        					}else {
-	        						article.setStatut(Enchere.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)));
+	        						article.setEncheres(enchereManager.selectionParArticle(article.getNoArticle()));
+	        						article.setStatut(Enchere.getStatut(article, utilisateur));
 	        					}
 							}
 	        				

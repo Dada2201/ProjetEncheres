@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group row">
                     <p>Meilleure offre :</p>
-                    <p>${enchere.montantEnchere} pts par ${utilisateurEnchere.pseudo}</p>
+                    <p>${enchere.montantEnchere} pts par </p>
                 </div>
                 <div class="form-group row">
                     <p>Mise à prix :</p>

@@ -94,7 +94,6 @@ public class ServletEditArticle extends HttpServlet {
 
 				if(f.exists() && !f.isDirectory()) {
 					if(f.delete()) {
-						System.out.println("ddd");
 					}
 				}
 	             nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
