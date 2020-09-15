@@ -31,6 +31,6 @@ $(document).ready(function(){
 			    $( "#ventesencours").prop("disabled", false);
 	}
 	});
-
+	
 
 })
