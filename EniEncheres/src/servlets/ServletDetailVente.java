@@ -1,5 +1,6 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -40,6 +41,15 @@ public class ServletDetailVente extends HttpServlet {
     	
     	try {
 			Article article = articleManager.selectById(Integer.parseInt(request.getParameter("idArticle")));
+			
+			File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
+
+			if(f.exists() && !f.isDirectory()) {
+				article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
+			}else {
+				article.setImg("resources\\img\\articles\\article.png");	
+			}
+			
 			Retrait retrait = retraitManager.selectById(article.getNoArticle());
 			request.setAttribute("retrait", retrait);
 			request.setAttribute("article", article);			

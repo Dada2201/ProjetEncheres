@@ -1,5 +1,6 @@
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -44,6 +45,15 @@ public class ServletEncherir extends HttpServlet {
     	
     	try {
     		this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+    		
+			File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+this.article.getNoArticle()+".png");
+
+			if(f.exists() && !f.isDirectory()) {
+				this.article.setImg("resources\\img\\articles\\"+this.article.getNoArticle()+".png");
+			}else {
+				this.article.setImg("resources\\img\\articles\\article.png");	
+			}
+    		
     		enchere = enchereManager.selectionParArticle(this.article.getNoArticle()).get(0);
 			Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
 			request.setAttribute("article", this.article);

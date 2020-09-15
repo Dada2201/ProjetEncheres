@@ -33,8 +33,6 @@ maxFileSize = 1024 * 1024 * 5,
 maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ServletAddArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public static final int TAILLE_TAMPON = 10240;
-    public static final String CHEMIN_FICHIERS = "/Users/abaron/"; // A changer
 
 	private CategoriesManager categoriesManager;
 	
@@ -94,16 +92,13 @@ public class ServletAddArticle extends HttpServlet {
 			article = articleManager.ajouter(article, utilisateur, categorie);
 
 	        Part part = request.getPart("photoArticle");
-	        String nomFichier = getNomFichier(part);
+	        String nomFichier = Common.getNomFichier(part);
 
 	        if (nomFichier != null && !nomFichier.isEmpty()) {
-	            String nomChamp = part.getName();
 	             nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
 	                    .substring(nomFichier.lastIndexOf('\\') + 1);
 
-	            ecrireFichier(part, article.getNoArticle()+".png", getServletContext().getRealPath("/")+"resources\\img\\articles\\");
-
-	            request.setAttribute(nomChamp, nomFichier);
+	            Common.ecrireFichier(part, article.getNoArticle()+".png", getServletContext().getRealPath("/")+"resources\\img\\articles\\");
 	        }
 			
 			retraitManager.ajouter(retrait);
@@ -113,39 +108,4 @@ public class ServletAddArticle extends HttpServlet {
 		}
 		response.sendRedirect(request.getContextPath());
 	}
-	
-    private void ecrireFichier( Part part, String nomFichier, String chemin ) throws IOException {
-        BufferedInputStream entree = null;
-        BufferedOutputStream sortie = null;
-        try {
-            entree = new BufferedInputStream(part.getInputStream(), TAILLE_TAMPON);
-            sortie = new BufferedOutputStream(new FileOutputStream(new File(chemin + nomFichier)), TAILLE_TAMPON);
-
-            byte[] tampon = new byte[TAILLE_TAMPON];
-            int longueur;
-            while ((longueur = entree.read(tampon)) > 0) {
-                sortie.write(tampon, 0, longueur);
-            }
-        } finally {
-            try {
-                sortie.close();
-            } catch (IOException ignore) {
-            	System.out.println(ignore.getMessage());
-            }
-            try {
-                entree.close();
-            } catch (IOException ignore) {
-            	System.out.println(ignore.getMessage());
-            }
-        }
-    }
-	
-    private static String getNomFichier( Part part ) {
-        for ( String contentDisposition : part.getHeader( "content-disposition" ).split( ";" ) ) {
-            if ( contentDisposition.trim().startsWith( "filename" ) ) {
-                return contentDisposition.substring( contentDisposition.indexOf( '=' ) + 1 ).trim().replace( "\"", "" );
-            }
-        }
-        return null;
-    }   
 }

@@ -3,6 +3,7 @@ package bll;
 import java.util.List;
 
 import bo.Article;
+import bo.Categorie;
 import bo.Enchere;
 import bo.Enchere.Statut;
 import bo.Utilisateur;
@@ -66,7 +67,11 @@ public class EnchereManager {
 		this.enchereDAO.update(enchere, article);
 	}
 
-	public List<Article> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException {
-		return this.enchereDAO.selectionFiltre(encheresStatut, utilisateur);
+	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre, Utilisateur utilisateur) throws BusinessException {
+		return this.enchereDAO.selectionFiltre(encheresStatut, categorieFiltre, utilisateur);
+	}
+
+	public List<Article> selectionArticles() throws BusinessException{
+		return this.enchereDAO.selectArticles();
 	}
 }

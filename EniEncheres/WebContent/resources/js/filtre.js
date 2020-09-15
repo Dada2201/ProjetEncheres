@@ -27,19 +27,20 @@ $(document).ready(function() {
 				test : json
 			},
 			success : function(responseText) {
-				$('#prodId').text(event.target.id);			
+
 			}
 		});
 	});
 	
 	$('#categories').on('change', function() {
+		console.log(this.value);
 		$.ajax({
 			url : 'ServletHome',
 			data : {
 				categorie : this.value
 			},
 			success : function(responseText) {
-				alert(data)
+
 			}
 		});
 		});

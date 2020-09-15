@@ -68,25 +68,30 @@ public class ServletHome extends HttpServlet {
 		try {
 			  if(request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {
 	                encheresStatut.add(Enchere.Statut.EN_COURS);
-	                listeArticles = enchereManager.selectionFiltre(encheresStatut, null);
+	                listeArticles = enchereManager.selectionArticles();
+	                
+	                for (Article article : listeArticles) {
+    					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");
+
+						if(f.exists() && !f.isDirectory()) {
+        					article.setImg("resources\\img\\articles\\"+article.getNoArticle()+".png");
+						}else {
+							article.setImg("resources\\img\\articles\\article.png");	
+						}
+					}
+    				request.setAttribute("listeArticles",listeArticles);
 	            }else {
 	            	
 	            	String categorie = request.getParameter("categorie");
-	            	System.out.println("categorie : "+categorie);
+	            	System.out.println(categorie);
 	            	if(categorie != null) {
-	            		CategoriesManager cm = new CategoriesManager();
-	            		for(int i=0; i<listeCategories.size() ;i++) {
-	            			if(listeCategories.get(i).getNoCategorie() == Integer.valueOf(categorie)) {
-	            				categorieFiltre = listeCategories.get(i);
-	            				// ICI ON A DONC LA BONNE CATEGORIE SELECTIONNE
-	            			}
-	            		}
+	            		 categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));
 	            	}
 	            	
 	            	String s = request.getParameter("test");	
 	        		if(s !=null) {
 	        			ObjectMapper mapper = new ObjectMapper();
-	        			List checkboxList = mapper.readValue(s, List.class);
+	        			List<?> checkboxList = mapper.readValue(s, List.class);
         			
 	        			if(checkboxList.contains("encheresouvertes")) {
 	        				encheresStatut.add(Enchere.Statut.OPEN);
@@ -110,7 +115,7 @@ public class ServletHome extends HttpServlet {
 	        			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 	        			
 	        			try {
-	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
+	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur) : (arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) ? articleManager.selectionFiltre(null, categorieFiltre, utilisateur) : null;
 	        				
 	        				for (Article article : listeArticles) {
 	        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");

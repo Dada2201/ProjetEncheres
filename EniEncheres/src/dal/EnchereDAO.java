@@ -3,6 +3,7 @@ package dal;
 import java.util.List;
 
 import bo.Article;
+import bo.Categorie;
 import bo.Enchere;
 import bo.Enchere.Statut;
 import bo.Utilisateur;
@@ -21,7 +22,9 @@ public interface EnchereDAO {
 
 	public void update(Enchere enchere, Article article) throws BusinessException;
 
-	public List<Article> selectionFiltre(List<Statut> encheresStatut, Utilisateur utilisateur) throws BusinessException;
+	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre, Utilisateur utilisateur) throws BusinessException;
 
 	public Enchere selectByArticleUtilisateur(int idArticle, int idUtilisateur) throws BusinessException;
+
+	public List<Article> selectArticles() throws BusinessException;
 }
