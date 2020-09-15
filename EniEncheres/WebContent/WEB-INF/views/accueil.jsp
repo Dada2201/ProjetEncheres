@@ -14,68 +14,75 @@
         <div class="row justify-content-center">
             <h1>Liste des enchères</h1>
         </div>
-        <p>Filtres :</p>
-        <div class="row justify-content-around">
-            <div class="col-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">&#x1F50D;</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Le nom de l'aticle contient">
-                </div>
-                
-                <div class="form-group row">
-                    <label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
-                    <div class="col-9"> 
-                                        	<select class="form-control" required name="categorie">
-                                        	                            <option>Toutes</option>
-                                        	
-							<c:forEach var="c" items="${categories}">
-								<option value='<c:out value="${c.noCategorie}"/>'><c:out value="${c.libelle}"/></option>
-							</c:forEach>
-                        </select>
-                    </div>
-                </div>
-            </div>
-           <div class="col-6 row justify-content-center align-self-center">
-                <button class="btn btn-primary">Rechercher</button>
-            </div>
-            
+        <div class="row">
+        	<div class="col-md-10">
+		        	<p>Filtres :</p>
+		        <div class="row justify-content-around">
+		            <div class="col-md-6">
+		                <div class="input-group mb-3">
+		                    <div class="input-group-prepend">
+		                        <span class="input-group-text">&#x1F50D;</span>
+		                    </div>
+		                    <input type="text" class="form-control" placeholder="Le nom de l'aticle contient">
+		                </div>
+		                
+		                <div class="form-group row">
+		                    <label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
+		                    <div class="col-9"> 
+		                                        	<select class="form-control" required name="categorie">
+		                                        	                            <option>Toutes</option>
+		                                        	
+									<c:forEach var="c" items="${categories}">
+										<option value='<c:out value="${c.noCategorie}"/>'><c:out value="${c.libelle}"/></option>
+									</c:forEach>
+		                        </select>
+		                    </div>
+		                </div>
+		            </div>
+		            
+		        </div>
+		        <c:if test="${logged}">
+		        	<form>
+		        	<div class="row justify-content-around">
+		        		<div class="col-md-4">
+		      		  		<div class="radio">
+		  						<label><input type="radio" id="achats" checked="true" name="optradio">Achats</label>
+							</div>
+			            	 <div class="checkbox pl-5">
+								  <label><input type="checkbox" id="encheresouvertes" value="">Enchères ouvertes</label>
+							 </div>
+							 <div class="checkbox pl-5">
+								  <label><input type="checkbox" id="encheresencours" value="">Mes enchères en cours</label>
+							 </div>
+							 <div class="checkbox pl-5">
+								  <label><input type="checkbox" id="enchereswin" value="">Mes enchères remportées</label>
+							</div>
+						</div>
+						<div class="col-md-4">
+		      		  		<div class="radio">
+		  						<label><input type="radio" id="ventes" name="optradio">Mes ventes</label>
+							</div>				
+			            	 <div class="checkbox pl-5">
+								  <label><input type="checkbox" id="ventesencours" value="" disabled>Mes ventes en cours</label>
+							 </div>
+							 <div class="checkbox pl-5">
+								  <label><input type="checkbox" id="ventesnon" value="" disabled>Ventes non débutées</label>
+							 </div>
+							 <div class="checkbox pl-5">
+								  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminées</label>
+							</div>
+						</div>
+					</div> 
+					</form>	
+			</c:if>
+        	</div>
+        	<div>
+		           <div class="col-md-6 justify-content-center align-self-center">
+		                <button class="btn btn-primary">Rechercher</button>
+		            </div>
+        	</div>
         </div>
-        <c:if test="${logged}">
-        	<form>
-        	<div class="row justify-content-around">
-        		<div class="col-4">
-      		  		<div class="radio">
-  						<label><input type="radio" id="achats" checked="true" name="optradio">Achats</label>
-					</div>
-	            	 <div class="checkbox">
-						  <label><input type="checkbox" id="encheresouvertes" value="">Enchères ouvertes</label>
-					 </div>
-					 <div class="checkbox">
-						  <label><input type="checkbox" id="encheresencours" value="">Mes enchères en cours</label>
-					 </div>
-					 <div class="checkbox">
-						  <label><input type="checkbox" id="enchereswin" value="">Mes enchères remportées</label>
-					</div>
-				</div>
-				<div class="col-4">
-      		  		<div class="radio">
-  						<label><input type="radio" id="ventes" name="optradio">Mes ventes</label>
-					</div>				
-	            	 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesencours" value="" disabled>Mes ventes en cours</label>
-					 </div>
-					 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesnon" value="" disabled>Ventes non débutées</label>
-					 </div>
-					 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminées</label>
-					</div>
-				</div>
-			</div> 
-			</form>	
-	</c:if>
+        
     </div>
 
 
