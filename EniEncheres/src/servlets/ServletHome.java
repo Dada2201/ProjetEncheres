@@ -21,8 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bll.ArticleManager;
+import bll.CategoriesManager;
 import bll.EnchereManager;
 import bo.Article;
+import bo.Categorie;
 import bo.Common;
 import bo.Enchere;
 import bo.Utilisateur;
@@ -31,8 +33,12 @@ import dal.BusinessException;
 @WebServlet("/")
 public class ServletHome extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private CategoriesManager categoriesManager;
+
     public ServletHome() {
         super();
+    	this.categoriesManager = new CategoriesManager();
+
     }
 
     /**
@@ -40,6 +46,16 @@ public class ServletHome extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		try {
+			List<Categorie> categories = categoriesManager.selectionTout();
+			request.setAttribute( "categories", categories);
+		}
+		catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		
 		EnchereManager enchereManager = new EnchereManager();
 		ArticleManager articleManager = new ArticleManager();
 		

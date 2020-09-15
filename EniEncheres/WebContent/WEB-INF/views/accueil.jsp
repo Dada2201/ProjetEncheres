@@ -25,8 +25,13 @@
                 
                 <div class="form-group row">
                     <label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
-                    <div class="col-9"> <select class="form-control">
-                            <option>Toutes</option>
+                    <div class="col-9"> 
+                                        	<select class="form-control" required name="categorie">
+                                        	                            <option>Toutes</option>
+                                        	
+							<c:forEach var="c" items="${categories}">
+								<option value='<c:out value="${c.noCategorie}"/>'><c:out value="${c.libelle}"/></option>
+							</c:forEach>
                         </select>
                     </div>
                 </div>
