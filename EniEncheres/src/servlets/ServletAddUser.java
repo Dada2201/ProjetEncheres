@@ -51,6 +51,7 @@ public class ServletAddUser extends HttpServlet {
 			ville = request.getParameter("ville");
 			motDePasse = request.getParameter("motDePasse");
 			confirmationMotDePasse = request.getParameter("confirmationMotDePasse");
+			
 
 			
 			if(!motDePasse.equals(confirmationMotDePasse)) {
@@ -68,7 +69,8 @@ public class ServletAddUser extends HttpServlet {
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
 			}else {
-				
+				//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
+				//rd.forward(request, response);
 			}
 		}
 		catch (BusinessException e) {
