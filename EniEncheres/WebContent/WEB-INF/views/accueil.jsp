@@ -29,8 +29,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="inputPassword" class="col-3 col-form-label">Catégories
-								:</label>
+							<label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
 							<div class="col-9">
 								<select id="categories" class="form-control" required
 									name="categorie">
@@ -96,26 +95,31 @@
 			</div>
 		</div>
 
-	<div id="liste" class="container">
-		<div class="row justify-content-around">
-			<c:forEach items="${listeArticles}" var="article">
-				<%@ include file="partial/article.jspf"%>
-			</c:forEach>
+		<div id="liste" class="container">
+			<div class="row justify-content-around">
+				<c:forEach items="${listeArticles}" var="article">
+					<%@ include file="partial/article.jspf"%>
+				</c:forEach>
+			</div>
 		</div>
+		<c:if test="${(nbItems/6) > 1}">
+			<nav class="row justify-content-center pt-5">
+				<ul class="pagination">
+					<c:forEach var="i" begin="1" end="${(nbItems/6)+1}">
+						<li value="${i}" class="page-item"><p class="page-link">${i}</p></li>
+					</c:forEach>
+				</ul>
+			</nav>
+		</c:if>
 	</div>
-	</div>
-
-
-
-
 
 	<script>
 		var checkedCheckbox = [];
 		var noCategorie = 0;
 		var liste = null;
-		
+
 		$('#categories').on('change', function() {
-			noCategorie=this.value;
+			noCategorie = this.value;
 			$.ajax({
 				url : 'ServletHome',
 				data : {
@@ -132,7 +136,24 @@
 			});
 		});
 		
-		
+		$('.pagination li').on('click', function(){
+			$.ajax({
+				url : 'ServletHome',
+				data : {
+					page : this.value
+				},
+				success : function(data) {
+					liste = "";
+					liste = $(data).find('#liste').html();
+					$('#liste').filter(function() {
+						return $(this).val() == "";
+					});
+					$('#liste').html(liste);
+				}
+			});
+		});
+
+
 		$(document).on("click", "input[type='checkbox']", function(event) {
 			if ($("#encheresouvertes").is(':checked')) {
 				checkedCheckbox.push($("#encheresouvertes").attr('id'))
@@ -152,7 +173,7 @@
 			if ($("#ventesend").is(':checked')) {
 				checkedCheckbox.push($("#ventesend").attr('id'))
 			}
-
+			
 			var json = JSON.stringify(checkedCheckbox);
 			checkedCheckbox.length = 0;
 

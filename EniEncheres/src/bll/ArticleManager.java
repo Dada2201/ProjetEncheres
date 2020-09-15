@@ -58,11 +58,15 @@ public class ArticleManager {
 		}
 	}
 
-	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Categorie categorieFiltre, Utilisateur utilisateur)  throws BusinessException{
-		return this.articleDAO.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur);
+	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Categorie categorieFiltre, Utilisateur utilisateur, int page)  throws BusinessException{
+		return this.articleDAO.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur, page);
 	}
 
 	public Article update(Article article, Utilisateur utilisateur, Categorie categorie)  throws BusinessException{
 		return this.articleDAO.update(article, utilisateur, categorie);
+	}
+	
+	public int getNbRows() throws BusinessException {
+		return this.articleDAO.foundRows();
 	}
 }
