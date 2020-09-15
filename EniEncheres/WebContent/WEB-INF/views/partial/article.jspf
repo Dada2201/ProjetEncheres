@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="bo.Article"%> 
 
 <div class="card border px-5">
   <div class="row align-items-center">
@@ -15,10 +17,20 @@
 	        <p class="card-text">Prix : ${article.prixInitial}</p>
 	        <p class="card-text">Fin de l'enchère: <fmt:formatDate pattern = "dd/MM/yyyy" value = "${article.dateFin}" /></p>
 	        <p class="card-text">Vendeur: ${article.utilisateur.pseudo}</p>
-		        <a href="${pageContext.request.contextPath}/enchere?enchere=${article.noArticle}" class="stretched-link btn btn-primary">Voir l'enchère</a>
+			   <c:if test="${article.statut == 'NOT_READY' || article.statut == 'CLOSE' || article.statut == 'EN_COURS'}">
+		        <a href="${pageContext.request.contextPath}/article?idArticle=${article.noArticle}" class="stretched-link btn btn-primary">Voir</a>
+			   </c:if>
+			   <c:if test="${article.statut == 'WIN_ENCHERE' || article.statut == 'EN_COURS_UTILISATEUR_ENCHERE' || article.statut == 'EN_COURS_ENCHERE'}">
+		        <a href="${pageContext.request.contextPath}/enchere?enchere=${article.noArticle}" class="stretched-link btn btn-primary">Voir</a>
+			   </c:if>
 	        </div>
 	      </div>
 	   </div>
-  	<a href="${pageContext.request.contextPath}/encherir?enchere=${article.noArticle}" class="stretched-link btn btn-primary stretched-link" style="position: relative;"><i class="fas fa-gavel"></i>Encherir</a>
-  </div>
+	   <c:if test = "${article.statut eq 'EN_COURS_ENCHERE'}">
+			<a href="${pageContext.request.contextPath}/encherir?enchere=${article.noArticle}" class="stretched-link btn btn-primary stretched-link" style="position: relative;"><i class="fas fa-gavel"></i>Encherir</a>
+	   </c:if>
+	   <c:if test="${article.statut == 'NOT_READY'}">
+	   	<a href="${pageContext.request.contextPath}/editArticle?enchere=${article.noArticle}" class="stretched-link btn btn-primary stretched-link" style="position: relative;"><i class="fas fa-pen"></i>Modifier</a>		
+	   </c:if>
+  	</div>
 </div>

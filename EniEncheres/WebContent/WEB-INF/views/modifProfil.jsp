@@ -1,4 +1,3 @@
-<%@page import="bo.Utilisateur"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="partial/header/connected.jspf" %>

@@ -24,8 +24,9 @@ public class Article {
 		CLOSE,
 		NULL,
 		
-		WIN, 
-		EN_COURS_UTILISATEUR
+		WIN_ENCHERE, 
+		EN_COURS_UTILISATEUR_ENCHERE, 
+		EN_COURS_ENCHERE
 	}
 	
 	public Article(int noArticle, String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial,

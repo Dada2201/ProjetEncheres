@@ -59,7 +59,7 @@ public class ServletDetailEnchere extends HttpServlet {
 			case NOT_READY:
 				h1 = "L'enchère n'a pas encore débuté";
 				break;
-			case WIN:
+			case WIN_ENCHERE:
 				h1 = "Vous avez remporté l'enchère félicitations !";
 				break;
 

@@ -62,17 +62,17 @@ public class Enchere {
 	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur){
 		if(currentUtilisateur != null) {
 			if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin()) && article.getEncheres().get(0).getUtilisateur().getId().equals(currentUtilisateur.getId())){
-				return Article.Statut.WIN;
+				return Article.Statut.WIN_ENCHERE;
 			}
 			
 			for(int i = 0; i < article.getEncheres().size(); i++) {
 				if(article.getEncheres().get(i).getUtilisateur().getId().equals(currentUtilisateur.getId())) {
-					return Article.Statut.EN_COURS_UTILISATEUR;
+					return Article.Statut.EN_COURS_UTILISATEUR_ENCHERE;
 				}
 			}
 		}
 		
-		return Article.Statut.EN_COURS;
+		return Article.Statut.EN_COURS_ENCHERE;
 	}
 
 	public Statut getStatut() {
