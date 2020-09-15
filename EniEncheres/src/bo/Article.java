@@ -16,12 +16,16 @@ public class Article {
 	private Categorie categorie;
 	private List<Enchere> encheres;
 	private Statut statut;
+	private String img;
 	
 	public static enum Statut{
 		NOT_READY,
 		EN_COURS,
 		CLOSE,
-		NULL
+		NULL,
+		
+		WIN, 
+		EN_COURS_UTILISATEUR
 	}
 	
 	public Article(int noArticle, String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial,
@@ -118,25 +122,32 @@ public class Article {
 		this.encheres = encheres;
 	}
 	
-	public static Enchere.Statut getStatut(Article article, Utilisateur currentUtilisateur, Utilisateur utilisateurEnchere){
+	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur){
 		if(article.getDateDebut().compareTo(new Date()) > 0) {
-			return Enchere.Statut.NOT_READY;
+			return Article.Statut.NOT_READY;
 		}	
-		else if(article.getDateFin().compareTo(new Date()) < 0){
-			if(currentUtilisateur != null && utilisateurEnchere.getId().equals(currentUtilisateur.getId())) {
-				return Enchere.Statut.WIN;
-			}else {
-				return Enchere.Statut.FINI;
-			}
+		else if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())){
+			return Article.Statut.CLOSE;
 		}
-		else if(article.getDateDebut().compareTo(new Date()) < 0 || article.getDateDebut().compareTo(new Date()) == 0) {
-			return Enchere.Statut.OPEN;
+		else {
+			return Article.Statut.EN_COURS;
 		}
-		return Enchere.Statut.NULL;
 	}
 
 	public Statut getStatut() {
 		return statut;
+	}
+
+	public void setImg(Article.Statut statut) {
+		this.statut = statut;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public void setStatut(Statut statut) {

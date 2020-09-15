@@ -210,6 +210,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, utilisateur.getId());
+			System.out.println(pstmt);
 			ResultSet rs = pstmt.executeQuery();
 			 System.out.println(pstmt);
 			while(rs.next())

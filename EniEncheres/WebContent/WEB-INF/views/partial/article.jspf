@@ -6,11 +6,12 @@
   <div class="row align-items-center">
 	  <div class="row align-items-center">
 	    <div>
-	     	<img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="100px" weight="100px" />
+	     	<img src="${article.img }" height="100px" weight="100px" />
 	    </div>
 	    <div>
 	      <div class="card-body">
 	        <p class="card-title"><u>${article.nomArticle}</u></p>
+	        <p>${article.statut}</p>
 	        <p class="card-text">Prix : ${article.prixInitial}</p>
 	        <p class="card-text">Fin de l'enchère: <fmt:formatDate pattern = "dd/MM/yyyy" value = "${article.dateFin}" /></p>
 	        <p class="card-text">Vendeur: ${article.utilisateur.pseudo}</p>

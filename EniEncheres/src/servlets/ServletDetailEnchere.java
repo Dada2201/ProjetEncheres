@@ -47,13 +47,13 @@ public class ServletDetailEnchere extends HttpServlet {
 			request.setAttribute("retrait", retrait);
 			request.setAttribute("article", article);
 			
-			Enchere.Statut statut = request.getSession().getAttribute(Common.UTILISATEUR_NAME) != null ? Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME), enchere.getUtilisateur()): Article.getStatut(article, null, enchere.getUtilisateur());
+			Article.Statut statut = Article.getStatut(article, (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME));
 			
 			switch (statut) {
 			case EN_COURS:
 				h1 = "L'enchère la plus haute pour le moment est de la part de " + enchere.getUtilisateur().getPseudo();
 				break;
-			case FINI:
+			case CLOSE:
 				h1 = "L'enchère à été remportéé par "+ enchere.getUtilisateur().getPseudo();
 				break;
 			case NOT_READY:

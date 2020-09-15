@@ -58,6 +58,22 @@ public class Enchere {
 		return "Enchere [utilisateur=" + utilisateur  + ", dateEnchere=" + dateEnchere
 				+ ", montantEnchere=" + montantEnchere + "]";
 	}
+	
+	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur){
+		if(currentUtilisateur != null) {
+			if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin()) && article.getEncheres().get(0).getUtilisateur().getId().equals(currentUtilisateur.getId())){
+				return Article.Statut.WIN;
+			}
+			
+			for(int i = 0; i < article.getEncheres().size(); i++) {
+				if(article.getEncheres().get(i).getUtilisateur().getId().equals(currentUtilisateur.getId())) {
+					return Article.Statut.EN_COURS_UTILISATEUR;
+				}
+			}
+		}
+		
+		return Article.Statut.EN_COURS;
+	}
 
 	public Statut getStatut() {
 		return statut;
