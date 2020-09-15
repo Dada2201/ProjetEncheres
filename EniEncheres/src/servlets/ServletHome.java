@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
 import bll.ArticleManager;
 import bll.CategoriesManager;
@@ -86,6 +87,7 @@ public class ServletHome extends HttpServlet {
 	            	System.out.println(categorie);
 	            	if(categorie != null) {
 	            		 categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));
+	            		 System.out.println(categorieFiltre.toString());
 	            	}
 	            	
 	            	String s = request.getParameter("test");	
