@@ -14,11 +14,11 @@
             <form class="col-md-8" action="ajoutArticle" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Article :</label>
-                    <input type="text" required name="nom"/>
+                    <input type="text" pattern="^[a-zA-Z0-9_]*$" required name="nom"/>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Description :</label>
-                    <textarea rows="5" required name="description"></textarea>
+                    <textarea rows="5"  required name="description"></textarea>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Catégories </label>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Mise à prix :</label>
-                    <input type="number" name="prix"/>
+                    <input type="number" min="1" name="prix"/>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 col-form-label">Début de l'enchère :</label>
@@ -52,15 +52,15 @@
 
                         <div class="form-group row">
                             <label class="col-3 col-form-label">Rue :</label>
-                            <input type="text" required name="rue"/>
+                            <input type="text" pattern="^[a-zA-Z0-9_]*$" required name="rue"/>
                         </div>
                         <div class="form-group row">
                             <label class="col-3 col-form-label">Code postal :</label>
-                            <input type="text" required name="codePostal"/>
+                            <input type="text" pattern="^[a-zA-Z0-9_]*$" maxlength="5" required name="codePostal"/>
                         </div>
                         <div class="form-group row">
                             <label class="col-3 col-form-label">Ville :</label>
-                            <input type="text" required name="ville"/>
+                            <input type="text" pattern="^[a-zA-Z_]*$" required name="ville"/>
                         </div>
                     </fieldset>
                 </div>
