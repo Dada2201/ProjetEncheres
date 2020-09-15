@@ -21,7 +21,7 @@ import bo.Utilisateur;
 import dal.BusinessException;
 
 
-@WebServlet("/vente")
+@WebServlet("/article")
 public class ServletDetailVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     	

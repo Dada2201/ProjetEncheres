@@ -93,5 +93,7 @@ public class ServletLogin extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+		request.setAttribute("title", "Profil");
+		response.sendRedirect(request.getContextPath());
 	}
 }
