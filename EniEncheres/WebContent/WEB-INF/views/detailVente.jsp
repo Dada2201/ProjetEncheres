@@ -9,10 +9,10 @@
 			<h1>${h1}</h1>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-4">
                 <img src="https://pbs.twimg.com/profile_images/790942822853640194/bvZIVYNp.jpg" height="250px" weight="250px" />
             </div>
-            <div class="col-8">
+            <div class="col-md-8">
                 <div class="form-group row">
                     <p>${article.nomArticle}</p>
                 </div>

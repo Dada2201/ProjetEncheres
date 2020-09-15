@@ -1,5 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <c:if test="${logged}">
 <%@ include file="partial/header/connected.jspf" %>
 	</c:if>
@@ -11,7 +12,7 @@
 
     <div class="container py-5">
         <div class="row justify-content-center">
-            <h1>Liste des enchères</h1>
+            <h1>Liste des enchÃ¨res</h1>
         </div>
         <p>Filtres :</p>
         <div class="row justify-content-around">
@@ -24,7 +25,7 @@
                 </div>
                 
                 <div class="form-group row">
-                    <label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
+                    <label for="inputPassword" class="col-3 col-form-label">CatÃ©gories :</label>
                     <div class="col-9"> 
                                         	<select class="form-control" required name="categorie">
                                         	                            <option>Toutes</option>
@@ -49,13 +50,13 @@
   						<label><input type="radio" id="achats" checked="true" name="optradio">Achats</label>
 					</div>
 	            	 <div class="checkbox">
-						  <label><input type="checkbox" id="encheresouvertes" value="">Enchères ouvertes</label>
+						  <label><input type="checkbox" id="encheresouvertes" value="">EnchÃ¨res ouvertes</label>
 					 </div>
 					 <div class="checkbox">
-						  <label><input type="checkbox" id="encheresencours" value="">Mes enchères en cours</label>
+						  <label><input type="checkbox" id="encheresencours" value="">Mes enchÃ¨res en cours</label>
 					 </div>
 					 <div class="checkbox">
-						  <label><input type="checkbox" id="enchereswin" value="">Mes enchères remportées</label>
+						  <label><input type="checkbox" id="enchereswin" value="">Mes enchÃ¨res remportÃ©es</label>
 					</div>
 				</div>
 				<div class="col-4">
@@ -66,10 +67,10 @@
 						  <label><input type="checkbox" id="ventesencours" value="" disabled>Mes ventes en cours</label>
 					 </div>
 					 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesnon" value="" disabled>Ventes non débutées</label>
+						  <label><input type="checkbox" id="ventesnon" value="" disabled>Ventes non dÃ©butÃ©es</label>
 					 </div>
 					 <div class="checkbox">
-						  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminées</label>
+						  <label><input type="checkbox" id="ventesend" value="" disabled=>Ventes terminÃ©es</label>
 					</div>
 				</div>
 			</div> 
