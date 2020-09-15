@@ -111,19 +111,27 @@
 
 	<script>
 		var checkedCheckbox = [];
-
+		var noCategorie = 0;
+		var liste = null;
 		
 		$('#categories').on('change', function() {
+			noCategorie=this.value;
 			$.ajax({
 				url : 'ServletHome',
 				data : {
 					categorie : this.value
 				},
-				success : function(responseText) {
-
+				success : function(data) {
+					liste = "";
+					liste = $(data).find('#liste').html();
+					$('#liste').filter(function() {
+						return $(this).val() == "";
+					});
+					$('#liste').html(liste);
 				}
 			});
-			});
+		});
+		
 		
 		$(document).on("click", "input[type='checkbox']", function(event) {
 			if ($("#encheresouvertes").is(':checked')) {
@@ -146,7 +154,6 @@
 			}
 
 			var json = JSON.stringify(checkedCheckbox);
-			var liste = null;
 			checkedCheckbox.length = 0;
 
 			$.ajax({

@@ -101,6 +101,7 @@ public class ServletHome extends HttpServlet {
     							article.setImg("resources\\img\\articles\\article.png");	
     						}
     					}
+        				System.out.println(listeArticles.toString());
         				request.setAttribute("listeArticles",listeArticles);
 	            	}
 	            	
