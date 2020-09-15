@@ -78,6 +78,7 @@ public class ServletHome extends HttpServlet {
 	            		for(int i=0; i<listeCategories.size() ;i++) {
 	            			if(listeCategories.get(i).getNoCategorie() == Integer.valueOf(categorie)) {
 	            				categorieFiltre = listeCategories.get(i);
+	            				// ICI ON A DONC LA BONNE CATEGORIE SELECTIONNE
 	            			}
 	            		}
 	            	}
@@ -109,7 +110,7 @@ public class ServletHome extends HttpServlet {
 	        			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 	        			
 	        			try {
-	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur,categorieFiltre) : null;
+	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, utilisateur) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, utilisateur) : null;
 	        				
 	        				for (Article article : listeArticles) {
 	        					File f = new File(getServletContext().getRealPath("/")+"resources\\img\\articles\\"+article.getNoArticle()+".png");

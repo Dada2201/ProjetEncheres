@@ -181,7 +181,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	}	
 	
 	@Override
-	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur,Categorie categorie) throws BusinessException {
+	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Utilisateur utilisateur) throws BusinessException {
 		List<Article> listeArticle= new ArrayList<Article>();
 		String filter = "";
 		
@@ -209,7 +209,6 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, utilisateur.getId());
-			pstmt.setLong(2, categorie.getNoCategorie());
 			System.out.println(pstmt);
 			ResultSet rs = pstmt.executeQuery();
 			 System.out.println(pstmt);
