@@ -50,12 +50,17 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Mot de passe :</label>
-                        <input type="password" class="form-control col-8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" maxlength="255" name="motDePasse" required>
+                        <input type="password" class="form-control col-8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" 
+                        onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Respectez le format du mot de passe (1minuscule, 1Majuscule, 1chiffre, 1symbole et min 8chars ' : ''); if(this.checkValidity()) 
+                        form.confirmationMotDePasse.pattern = this.value;" 
+                        maxlength="255" name="motDePasse" required>
 					<!-- Le pattern du mot de passe : 1Maj ,1Min, 1chiffre, 1symbol 8min 255max -->                   
                     </div>
                     <div class="form-group row">
                         <label class="col-4">Confirmation :</label>
-                        <input type="password" class="form-control col-8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" maxlength="255" name="confirmationMotDePasse" required>
+                        <input type="password" class="form-control col-8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" 
+                        onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" 
+                        maxlength="255" name="confirmationMotDePasse" required>
                     </div>
                 </div>
             </div>
