@@ -22,8 +22,10 @@
                 </div>
             </div>
         </form>
+        <p> ${error.toString()} </p>
 	    <div class="mt-5 row justify-content-center">
 	        <a href="${pageContext.request.contextPath}/ajoutUtilisateur" class="btn btn-primary">Créer un compte</a>
 	    </div>
     </div>
+    
 <%@ include file="partial/footer.jspf" %>

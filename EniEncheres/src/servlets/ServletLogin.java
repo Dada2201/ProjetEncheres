@@ -79,7 +79,9 @@ public class ServletLogin extends HttpServlet {
 				request.setAttribute("title", "Profil");
 				response.sendRedirect(request.getContextPath());
 			}else {
-				response.sendRedirect(request.getContextPath()+"/login");
+				request.setAttribute("error", "Erreur de login");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
+				rd.forward(request, response);	
 			}
 		}
 		catch (BusinessException e) {
