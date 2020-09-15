@@ -2,6 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="partial/header/default.jspf" %>
     <div class="container py-5">
+    <c:if test="${error}">
+        <div class="alert alert-danger" role="alert">
+        Une erreur d'authentification est survenue !
+	</div>
+	</c:if>
         <form class="col-12" action="login" method="post">
             <div class="form-group row mx-auto col-md-6">
                 <label class="col-4">Identifiant :</label>
@@ -22,7 +27,6 @@
                 </div>
             </div>
         </form>
-        <p> ${error.toString()} </p>
 	    <div class="mt-5 row justify-content-center">
 	        <a href="${pageContext.request.contextPath}/ajoutUtilisateur" class="btn btn-primary">Créer un compte</a>
 	    </div>

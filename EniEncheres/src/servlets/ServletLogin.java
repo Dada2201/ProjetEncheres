@@ -79,7 +79,7 @@ public class ServletLogin extends HttpServlet {
 				request.setAttribute("title", "Profil");
 				response.sendRedirect(request.getContextPath());
 			}else {
-				request.setAttribute("error", "Erreur de login");
+				request.setAttribute("error", true);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
 				rd.forward(request, response);	
 			}
