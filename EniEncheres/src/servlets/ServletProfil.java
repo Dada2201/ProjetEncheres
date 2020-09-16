@@ -28,15 +28,14 @@ public class ServletProfil extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = null;
-		try {
+		if(Common.isConnected(request)) {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
 			request.setAttribute(Common.UTILISATEUR_NAME,
 					(Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
 			request.setAttribute("title", "Profil");
-			rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
 			rd.forward(request, response);
-		} finally {
-
+		}else {
+			response.sendRedirect(request.getContextPath());
 		}
 	}
 

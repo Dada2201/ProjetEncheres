@@ -29,9 +29,13 @@ public class ServletEditPassword extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("title", "Modifier mon mot de passe");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/editPassword.jsp");
-		rd.forward(request, response);
+		if (!Common.isConnected(request)) {
+			request.setAttribute("title", "Modifier mon mot de passe");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/editPassword.jsp");
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect(request.getContextPath());
+		}
 	}
 
 	/**

@@ -12,7 +12,6 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import bll.UtilisateurManager;
@@ -36,12 +35,21 @@ public class Common {
 		return null;
 	}
 
-	public static void isConnected(HttpServletRequest request, HttpServletResponse response,
-			UtilisateurManager utilisateurManager) throws IOException, BusinessException {
-		if (request.getSession().getAttribute("utilisateur") != null || utilisateurManager
-				.selectionParId(((Utilisateur) request.getSession().getAttribute("utilisateur")).getId()) != null) {
-			response.sendRedirect("/logout");
+	public static boolean isConnected(HttpServletRequest request) throws IOException {
+		try {
+			if (request.getSession().getAttribute(Common.UTILISATEUR_NAME) != null) {
+				UtilisateurManager utilisateurManager = new UtilisateurManager();
+				if (utilisateurManager.selectionParId(
+						((Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME)).getId()) == null) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
 		}
+		return true;
 	}
 
 	public static String getMd5(String input) {

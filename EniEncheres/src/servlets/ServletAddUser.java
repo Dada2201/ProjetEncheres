@@ -72,7 +72,7 @@ public class ServletAddUser extends HttpServlet {
 			if(utilisateur == null) {
 				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Common.getMd5(motDePasse), 0, false));	
 				HttpSession currentUserSession = request.getSession();
-				currentUserSession.setAttribute("utilisateur", utilisateur);
+				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
 
