@@ -45,7 +45,7 @@
 			<div class="col-md">
 				<div class="form-group row">
 					<label class="col-4">Rue :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+						class="form-control col-8" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$"
 						maxlength="30" name="rue" required>
 				</div>
 				<div class="form-group row">
