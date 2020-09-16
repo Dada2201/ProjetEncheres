@@ -45,7 +45,6 @@ public class ServletEncherir extends HttpServlet {
 			ArticleManager articleManager = new ArticleManager();
 			Utilisateur u = (Utilisateur) request.getSession().getAttribute("utilisateur");
 			request.setAttribute("utilisateur", u);
-			Enchere enchere = null;
 
 			try {
 				this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
@@ -61,10 +60,10 @@ public class ServletEncherir extends HttpServlet {
 
 				List<Enchere> encheres = enchereManager.selectionParArticle(this.article.getNoArticle());
 
-				enchere = encheres != null && encheres.size() != 0 ? encheres.get(0) : null;
+				this.enchere = encheres != null && encheres.size() != 0 ? encheres.get(0) : null;
 				Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
 				request.setAttribute("article", this.article);
-				request.setAttribute("enchere", enchere);
+				request.setAttribute("enchere", this.enchere);
 				request.setAttribute("retrait", retrait);
 				request.setAttribute(Common.UTILISATEUR_NAME, request.getSession().getAttribute(Common.UTILISATEUR_NAME));
 			} catch (NumberFormatException e) {

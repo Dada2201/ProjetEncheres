@@ -30,7 +30,7 @@ public class ServletAddUser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute(Common.PAGE_TITLE, "Ajout d'un utilisateur");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/addUser.jsp");
 		rd.forward(request, response);
 	}
 
@@ -79,7 +79,7 @@ public class ServletAddUser extends HttpServlet {
 			}
 
 			if (erreurInscription) {
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/addUser.jsp");
 				rd.forward(request, response);
 			} else {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
