@@ -101,6 +101,7 @@
 				</c:forEach>
 			</div>
 		</div>
+		<p>${nbItems }</p>
 		<c:if test="${(nbItems/6) > 1}">
 			<nav class="row justify-content-center pt-5">
 				<ul class="pagination">

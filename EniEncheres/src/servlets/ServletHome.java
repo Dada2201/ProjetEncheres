@@ -118,8 +118,8 @@ public class ServletHome extends HttpServlet {
 	        			}
 	        			
 	        			try {
-	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0) : null;
-	        				nbRows = encheresStatut.size() != 0 ? enchereManager.getNbRows() : arcticleStatut.size() != 0 ? articleManager.getNbRows() : null;
+	        				listeArticles = encheresStatut.size() != 0 ? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0) : arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur, page !=null ? Integer.parseInt(page) : 0) : new ArrayList<Article>();
+	        				nbRows = encheresStatut.size() != 0 ? enchereManager.getNbRows() : arcticleStatut.size() != 0 ? articleManager.getNbRows() : 0;
 	        				
 	        				for (Article article : listeArticles) {
 	        					Common.setImg(article, getServletContext());
