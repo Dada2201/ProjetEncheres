@@ -52,8 +52,6 @@ public class ServletAddUser extends HttpServlet {
 			motDePasse = request.getParameter("motDePasse");
 			confirmationMotDePasse = request.getParameter("confirmationMotDePasse");
 			
-
-			
 			if(!motDePasse.equals(confirmationMotDePasse)) {
 				BusinessException businessException = null;
 				businessException.ajouterErreur(CodesResultatBLL.REGLE_MOT_DE_PASSE_ERREUR);
@@ -62,15 +60,19 @@ public class ServletAddUser extends HttpServlet {
 			
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);
 			
+			
 			if(utilisateur == null) {
 				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Common.getMd5(motDePasse), 0, false));	
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute("utilisateur", utilisateur);
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
+				rd.forward(request, response);
 			}else {
-				//RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
-				//rd.forward(request, response);
+				request.setAttribute("errorPseudo", true);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
+				rd.forward(request, response);
 			}
 		}
 		catch (BusinessException e) {
@@ -78,7 +80,5 @@ public class ServletAddUser extends HttpServlet {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
-		rd.forward(request, response);
 	}
 }
