@@ -1,4 +1,3 @@
-alert('toto');
 $(document).ready(function() {
 
 	$(document).on("click", "input[type='checkbox']", function(event) {
