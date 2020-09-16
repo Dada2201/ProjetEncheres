@@ -8,24 +8,25 @@
 		<h1>Nouvelle vente</h1>
 	</div>
 	<div class="row">
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<img id="imgOut"
 				src="<c:url value="/resources/img/articles/article.png" />"
 				height="250px" width="250px" />
 		</div>
-		<form class="col-md-8" action="ajoutArticle" method="post"
+		<form class="col-md-9" action="ajoutArticle" method="post"
 			enctype="multipart/form-data">
 			<div class="form-group row">
-				<label class="col-3 col-form-label">Article :</label> <input
-					type="text" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required name="nom" autofocus />
+				<label class="col-md-3 form-label">Article</label> <input type="text"
+					pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required name="nom"
+					class="form-control col-md-9" autofocus />
 			</div>
 			<div class="form-group row">
-				<label class="col-3 col-form-label">Description :</label>
-				<textarea rows="5" required name="description"></textarea>
+				<label class="col-md-3 form-label">Description</label>
+				<textarea rows="5" class="form-control col-md-9" required name="description"></textarea>
 			</div>
 			<div class="form-group row">
-				<label class="col-3 col-form-label">Catégories </label>
-				<div class="col-9">
+				<label class="col-3 form-label">Catégories </label>
+				<div class="col-md-9">
 					<select class="form-control" required name="categorie">
 						<c:forEach var="c" items="${categories}">
 							<option value='<c:out value="${c.noCategorie}"/>'><c:out
@@ -35,38 +36,41 @@
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-3 col-form-label">Photo de l'article</label> <input
+				<label class="col-md-3 form-label">Photo de l'article</label> <input
 					id="imgIn" type="file" accept="image/png, image/jpeg, image/jpg"
-					name="photoArticle" />
+					name="photoArticle" class="col-md-9"/>
 			</div>
 			<div class="form-group row">
-				<label class="col-3 col-form-label">Mise à prix :</label> <input
-					type="number" min="1" name="prix" required/>
+				<label class="col-md-3 form-label">Mise à prix</label> <input
+					type="number" class="form-control col-md-9" min="1" name="prix" required />
 			</div>
 			<div class="form-group row">
-				<label class="col-3 col-form-label">Début de l'enchère :</label> <input
-					type="date" required name="dateDebutEnchere" />
+				<label class="col-md-3 form-label">Début de l'enchère</label> <input
+					type="date" class="form-control col-md-9" required name="dateDebutEnchere" />
 			</div>
 			<div class="form-group row">
-				<label class="col-3 col-form-label">Fin de l'enchère :</label> <input
-					type="date" required name="dateFinEnchere" />
+				<label class="col-md-3 form-label">Fin de l'enchère</label> <input
+					type="date" class="form-control col-md-9" required name="dateFinEnchere" />
 			</div>
 			<div>
-				<fieldset class="border p-2">
+				<fieldset class="border p-4">
 					<legend class="w-auto">Retrait</legend>
 
 					<div class="form-group row">
-						<label class="col-3 col-form-label">Rue :</label> <input
-							type="text" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required name="rue" />
+						<label class="col-md-3 form-label">Rue</label> <input type="text"
+							class="form-control col-md-9"
+							pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required
+							name="rue" />
 					</div>
 					<div class="form-group row">
-						<label class="col-3 col-form-label">Code postal :</label> <input
-							type="text" pattern="^[0-9_]*$" maxlength="5" required
-							name="codePostal" />
+						<label class="col-md-3 form-label">Code postal</label> <input
+							type="text" class="form-control col-md-9" pattern="^[0-9_]*$"
+							maxlength="5" required name="codePostal" />
 					</div>
 					<div class="form-group row">
-						<label class="col-3 col-form-label">Ville :</label> <input
-							type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required name="ville" />
+						<label class="col-md-3 form-label">Ville</label> <input type="text"
+							class="form-control col-md-9" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
+							required name="ville" />
 					</div>
 				</fieldset>
 			</div>

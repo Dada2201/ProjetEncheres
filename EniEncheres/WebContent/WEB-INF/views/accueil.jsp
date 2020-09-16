@@ -16,7 +16,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-10">
-				<h2>Filtres :</h2>
+				<h2>Filtres</h2>
 				<div class="row justify-content-around">
 					<div class="col-md-8">
 						<div class="input-group mb-3">
