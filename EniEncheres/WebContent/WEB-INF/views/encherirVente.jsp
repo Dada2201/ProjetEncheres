@@ -38,7 +38,7 @@
 			<div class="form-group row">
 				<c:if test="${enchere != null}">
 					<p>Meilleure offre :</p>
-					<p>${enchere.montantEnchere}ptspar
+					<p>${enchere.montantEnchere}pts par
 						${enchere.utilisateur.pseudo}</p>
 				</c:if>
 			</div>

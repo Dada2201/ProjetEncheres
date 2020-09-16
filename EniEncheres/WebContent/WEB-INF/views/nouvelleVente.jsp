@@ -57,7 +57,7 @@
 
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Rue :</label> <input
-							type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required name="rue" />
+							type="text" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required name="rue" />
 					</div>
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Code postal :</label> <input

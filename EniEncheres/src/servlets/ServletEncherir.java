@@ -43,6 +43,9 @@ public class ServletEncherir extends HttpServlet {
 			EnchereManager enchereManager = new EnchereManager();
 			RetraitManager retraitManager = new RetraitManager();
 			ArticleManager articleManager = new ArticleManager();
+			Utilisateur u = (Utilisateur) request.getSession().getAttribute("utilisateur");
+			request.setAttribute("utilisateur", u);
+			Enchere enchere = null;
 
 			try {
 				this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
