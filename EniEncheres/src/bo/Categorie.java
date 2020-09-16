@@ -4,7 +4,7 @@ public class Categorie {
 
 	private int noCategorie;
 	private String libelle;
-	
+
 	public Categorie(int noCategorie, String libelle) {
 		super();
 		this.noCategorie = noCategorie;
@@ -26,7 +26,5 @@ public class Categorie {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	
-	
-	
+
 }

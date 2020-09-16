@@ -17,39 +17,42 @@ import bo.Utilisateur;
 class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String STRING_CATEGORIE = "numero_categorie";
 
-	private static final String SELECT_ALL="SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur LIMIT "+Common.NB_ITEMS_PAGE+ " OFFSET ?";
-	private static final String SELECT_BY_ID="SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
-	private static final String SELECT_FILTRE="SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_utilisateur = ? AND (%s) LIMIT "+Common.NB_ITEMS_PAGE+ " OFFSET ?";
-	private static final String SELECT_ROWS="select found_rows() as nbRows;";
-	
+	private static final String SELECT_ALL = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur LIMIT "
+			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
+	private static final String SELECT_BY_ID = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
+	private static final String SELECT_FILTRE = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_utilisateur = ? AND (%s) LIMIT "
+			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
+	private static final String SELECT_ROWS = "select found_rows() as nbRows;";
+
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO encheres.articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie)VALUES(?,?,?,?,?,?,?,?);";
 	private static final String UPDATE = "UPDATE encheres.articles_vendus SET articles_vendus.nom_article = ?, articles_vendus.description = ?, articles_vendus.date_debut_encheres = ?, articles_vendus.date_fin_encheres = ?, articles_vendus.prix_initial = ?, articles_vendus.prix_vente = ?, articles_vendus.no_categorie = ? WHERE no_article = ?; ";
 
-	private static final String FILTER_EN_COURS = String.format("('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	private static final String FILTER_NOT_READY = String.format("(DATEDIFF('%s' , articles_vendus.date_debut_encheres) < 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	private static final String FILTER_CLOSE = String.format("(DATEDIFF('%s', articles_vendus.date_fin_encheres) > 0)", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	private static final String FILTER_CATEGORIE=String.format("(categories.no_categorie = %s)", STRING_CATEGORIE);
+	private static final String FILTER_EN_COURS = String.format(
+			"('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)",
+			new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_NOT_READY = String.format(
+			"(DATEDIFF('%s' , articles_vendus.date_debut_encheres) < 0)",
+			new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_CLOSE = String.format("(DATEDIFF('%s', articles_vendus.date_fin_encheres) > 0)",
+			new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	private static final String FILTER_CATEGORIE = String.format("(categories.no_categorie = %s)", STRING_CATEGORIE);
 
 	@Override
 	public List<Article> selectAll() throws BusinessException {
 		List<Article> listeArticles = new ArrayList<Article>();
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next())
-			{
+			while (rs.next()) {
 				Article article = articleBuilder(rs);
 				listeArticles.add(article);
 			}
 			rs.close();
 			pstmt.close();
 			cnx.commit();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_ARTICLE_ECHEC);
@@ -57,26 +60,22 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 		return listeArticles;
 	}
-	
+
 	@Override
 	public Article selectById(int idArticle) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setLong(1, idArticle);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next())
-			{
+			while (rs.next()) {
 				Article article = articleBuilder(rs);
 				return article;
 			}
 			rs.close();
 			pstmt.close();
 			cnx.commit();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_ARTICLE_ECHEC);
@@ -87,36 +86,33 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public void remove(int idArticle) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(REMOVE);
 			pstmt.setLong(1, idArticle);
 			pstmt.executeUpdate();
 			pstmt.close();
 			cnx.commit();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_ARTICLE_ERREUR);
 			throw businessException;
 		}
 	}
-	
+
 	static Article articleBuilder(ResultSet rs) throws SQLException, NumberFormatException, BusinessException {
-		Article article = new Article(rs.getInt("articles_vendus.no_article"), rs.getString("articles_vendus.nom_article"), rs.getString("articles_vendus.description"), 
-				rs.getDate("articles_vendus.date_debut_encheres"), rs.getDate("articles_vendus.date_fin_encheres"), rs.getInt("articles_vendus.prix_initial"), rs.getInt("articles_vendus.prix_vente"), 
-				UtilisateurDAOJdbcImpl.utilisateurBuilder(rs), 
-				CategorieDAOJdbcImpl.categorieBuilder(rs));
+		Article article = new Article(rs.getInt("articles_vendus.no_article"),
+				rs.getString("articles_vendus.nom_article"), rs.getString("articles_vendus.description"),
+				rs.getDate("articles_vendus.date_debut_encheres"), rs.getDate("articles_vendus.date_fin_encheres"),
+				rs.getInt("articles_vendus.prix_initial"), rs.getInt("articles_vendus.prix_vente"),
+				UtilisateurDAOJdbcImpl.utilisateurBuilder(rs), CategorieDAOJdbcImpl.categorieBuilder(rs));
 		return article;
 	}
 
 	@Override
 	public Article ajouter(Article a, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, a.getNomArticle());
@@ -129,29 +125,25 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDouble(8, categorie.getNoCategorie());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next())
-			{
+			if (rs.next()) {
 				a.setNoArticle(rs.getInt(1));
 			}
 			rs.close();
 			pstmt.close();
 			cnx.commit();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.AJOUTER_ARTICLE_ECHEC);
 			throw businessException;
 		}
-		
+
 		return a;
 	}
 
 	@Override
 	public Article update(Article a, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, a.getNomArticle());
@@ -164,30 +156,28 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDouble(8, a.getNoArticle());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next())
-			{
+			if (rs.next()) {
 				a.setNoArticle(rs.getInt(1));
 			}
 			rs.close();
 			pstmt.close();
 			cnx.commit();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.AJOUTER_ARTICLE_ECHEC);
 			throw businessException;
 		}
-		
+
 		return a;
-	}	
-	
+	}
+
 	@Override
-	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Categorie categorie, Utilisateur utilisateur, int page) throws BusinessException {
-		List<Article> listeArticle= new ArrayList<Article>();
+	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Categorie categorie,
+			Utilisateur utilisateur, int page) throws BusinessException {
+		List<Article> listeArticle = new ArrayList<Article>();
 		String filter = "";
-		if(arcticleStatut != null) {
+		if (arcticleStatut != null) {
 			for (int i = 0; i < arcticleStatut.size(); i++) {
 				switch (arcticleStatut.get(i)) {
 				case EN_COURS:
@@ -202,37 +192,32 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 				default:
 					break;
 				}
-				if(arcticleStatut.size() != (i+1) && arcticleStatut.size()!=1) {
-					filter +=" OR ";
+				if (arcticleStatut.size() != (i + 1) && arcticleStatut.size() != 1) {
+					filter += " OR ";
 				}
-			}	
+			}
 		}
-		
-		if(filter.equals("") && categorie != null) {
+
+		if (filter.equals("") && categorie != null) {
 			filter = FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie()));
-		}
-		else if(!filter.equals("") && categorie != null) {
+		} else if (!filter.equals("") && categorie != null) {
 			filter += " OR " + FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie()));
 		}
-		
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, utilisateur.getId());
-			pstmt.setLong(2, page*Common.NB_ITEMS_PAGE);
+			pstmt.setLong(2, page * Common.NB_ITEMS_PAGE);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next())
-			{
+			while (rs.next()) {
 				Article article = articleBuilder(rs);
 				listeArticle.add(article);
 			}
 			rs.close();
 			pstmt.close();
 			cnx.commit();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_ENCHERE_ECHEC);
@@ -243,21 +228,17 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public int foundRows() throws BusinessException {
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ROWS);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next())
-			{
+			while (rs.next()) {
 				return rs.getInt("nbRows");
 			}
 			rs.close();
 			pstmt.close();
 			cnx.commit();
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_ENCHERE_ECHEC);

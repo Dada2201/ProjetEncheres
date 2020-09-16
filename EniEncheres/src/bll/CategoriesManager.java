@@ -12,14 +12,14 @@ public class CategoriesManager {
 	private CategorieDAO categorieDAO;
 
 	public CategoriesManager() {
-		this.categorieDAO=DAOFactory.getCategorieDAO();
+		this.categorieDAO = DAOFactory.getCategorieDAO();
 	}
-	
-	public List<Categorie> selectionTout() throws BusinessException{
+
+	public List<Categorie> selectionTout() throws BusinessException {
 		return this.categorieDAO.selectAll();
 	}
-	
-	public Categorie selectionById(int idCategorie) throws BusinessException{
+
+	public Categorie selectionById(int idCategorie) throws BusinessException {
 		return this.categorieDAO.selectById(idCategorie);
 	}
 }

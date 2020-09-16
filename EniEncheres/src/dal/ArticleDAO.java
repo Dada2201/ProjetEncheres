@@ -8,7 +8,7 @@ import bo.Categorie;
 import bo.Utilisateur;
 
 public interface ArticleDAO {
-	
+
 	public List<Article> selectAll() throws BusinessException;
 
 	public void remove(int idArticle) throws BusinessException;
@@ -17,7 +17,8 @@ public interface ArticleDAO {
 
 	public Article selectById(int idArticle) throws BusinessException;
 
-	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Categorie categorieFiltre, Utilisateur utilisateur, int page) throws BusinessException;
+	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Categorie categorieFiltre,
+			Utilisateur utilisateur, int page) throws BusinessException;
 
 	public Article update(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException;
 

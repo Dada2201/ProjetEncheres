@@ -24,52 +24,53 @@ import bo.Utilisateur;
 import dal.BusinessException;
 
 @WebServlet("/ajoutArticle")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024,
-maxFileSize = 1024 * 1024 * 5,
-maxRequestSize = 1024 * 1024 * 5 * 5)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class ServletAddArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private CategoriesManager categoriesManager;
-	
-    public ServletAddArticle() {
-        super();
-    	this.categoriesManager = new CategoriesManager();
-    }
 
-    /**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	public ServletAddArticle() {
+		super();
+		this.categoriesManager = new CategoriesManager();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			List<Categorie> categories = categoriesManager.selectionTout();
-			request.setAttribute( "categories", categories);
-		}
-		catch (BusinessException e) {
+			request.setAttribute("categories", categories);
+		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
+
 		request.setAttribute("title", "Ajout d'un article");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/nouvelleVente.jsp");
 		rd.forward(request, response);
 	}
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String nom, description, categorieSelected, dateDebutEnchere, dateFinEnchere, rue, codePostal, ville;
 		int prix;
-		try
-		{			
+		try {
 
 			CategoriesManager categorieManager = new CategoriesManager();
 			ArticleManager articleManager = new ArticleManager();
 			RetraitManager retraitManager = new RetraitManager();
-			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME);
-			
+			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME);
+
 			nom = request.getParameter("nom");
 			description = request.getParameter("description");
 			dateDebutEnchere = request.getParameter("dateDebutEnchere");
@@ -81,25 +82,26 @@ public class ServletAddArticle extends HttpServlet {
 			categorieSelected = request.getParameter("categorie");
 
 			Categorie categorie = categorieManager.selectionById(Integer.parseInt(categorieSelected));
-			Article article = new Article(0, nom, description, new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere), new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere)
-					, prix, 0, utilisateur, categorie);
+			Article article = new Article(0, nom, description,
+					new SimpleDateFormat("yyyy-MM-dd").parse(dateDebutEnchere),
+					new SimpleDateFormat("yyyy-MM-dd").parse(dateFinEnchere), prix, 0, utilisateur, categorie);
 			Retrait retrait = new Retrait(article, rue, codePostal, ville);
 
 			article = articleManager.ajouter(article, utilisateur, categorie);
 
-	        Part part = request.getPart("photoArticle");
-	        String nomFichier = Common.getNomFichier(part);
+			Part part = request.getPart("photoArticle");
+			String nomFichier = Common.getNomFichier(part);
 
-	        if (nomFichier != null && !nomFichier.isEmpty()) {
-	             nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
-	                    .substring(nomFichier.lastIndexOf('\\') + 1);
+			if (nomFichier != null && !nomFichier.isEmpty()) {
+				nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
+						.substring(nomFichier.lastIndexOf('\\') + 1);
 
-	            Common.ecrireFichier(part, article.getNoArticle()+".png", getServletContext().getRealPath("/")+"resources\\img\\articles\\");
-	        }
-			
+				Common.ecrireFichier(part, article.getNoArticle() + ".png",
+						getServletContext().getRealPath("/") + "resources\\img\\articles\\");
+			}
+
 			retraitManager.ajouter(retrait);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 		response.sendRedirect(request.getContextPath());
