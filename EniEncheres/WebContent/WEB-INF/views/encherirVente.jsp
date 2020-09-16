@@ -31,7 +31,7 @@
 			<div class="form-group row">
 				<c:if test="${enchere != null}">
 					<p>Meilleure offre :</p>
-					<p>${enchere.montantEnchere}ptspar
+					<p>${enchere.montantEnchere}pts par
 						${enchere.utilisateur.pseudo}</p>
 				</c:if>
 			</div>
@@ -58,7 +58,8 @@
 			</div>
 			<form action="encherir" method="post" class="form-group row">
 				<p>Ma proposition :</p>
-				<input type="number" name="prix" /> <input type="submit"
+				<p>Vos credits : ${utilisateur.credit}</p>
+				<input type="number" min="1" name="prix" /> <input type="submit"
 					class="btn btn-primary" value="Enchérir" />
 			</form>
 		</div>
