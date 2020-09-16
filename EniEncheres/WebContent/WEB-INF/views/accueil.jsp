@@ -102,16 +102,18 @@
 					<%@ include file="partial/article.jspf"%>
 				</c:forEach>
 			</div>
+			<c:if test="${(nbItems/6) > 1}">
+				<nav class="row justify-content-center pt-5">
+					<ul id="pagination" class="pagination">
+						<c:forEach var="i" begin="1" end="${(nbItems/6+1)}">
+							<c:if test="${i!=(nbItems/6+1) || nbItems%6!=0}">
+								<li value="${i}" class="page-item"><p class="page-link">${i}</p></li>
+							</c:if>
+						</c:forEach>
+					</ul>
+				</nav>
+			</c:if>
 		</div>
-		<c:if test="${(nbItems/6) > 1}">
-			<nav class="row justify-content-center pt-5">
-				<ul id="pagination" class="pagination">
-					<c:forEach var="i" begin="1" end="${(nbItems/6)+1}">
-						<li value="${i}" class="page-item"><p class="page-link">${i}</p></li>
-					</c:forEach>
-				</ul>
-			</nav>
-		</c:if>
 	</div>
 
 	<script>
@@ -138,15 +140,17 @@
 		});
 
 		$('.pagination li').on('click', function() {
+			alert('ici');
 			$.ajax({
 				url : 'ServletHome',
+				type :'GET',
 				data : {
 					page : this.value
 				},
 				success : function(data) {
-					alert(data)
 					liste = "";
 					liste = $(data).find('#liste').html();
+					alert(liste)
 					$('#liste').filter(function() {
 						return $(this).val() == "";
 					});
