@@ -28,7 +28,7 @@
 							class="stretched-link btn btn-primary">Voir</a>
 					</c:if>
 					<c:if
-						test="${article.statut == 'WIN_ENCHERE' || article.statut == 'EN_COURS_UTILISATEUR_ENCHERE' || article.statut == 'EN_COURS_ENCHERE'}">
+						test="${!logged || article.statut == 'WIN_ENCHERE' || article.statut == 'EN_COURS_UTILISATEUR_ENCHERE' || article.statut == 'EN_COURS_ENCHERE'}">
 						<a
 							href="${pageContext.request.contextPath}/enchere?enchere=${article.noArticle}"
 							class="stretched-link btn btn-primary">Voir</a>
