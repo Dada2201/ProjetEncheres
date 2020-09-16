@@ -3,6 +3,7 @@ package servlets;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,38 +38,45 @@ public class ServletEncherir extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		EnchereManager enchereManager = new EnchereManager();
-		RetraitManager retraitManager = new RetraitManager();
-		ArticleManager articleManager = new ArticleManager();
+		if (Common.isConnected(request)) {
+			EnchereManager enchereManager = new EnchereManager();
+			RetraitManager retraitManager = new RetraitManager();
+			ArticleManager articleManager = new ArticleManager();
 
-		Enchere enchere = null;
+			Enchere enchere = null;
 
-		try {
-			this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+			try {
+				this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
 
-			File f = new File(getServletContext().getRealPath("/") + "resources\\img\\articles\\"
-					+ this.article.getNoArticle() + ".png");
+				File f = new File(getServletContext().getRealPath("/") + "resources\\img\\articles\\"
+						+ this.article.getNoArticle() + ".png");
 
-			if (f.exists() && !f.isDirectory()) {
-				this.article.setImg("resources\\img\\articles\\" + this.article.getNoArticle() + ".png");
-			} else {
-				this.article.setImg("resources\\img\\articles\\article.png");
+				if (f.exists() && !f.isDirectory()) {
+					this.article.setImg("resources\\img\\articles\\" + this.article.getNoArticle() + ".png");
+				} else {
+					this.article.setImg("resources\\img\\articles\\article.png");
+				}
+
+				List<Enchere> encheres = enchereManager.selectionParArticle(this.article.getNoArticle());
+
+				enchere = encheres != null && encheres.size() != 0 ? encheres.get(0) : null;
+				Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
+				request.setAttribute("article", this.article);
+				request.setAttribute("enchere", enchere);
+				request.setAttribute("retrait", retrait);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				e.printStackTrace();
 			}
 
-			enchere = enchereManager.selectionParArticle(this.article.getNoArticle()).get(0);
-			Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
-			request.setAttribute("article", this.article);
-			request.setAttribute("enchere", enchere);
-			request.setAttribute("retrait", retrait);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (BusinessException e) {
-			e.printStackTrace();
+			request.setAttribute("title", "Enchérir");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/encherirVente.jsp");
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect(request.getContextPath());
 		}
 
-		request.setAttribute("title", "Enchérir");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/encherirVente.jsp");
-		rd.forward(request, response);
 	}
 
 	/**
