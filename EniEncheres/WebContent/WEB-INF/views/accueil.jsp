@@ -104,7 +104,7 @@
 		</div>
 		<c:if test="${(nbItems/6) > 1}">
 			<nav class="row justify-content-center pt-5">
-				<ul class="pagination">
+				<ul id="pagination" class="pagination">
 					<c:forEach var="i" begin="1" end="${(nbItems/6)+1}">
 						<li value="${i}" class="page-item"><p class="page-link">${i}</p></li>
 					</c:forEach>
@@ -127,11 +127,11 @@
 				},
 				success : function(data) {
 					liste = "";
-					liste = $(data).find('#liste').html();
-					$('#liste').filter(function() {
+					liste = $(data).find('#pagination').html();
+					$('#pagination').filter(function() {
 						return $(this).val() == "";
 					});
-					$('#liste').html(liste);
+					$('#pagination').html(liste);
 				}
 			});
 		});
@@ -143,6 +143,7 @@
 					page : this.value
 				},
 				success : function(data) {
+					alert(data)
 					liste = "";
 					liste = $(data).find('#liste').html();
 					$('#liste').filter(function() {
