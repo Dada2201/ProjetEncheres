@@ -78,7 +78,7 @@ public class ServletEditArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String nom, description, categorieSelected, photoArticle, dateDebutEnchere, dateFinEnchere, rue, codePostal, ville, prix;
+		String nom, description, categorieSelected, dateDebutEnchere, dateFinEnchere, rue, codePostal, ville, prix;
 		try
 		{			
 			CategoriesManager categorieManager = new CategoriesManager();
@@ -104,7 +104,6 @@ public class ServletEditArticle extends HttpServlet {
 			
 			nom = request.getParameter("nom");
 			description = request.getParameter("description");
-			photoArticle = request.getParameter("photoArticle");
 			dateDebutEnchere = request.getParameter("dateDebutEnchere");
 			dateFinEnchere = request.getParameter("dateFinEnchere");
 			rue = request.getParameter("rue");

@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <img src="${article.img}" height="250px" weight="250px" />
+                <img src="${article.img}" height="250px" width="250px" />
             </div>
             <div class="col-md-8">
                 <div class="form-group row">

@@ -1,16 +1,5 @@
 package bo;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import bll.UtilisateurManager;
-import dal.BusinessException;
-
 public class Utilisateur  {
     private Integer id;
     private String pseudo;

@@ -2,7 +2,6 @@ package servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,11 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bll.ArticleManager;
-import bll.EnchereManager;
 import bll.RetraitManager;
 import bo.Article;
 import bo.Common;
-import bo.Enchere;
 import bo.Retrait;
 import bo.Utilisateur;
 import dal.BusinessException;

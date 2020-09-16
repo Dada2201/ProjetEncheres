@@ -2,7 +2,6 @@ package servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
