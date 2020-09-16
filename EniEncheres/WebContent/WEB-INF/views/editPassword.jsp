@@ -9,7 +9,7 @@
 		<div class="form-group row mx-auto col-md-6">
 			<label class="col-4">Email :</label> <input type="email"
 				class="form-control col-8" placeholder="Email" maxlength="30"
-				name="email" required>
+				name="email" required autofocus>
 		</div>
 		<div class="form-group row mx-auto col-md-6">
 			<label class="col-4">Mot de passe :</label> <input type="password"
@@ -23,8 +23,9 @@
 				name="confirmationMotDePasse" required>
 		</div>
 		<div class="mt-5 mx-auto row justify-content-around col-md-6">
+			<a href="${pageContext.request.contextPath}/login"
+				class="btn btn-primary">Se connecter</a>
 			<a href="${pageContext.request.contextPath}/ajoutUtilisateur"
-				class="btn btn-primary">Se connecter</a><a href="${pageContext.request.contextPath}/login"
 				class="btn btn-primary">Créer un compte</a> <input
 				class="btn btn-primary" type="submit" value="Modifier">
 		</div>

@@ -17,7 +17,7 @@
 			enctype="multipart/form-data">
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Article :</label> <input
-					type="text" pattern="^[a-zA-Z0-9_]*$" required name="nom" />
+					type="text" pattern="^[a-zA-Z0-9_]*$" required name="nom" autofocus />
 			</div>
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Description :</label>

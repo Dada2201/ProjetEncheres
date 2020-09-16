@@ -10,7 +10,7 @@
 		<div class="form-group row mx-auto col-md-6">
 			<label class="col-4">Identifiant :</label> <input type="text"
 				class="form-control col-8" placeholder="Pseudo" name="pseudo"
-				required>
+				required autofocus>
 		</div>
 		<div class="form-group row mx-auto col-md-6">
 			<label class="col-4">Mot de passe :</label> <input type="password"
