@@ -59,18 +59,23 @@ public class ServletAddUser extends HttpServlet {
 			}
 			
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);
+			Utilisateur umail = utilisateurManager.selectionParEmail(email);
 			
-			
-			if(utilisateur == null) {
-				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Common.getMd5(motDePasse), 0, false));	
-				HttpSession currentUserSession = request.getSession();
-				currentUserSession.setAttribute("utilisateur", utilisateur);
-				// 5 minutes
-				currentUserSession.setMaxInactiveInterval(300);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
-				rd.forward(request, response);
-			}else {
-				request.setAttribute("errorPseudo", true);
+			if(umail != null) {
+				request.setAttribute("errorMail", true);
+				if(utilisateur == null) {
+					utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Common.getMd5(motDePasse), 0, false));	
+					HttpSession currentUserSession = request.getSession();
+					currentUserSession.setAttribute("utilisateur", utilisateur);
+					// 5 minutes
+					currentUserSession.setMaxInactiveInterval(300);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
+					rd.forward(request, response);
+				}else {
+					request.setAttribute("errorPseudo", true);
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
+					rd.forward(request, response);
+				}
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
 				rd.forward(request, response);
 			}

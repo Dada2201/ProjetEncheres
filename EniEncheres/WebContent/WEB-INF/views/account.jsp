@@ -4,9 +4,14 @@
     <div class="container py-5">
         <c:if test="${errorPseudo}">
         <div class="alert alert-danger" role="alert">
-		Le pseudo est déjà pris, veuillez en prendre un autre.
-	</div>
-	</c:if>
+			Le pseudo est déjà pris, veuillez en prendre un autre.
+		</div>
+		</c:if>
+		<c:if test="${errorMail}">
+        <div class="alert alert-danger" role="alert">
+			Le mail est déjà pris, veuillez en prendre un autre.
+		</div>
+		</c:if>
         <div class="row justify-content-center">
             <h1>Mon profil</h1>
         </div>
