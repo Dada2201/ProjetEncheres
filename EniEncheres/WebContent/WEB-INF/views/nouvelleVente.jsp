@@ -41,7 +41,7 @@
 			</div>
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Mise à prix :</label> <input
-					type="number" min="1" name="prix" />
+					type="number" min="1" name="prix" required/>
 			</div>
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Début de l'enchère :</label> <input
