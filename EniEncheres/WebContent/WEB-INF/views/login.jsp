@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="partial/header/default.jspf"%>
 <div class="container py-5">
+	<div class="row justify-content-center mb-5">
+		<h1>Se connecter</h1>
+	</div>
+
 	<c:if test="${error}">
 		<div class="alert alert-danger" role="alert">Une erreur
 			d'authentification est survenue !</div>

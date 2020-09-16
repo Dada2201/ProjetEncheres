@@ -5,7 +5,6 @@
 	<%@ include file="partial/header/connected.jspf"%>
 </c:if>
 <c:if test="${!logged}">
-	<!--  TODO change for test !logged or logged -->
 	<%@ include file="partial/header/notConnected.jspf"%>
 
 </c:if>
@@ -17,9 +16,9 @@
 		</div>
 		<div class="row">
 			<div class="col-md-10">
-				<p>Filtres :</p>
+				<h2>Filtres :</h2>
 				<div class="row justify-content-around">
-					<div class="col-md-6">
+					<div class="col-md-8">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text">&#x1F50D;</span>
@@ -97,6 +96,11 @@
 		</div>
 
 		<div id="liste" class="container">
+			<c:if test="${listeArticles != null}">
+				<div class="row justify-content-center">
+					<h2>Toutes les encheres</h2>
+				</div>
+			</c:if>
 			<div class="row justify-content-around">
 				<c:forEach items="${listeArticles}" var="article">
 					<%@ include file="partial/article.jspf"%>
@@ -143,7 +147,7 @@
 			alert('ici');
 			$.ajax({
 				url : 'ServletHome',
-				type :'GET',
+				type : 'GET',
 				data : {
 					page : this.value
 				},

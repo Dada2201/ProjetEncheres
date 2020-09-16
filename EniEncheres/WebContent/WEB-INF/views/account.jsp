@@ -10,8 +10,8 @@
 		<div class="alert alert-danger" role="alert">Le mail est déjà
 			pris, veuillez en prendre un autre.</div>
 	</c:if>
-	<div class="row justify-content-center">
-		<h1>Mon profil</h1>
+	<div class="row justify-content-center mb-5">
+		<h1>Créer un compte</h1>
 	</div>
 
 	<form action="ajoutUtilisateur" method="post">
@@ -24,12 +24,14 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Nom :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="nom"
-						maxlength="30" required>
+						class="form-control col-8"
+						pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="nom" maxlength="30"
+						required>
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Prénom :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="prenom"
+						class="form-control col-8"
+						pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="prenom"
 						maxlength="30" required>
 				</div>
 				<div class="form-group row">
@@ -45,8 +47,9 @@
 			<div class="col-md">
 				<div class="form-group row">
 					<label class="col-4">Rue :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$"
-						maxlength="30" name="rue" required>
+						class="form-control col-8"
+						pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" maxlength="30"
+						name="rue" required>
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Code Postal :</label> <input type="text"
@@ -55,7 +58,8 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Ville :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" maxlength="30"
+						class="form-control col-8"
+						pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" maxlength="30"
 						name="ville" required>
 				</div>
 				<div class="form-group row">

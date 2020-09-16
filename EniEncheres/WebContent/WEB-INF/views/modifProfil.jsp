@@ -5,7 +5,7 @@
 	<div class="row justify-content-center">
 		<h1>Mon profil</h1>
 	</div>
-	
+
 	<c:if test="${errorMdp}">
 		<div class="alert alert-danger" role="alert">Le mot de passe actuel ne correspond pas.</div>
 	</c:if>
