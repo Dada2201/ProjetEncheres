@@ -15,7 +15,7 @@
 			enctype="multipart/form-data">
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Article :</label> <input
-					type="text" value="${article.nomArticle}" required name="nom" />
+					type="text" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" value="${article.nomArticle}" required name="nom" autofocus/>
 			</div>
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Description :</label>
@@ -41,7 +41,7 @@
 			</div>
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Mise à prix :</label> <input
-					type="number" value="${article.prixInitial }" name="prix" />
+					type="number" value="${article.prixInitial }" name="prix" required/>
 			</div>
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Début de l'enchère :</label> <input
@@ -59,15 +59,15 @@
 
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Rue :</label> <input
-							type="text" value="${retrait.rue }" name="rue" />
+							type="text" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required value="${retrait.rue }" name="rue" />
 					</div>
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Code postal :</label> <input
-							type="text" value="${retrait.codePostal}" name="codePostal" />
+							type="text" pattern="^[0-9_]*$" required value="${retrait.codePostal}" maxlength="5" name="codePostal" />
 					</div>
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Ville :</label> <input
-							type="text" value="${retrait.ville}" name="ville" />
+							type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required value="${retrait.ville}" name="ville" />
 					</div>
 				</fieldset>
 			</div>
