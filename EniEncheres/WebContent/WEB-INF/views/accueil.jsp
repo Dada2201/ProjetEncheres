@@ -138,15 +138,17 @@
 		});
 
 		$('.pagination li').on('click', function() {
+			alert('ici');
 			$.ajax({
 				url : 'ServletHome',
+				type :'GET',
 				data : {
 					page : this.value
 				},
 				success : function(data) {
-					alert(data)
 					liste = "";
 					liste = $(data).find('#liste').html();
+					alert(liste)
 					$('#liste').filter(function() {
 						return $(this).val() == "";
 					});
