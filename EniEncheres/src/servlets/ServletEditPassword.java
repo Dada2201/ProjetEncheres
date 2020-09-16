@@ -30,7 +30,7 @@ public class ServletEditPassword extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!Common.isConnected(request)) {
-			request.setAttribute("title", "Modifier mon mot de passe");
+			request.setAttribute(Common.PAGE_TITLE, "Modifier mon mot de passe");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/editPassword.jsp");
 			rd.forward(request, response);
 		} else {

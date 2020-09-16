@@ -24,7 +24,7 @@ $(document).ready(function() {
 		$.ajax({
 			url : 'ServletHome',
 			data : {
-				test : json
+				checkbox : json
 			},
 			success : function(responseText) {
 
@@ -71,7 +71,7 @@ $(document).on("click", ".pagination li", function() {
 		url : 'ServletHome',
 		data : {
 			page : this.value,
-			test : json
+			checkbox : json
 		},
 		success : function(data) {
 			liste = "";

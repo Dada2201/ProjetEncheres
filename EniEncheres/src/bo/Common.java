@@ -20,6 +20,7 @@ import dal.BusinessException;
 public class Common {
 
 	public final static String UTILISATEUR_NAME = "utilisateur";
+	public final static String PAGE_TITLE = "title";
 	public static final int TAILLE_TAMPON = 10240;
 	public static final int NB_ITEMS_PAGE = 6;
 

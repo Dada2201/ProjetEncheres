@@ -32,7 +32,7 @@ public class ServletProfil extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/profil.jsp");
 			request.setAttribute(Common.UTILISATEUR_NAME,
 					(Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
-			request.setAttribute("title", "Profil");
+			request.setAttribute(Common.PAGE_TITLE, "Profil");
 			rd.forward(request, response);
 		}else {
 			response.sendRedirect(request.getContextPath());

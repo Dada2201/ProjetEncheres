@@ -86,7 +86,7 @@ public class ServletDetailEnchere extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		request.setAttribute("title", "Détail d'un article");
+		request.setAttribute(Common.PAGE_TITLE, "Détail d'un article");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/detailEnchere.jsp");
 		rd.forward(request, response);
 	}

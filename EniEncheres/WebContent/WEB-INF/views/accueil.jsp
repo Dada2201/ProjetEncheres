@@ -183,7 +183,7 @@
 			checkedCheckbox.length = 0;
 
 			$.ajax({
-				url : 'ServletHome?test=' + json,
+				url : 'ServletHome?checkbox=' + json,
 				type : 'GET',
 				success : function(data) {
 					liste = "";
