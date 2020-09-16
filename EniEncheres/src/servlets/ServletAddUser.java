@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bll.CodesResultatBLL;
 import bll.UtilisateurManager;
 import bo.Common;
 import bo.Utilisateur;
@@ -57,35 +56,32 @@ public class ServletAddUser extends HttpServlet {
 			motDePasse = request.getParameter("motDePasse");
 			confirmationMotDePasse = request.getParameter("confirmationMotDePasse");
 
-			
-			// V�rifications inscriptions
-			@SuppressWarnings("unused")
 			Boolean erreurInscription = false;
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);
 			Utilisateur umail = utilisateurManager.selectionParEmail(email);
-			
-			if(umail != null) {
+
+			if (umail != null) {
 				erreurInscription = true;
 				request.setAttribute("errorMail", true);
 			}
-				
-			if(utilisateur == null) {
-				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, Common.getMd5(motDePasse), 0, false));	
+
+			if (utilisateur == null) {
+				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue,
+						codePostal, ville, Common.getMd5(motDePasse), 0, false));
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
 
-			}else {
+			} else {
 				erreurInscription = true;
 				request.setAttribute("errorPseudo", true);
 			}
-			
-			if(erreurInscription) {
+
+			if (erreurInscription) {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
 				rd.forward(request, response);
-			}
-			else {
+			} else {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
 				rd.forward(request, response);
 			}

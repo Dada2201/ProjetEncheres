@@ -27,6 +27,7 @@ public class ServletEncherir extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	Article article = null;
+	Enchere enchere = null;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -42,8 +43,6 @@ public class ServletEncherir extends HttpServlet {
 			EnchereManager enchereManager = new EnchereManager();
 			RetraitManager retraitManager = new RetraitManager();
 			ArticleManager articleManager = new ArticleManager();
-
-			Enchere enchere = null;
 
 			try {
 				this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
@@ -64,6 +63,7 @@ public class ServletEncherir extends HttpServlet {
 				request.setAttribute("article", this.article);
 				request.setAttribute("enchere", enchere);
 				request.setAttribute("retrait", retrait);
+				request.setAttribute(Common.UTILISATEUR_NAME, request.getSession().getAttribute(Common.UTILISATEUR_NAME));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (BusinessException e) {
@@ -87,16 +87,19 @@ public class ServletEncherir extends HttpServlet {
 			throws ServletException, IOException {
 
 		Utilisateur utilisateur = ((Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
-
 		EnchereManager enchereManager = new EnchereManager();
+		int prix = Integer.parseInt(request.getParameter("prix"));
+		if(prix > this.enchere.getMontantEnchere()) {
+			Enchere enchere = new Enchere((Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME),
+					new Date(), prix);
 
-		Enchere enchere = new Enchere((Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME),
-				new Date(), Integer.parseInt(request.getParameter("prix")));
-
-		try {
-			enchereManager.ajouter(utilisateur, this.article, enchere);
-		} catch (BusinessException e) {
-			e.printStackTrace();
+			try {
+				enchereManager.ajouter(utilisateur, this.article, enchere);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+		}else {
+			request.setAttribute("errorEnchere", true);
 		}
 
 		response.sendRedirect("encherir?enchere=" + this.article.getNoArticle());

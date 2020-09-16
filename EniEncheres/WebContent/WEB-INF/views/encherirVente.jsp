@@ -5,6 +5,10 @@
 
 <%@ include file="partial/header/connected.jspf"%>
 <div class="container py-5">
+	<c:if test="${errorEnchere}">
+		<div class="alert alert-danger" role="alert">Le pseudo est déjà
+			pris, veuillez en prendre un autre.</div>
+	</c:if>
 	<div class="row justify-content-center">
 		<h1>Enchérir sur la vente</h1>
 	</div>
@@ -16,6 +20,9 @@
 			<c:if test="${enchere == null}">
 				<p class="text-info">Personne n'a encore enchéri ! Soyez le
 					premier !</p>
+			</c:if>
+			<c:if test="${enchere != null && enchere.montantEnchere >= utilisateur.credit}">
+				<p class="text-danger">Vous ne pouvez pas enchérir, vous avez seulement ${utilisateur.credit}pts alors que l'enchère est à ${enchere.montantEnchere}pts !</p>
 			</c:if>
 			<div class="form-group row">
 				<p>${article.nomArticle}</p>
@@ -56,11 +63,13 @@
 				<p>Vendeur :</p>
 				<p>${article.utilisateur.pseudo}</p>
 			</div>
-			<form action="encherir" method="post" class="form-group row">
-				<p>Ma proposition :</p>
-				<input type="number" name="prix" /> <input type="submit"
-					class="btn btn-primary" value="Enchérir" />
-			</form>
+			<c:if test="${enchere.montantEnchere < utilisateur.credit}">
+				<form action="encherir" method="post" class="form-group row">
+					<p>Ma proposition :</p>
+					<input type="number" name="prix" min="${enchere.montantEnchere+1}" /> <input type="submit"
+						class="btn btn-primary" value="Enchérir" />
+				</form>
+			</c:if>
 		</div>
 	</div>
 </div>
