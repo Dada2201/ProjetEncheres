@@ -17,7 +17,7 @@
 			enctype="multipart/form-data">
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Article :</label> <input
-					type="text" pattern="^[a-zA-Z0-9_]*$" required name="nom" autofocus />
+					type="text" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required name="nom" autofocus />
 			</div>
 			<div class="form-group row">
 				<label class="col-3 col-form-label">Description :</label>
@@ -57,16 +57,16 @@
 
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Rue :</label> <input
-							type="text" pattern="^[a-zA-Z0-9_]*$" required name="rue" />
+							type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required name="rue" />
 					</div>
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Code postal :</label> <input
-							type="text" pattern="^[a-zA-Z0-9_]*$" maxlength="5" required
+							type="text" pattern="^[0-9_]*$" maxlength="5" required
 							name="codePostal" />
 					</div>
 					<div class="form-group row">
 						<label class="col-3 col-form-label">Ville :</label> <input
-							type="text" pattern="^[a-zA-Z_]*$" required name="ville" />
+							type="text" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required name="ville" />
 					</div>
 				</fieldset>
 			</div>

@@ -5,6 +5,11 @@
 	<div class="row justify-content-center">
 		<h1>Mon profil</h1>
 	</div>
+	
+	<c:if test="${errorMdp}">
+		<div class="alert alert-danger" role="alert">Le mot de passe actuel ne correspond pas.</div>
+	</c:if>
+	
 	<form action="<%=request.getContextPath()%>/modificationProfil"
 		method="post">
 		<div class="row">
@@ -55,11 +60,18 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Nouveau mot de passe :</label> <input
-						type="password" class="form-control col-8" name="mdpnouveau">
+						type="password" class="form-control col-8" 
+						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
+						onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Respectez le format du mot de passe (1minuscule, 1Majuscule, 1chiffre, 1symbole et min 8chars ' : ''); if(this.checkValidity()) 
+                        form.mdpconfirm.pattern = this.value;"
+						maxlength="255" name="mdpnouveau" required>
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Confirmation :</label> <input type="password"
-						class="form-control col-8" name="mdpconfirm">
+						class="form-control col-8" 
+						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
+						onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');"
+						maxlength="255" name="mdpconfirm" required>
 				</div>
 			</div>
 		</div>
