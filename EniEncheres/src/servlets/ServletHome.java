@@ -101,7 +101,7 @@ public class ServletHome extends HttpServlet {
 					List<?> checkboxList = mapper.readValue(s, List.class);
 
 					if (checkboxList.contains("encheresouvertes")) {
-						encheresStatut.add(Enchere.Statut.OPEN);
+						arcticleStatut.add(Article.Statut.OPEN);
 					}
 					if (checkboxList.contains("enchereswin")) {
 						encheresStatut.add(Enchere.Statut.WIN);
@@ -132,7 +132,7 @@ public class ServletHome extends HttpServlet {
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
 							if (checkboxList.contains("ventesend") || checkboxList.contains("ventesencours")
-									|| checkboxList.contains("ventesnon")) {
+									|| checkboxList.contains("ventesnon") || checkboxList.contains("encheresouvertes")) {
 								article.setStatut(Article.getStatut(article, utilisateur));
 							} else {
 								article.setEncheres(enchereManager.selectionParArticle(article.getNoArticle()));

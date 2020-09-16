@@ -21,7 +21,7 @@ public class Article {
 	public static enum Statut {
 		NOT_READY, EN_COURS, CLOSE, NULL,
 
-		WIN_ENCHERE, EN_COURS_UTILISATEUR_ENCHERE, EN_COURS_ENCHERE
+		WIN_ENCHERE, EN_COURS_UTILISATEUR_ENCHERE, EN_COURS_ENCHERE, OPEN
 	}
 
 	public Article(int noArticle, String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial,
@@ -123,6 +123,8 @@ public class Article {
 			return Article.Statut.NOT_READY;
 		} else if (new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())) {
 			return Article.Statut.CLOSE;
+		} else if (article.getDateDebut().compareTo(new Date()) <= 0) {
+			return Article.Statut.OPEN;
 		} else {
 			return Article.Statut.EN_COURS;
 		}

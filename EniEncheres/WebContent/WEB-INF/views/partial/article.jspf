@@ -36,7 +36,7 @@
 				</div>
 			</div>
 		</div>
-		<c:if test="${article.statut eq 'EN_COURS_ENCHERE'}">
+		<c:if test="${article.statut eq 'EN_COURS_ENCHERE' || article.statut eq 'OPEN'}">
 			<a
 				href="${pageContext.request.contextPath}/encherir?enchere=${article.noArticle}"
 				class="stretched-link btn btn-primary stretched-link"

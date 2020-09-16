@@ -10,7 +10,7 @@ public class Enchere {
 	private Statut statut;
 
 	public enum Statut {
-		NOT_READY, OPEN, EN_COURS, EN_COURS_UTILISATEUR, FINI, WIN, NULL,
+		NOT_READY, EN_COURS, EN_COURS_UTILISATEUR, FINI, WIN, NULL,
 	}
 
 	public Enchere(Utilisateur utilisateur, Date dateEnchere, int montantEnchere) {
