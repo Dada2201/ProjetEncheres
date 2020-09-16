@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ include file="partial/header/notConnected.jspf"%>
+<%@ include file="partial/header/connected.jspf"%>
 <div class="container py-5">
 	<div class="row justify-content-center">
 		<h1>Enchérir sur la vente</h1>
@@ -13,6 +13,10 @@
 			<img src="${article.img}" height="250px" width="250px" />
 		</div>
 		<div class="col-md-8">
+			<c:if test="${enchere == null}">
+				<p class="text-info">Personne n'a encore enchéri ! Soyez le
+					premier !</p>
+			</c:if>
 			<div class="form-group row">
 				<p>${article.nomArticle}</p>
 			</div>
@@ -25,8 +29,11 @@
 				<p>${article.categorie.libelle}</p>
 			</div>
 			<div class="form-group row">
-				<p>Meilleure offre :</p>
-				<p>${enchere.montantEnchere}pts par</p>
+				<c:if test="${enchere != null}">
+					<p>Meilleure offre :</p>
+					<p>${enchere.montantEnchere}ptspar
+						${enchere.utilisateur.pseudo}</p>
+				</c:if>
 			</div>
 			<div class="form-group row">
 				<p>Mise à prix :</p>
@@ -57,6 +64,4 @@
 		</div>
 	</div>
 </div>
-</body>
-
-</html>
+<%@ include file="partial/footer.jspf"%>
