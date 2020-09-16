@@ -30,7 +30,7 @@ public class ServletAddUser extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("title", "Ajout d'un utilisateur");
+		request.setAttribute(Common.PAGE_TITLE, "Ajout d'un utilisateur");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
 		rd.forward(request, response);
 	}
@@ -58,7 +58,7 @@ public class ServletAddUser extends HttpServlet {
 			confirmationMotDePasse = request.getParameter("confirmationMotDePasse");
 
 			
-			// Vérifications inscriptions
+			// Vï¿½rifications inscriptions
 			@SuppressWarnings("unused")
 			Boolean erreurInscription = false;
 			Utilisateur utilisateur = utilisateurManager.selectionParPseudo(pseudo);

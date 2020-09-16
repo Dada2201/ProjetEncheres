@@ -39,7 +39,7 @@ public class ServletModificationProfil extends HttpServlet {
 		if (Common.isConnected(request)) {
 			request.setAttribute(Common.UTILISATEUR_NAME,
 					(Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
-			request.setAttribute("title", "Modification du profil");
+			request.setAttribute(Common.PAGE_TITLE, "Modification du profil");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");
 			rd.forward(request, response);
 		} else {

@@ -95,7 +95,7 @@ public class ServletHome extends HttpServlet {
 					request.setAttribute("nbItems", nbRows);
 				}
 
-				String s = request.getParameter("test");
+				String s = request.getParameter("checkbox");
 				if (s != null) {
 					ObjectMapper mapper = new ObjectMapper();
 					List<?> checkboxList = mapper.readValue(s, List.class);
@@ -159,7 +159,7 @@ public class ServletHome extends HttpServlet {
 			request.setAttribute("logged", false);
 		}
 
-		request.setAttribute("title", "Accueil");
+		request.setAttribute(Common.PAGE_TITLE, "Accueil");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		rd.forward(request, response);
 	}

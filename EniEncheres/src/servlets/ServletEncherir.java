@@ -70,7 +70,7 @@ public class ServletEncherir extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			request.setAttribute("title", "Enchérir");
+			request.setAttribute(Common.PAGE_TITLE, "Enchérir");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/encherirVente.jsp");
 			rd.forward(request, response);
 		} else {
