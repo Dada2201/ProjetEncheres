@@ -41,6 +41,7 @@ public class ServletDetailEnchere extends HttpServlet {
 
 		try {
 			Article article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+			article.setEncheres(enchereManager.selectionParArticle(article.getNoArticle()));
 
 			File f = new File(getServletContext().getRealPath("/") + "resources\\img\\articles\\"
 					+ article.getNoArticle() + ".png");
@@ -59,6 +60,7 @@ public class ServletDetailEnchere extends HttpServlet {
 
 			Article.Statut statut = Enchere.getStatut(article,
 					(Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
+			
 
 			switch (statut) {
 			case EN_COURS_ENCHERE:

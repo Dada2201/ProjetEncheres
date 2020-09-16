@@ -65,7 +65,7 @@ public class ServletHome extends HttpServlet {
 			if (request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {
 
 				encheresStatut.add(Enchere.Statut.EN_COURS);
-				listeArticles = enchereManager.selectionArticles(page != null ? Integer.parseInt(page) : 0);
+				listeArticles = enchereManager.selectionArticles(page != null ? Integer.parseInt(page)-1 : 0);
 				nbRows = enchereManager.getNbRows();
 
 				for (Article article : listeArticles) {
@@ -82,10 +82,10 @@ public class ServletHome extends HttpServlet {
 					categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));
 					if (arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) {
 						listeArticles = articleManager.selectionFiltre(new ArrayList<Article.Statut>(), categorieFiltre,
-								utilisateur, page != null ? Integer.parseInt(page) : 0);
+								utilisateur, page != null ? Integer.parseInt(page)-1 : 0);
 						nbRows = articleManager.getNbRows();
 						listeArticles.addAll(enchereManager.selectionFiltre(new ArrayList<Enchere.Statut>(),
-								categorieFiltre, utilisateur, page != null ? Integer.parseInt(page) : 0));
+								categorieFiltre, utilisateur, page != null ? Integer.parseInt(page)-1 : 0));
 						nbRows += enchereManager.getNbRows();
 					}
 					for (Article article : listeArticles) {
@@ -101,7 +101,7 @@ public class ServletHome extends HttpServlet {
 					List<?> checkboxList = mapper.readValue(s, List.class);
 
 					if (checkboxList.contains("encheresouvertes")) {
-						encheresStatut.add(Enchere.Statut.OPEN);
+						arcticleStatut.add(Article.Statut.OPEN);
 					}
 					if (checkboxList.contains("enchereswin")) {
 						encheresStatut.add(Enchere.Statut.WIN);
@@ -122,9 +122,9 @@ public class ServletHome extends HttpServlet {
 					try {
 						listeArticles = encheresStatut.size() != 0
 								? enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur,
-										page != null ? Integer.parseInt(page) : 0)
+										page != null ? Integer.parseInt(page)-1 : 0)
 								: arcticleStatut.size() != 0 ? articleManager.selectionFiltre(arcticleStatut,
-										categorieFiltre, utilisateur, page != null ? Integer.parseInt(page) : 0)
+										categorieFiltre, utilisateur, page != null ? Integer.parseInt(page)-1 : 0)
 										: new ArrayList<Article>();
 						nbRows = encheresStatut.size() != 0 ? enchereManager.getNbRows()
 								: arcticleStatut.size() != 0 ? articleManager.getNbRows() : 0;
@@ -132,7 +132,7 @@ public class ServletHome extends HttpServlet {
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
 							if (checkboxList.contains("ventesend") || checkboxList.contains("ventesencours")
-									|| checkboxList.contains("ventesnon")) {
+									|| checkboxList.contains("ventesnon") || checkboxList.contains("encheresouvertes")) {
 								article.setStatut(Article.getStatut(article, utilisateur));
 							} else {
 								article.setEncheres(enchereManager.selectionParArticle(article.getNoArticle()));

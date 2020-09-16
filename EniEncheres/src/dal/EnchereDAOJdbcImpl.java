@@ -33,9 +33,6 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String REMOVE = "DELETE from encheres.encheres where no_article=?";
 	private static final String UPDATE = "UPDATE encheres.encheres SET no_utilisateur = ?, date_enchere = ?, montant_enchere = ? WHERE no_article = ?";
 
-	private static final String FILTER_OPEN = String.format(
-			"('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)",
-			new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	private static final String FILTER_EN_COURS_UTILISATEUR = String.format(
 			"(encheres.no_utilisateur = %s AND '%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)",
 			STRING_UTILISATEUR, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -213,9 +210,6 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 		if (encheresStatut != null) {
 			for (int i = 0; i < encheresStatut.size(); i++) {
 				switch (encheresStatut.get(i)) {
-				case OPEN:
-					filter += EnchereDAOJdbcImpl.FILTER_OPEN;
-					break;
 				case EN_COURS_UTILISATEUR:
 					filter += EnchereDAOJdbcImpl.FILTER_EN_COURS_UTILISATEUR.replace(STRING_UTILISATEUR,
 							utilisateur.getId().toString());
@@ -245,6 +239,7 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, page * Common.NB_ITEMS_PAGE);
+			System.out.println(pstmt);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Article article = ArticleDAOJdbcImpl.articleBuilder(rs);
