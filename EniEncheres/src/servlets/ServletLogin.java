@@ -31,7 +31,10 @@ public class ServletLogin extends HttpServlet {
 		UtilisateurManager utilisateurManager = new UtilisateurManager();
 		String cookie = Common.getCookie(request, Common.UTILISATEUR_NAME);
 		
-		if(cookie != null) {
+		if(request.getSession().getAttribute(Common.UTILISATEUR_NAME)!=null) {
+			response.sendRedirect(request.getContextPath());
+		}
+		else if(cookie != null) {
 			Utilisateur utilisateur;
 			try {
 				utilisateur = utilisateurManager.selectionParId(Integer.parseInt(cookie));
@@ -39,13 +42,14 @@ public class ServletLogin extends HttpServlet {
 				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
-				response.sendRedirect("/WEB-INF/views/accueil.jsp");
+				response.sendRedirect(request.getContextPath());
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
-		}else {
+		}
+		else {
 			request.setAttribute("title", "Connexion");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
 			rd.forward(request, response);	

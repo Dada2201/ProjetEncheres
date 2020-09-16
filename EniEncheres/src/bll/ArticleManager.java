@@ -5,7 +5,6 @@ import java.util.List;
 import bo.Article;
 import bo.Article.Statut;
 import bo.Categorie;
-import bo.Enchere;
 import bo.Utilisateur;
 import dal.ArticleDAO;
 import dal.BusinessException;

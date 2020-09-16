@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <img id="imgOut" src="${article.img}" height="250px" weight="250px" />
+                <img id="imgOut" src="${article.img}" height="250px" width="250px" />
             </div>
             <form class="col-md-8" action="editArticle" method="post" enctype="multipart/form-data">
                 <div class="form-group row">

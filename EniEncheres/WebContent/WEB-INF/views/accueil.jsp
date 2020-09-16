@@ -50,7 +50,7 @@
 						<div class="row justify-content-around">
 							<div class="col-md-4">
 								<div class="radio">
-									<label><input type="radio" id="achats" checked="true"
+									<label><input type="radio" id="achats" checked
 										name="optradio">Achats</label>
 								</div>
 								<div class="checkbox pl-5">
@@ -80,8 +80,7 @@
 										disabled>Ventes non débutées</label>
 								</div>
 								<div class="checkbox pl-5">
-									<label><input type="checkbox" id="ventesend" value=""
-										disabled=>Ventes terminées</label>
+									<label><input type="checkbox" id="ventesend" value="" disabled>Ventes terminées</label>
 								</div>
 							</div>
 						</div>

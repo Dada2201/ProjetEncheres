@@ -1,8 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,25 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bll.ArticleManager;
-import bll.CategoriesManager;
 import bll.EnchereManager;
 import bll.RetraitManager;
 import bo.Article;
-import bo.Categorie;
 import bo.Common;
-import bo.Retrait;
 import bo.Utilisateur;
-import dal.BusinessException;
 
 @WebServlet("/cancelArticle")
 public class ServletCancelArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private CategoriesManager categoriesManager;
 	
     public ServletCancelArticle() {
         super();
-    	this.categoriesManager = new CategoriesManager();
     }
 
     /**
