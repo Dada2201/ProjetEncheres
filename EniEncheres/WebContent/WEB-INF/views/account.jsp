@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="partial/header/default.jspf" %>
     <div class="container py-5">
-        <c:if test="${error}">
+        <c:if test="${errorPseudo}">
         <div class="alert alert-danger" role="alert">
-        Les deux mots de passe ne correspondent pas !
+		Le pseudo est déjà pris, veuillez en prendre un autre.
 	</div>
 	</c:if>
         <div class="row justify-content-center">

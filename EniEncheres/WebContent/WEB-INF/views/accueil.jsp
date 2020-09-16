@@ -126,11 +126,11 @@
 				},
 				success : function(data) {
 					liste = "";
-					liste = $(data).find('#pagination').html();
-					$('#pagination').filter(function() {
+					liste = $(data).find('#liste').html();
+					$('#liste').filter(function() {
 						return $(this).val() == "";
 					});
-					$('#pagination').html(liste);
+					$('#liste').html(liste);
 				}
 			});
 		});
