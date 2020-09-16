@@ -16,21 +16,21 @@
 			<div class="col-md">
 				<div class="form-group row">
 					<label class="col-4">Pseudo : </label> <input type="text"
-						value="${utilisateur.pseudo}" class="form-control col-8"
+						value="${utilisateur.pseudo}" pattern="^[a-zA-Z0-9_]*$" required class="form-control col-8"
 						name="pseudo">
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Nom :</label> <input type="text"
-						value="${utilisateur.nom}" class="form-control col-8" name="nom">
+						value="${utilisateur.nom}" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required class="form-control col-8" name="nom">
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Prénom :</label> <input type="text"
-						value="${utilisateur.prenom}" class="form-control col-8"
+						value="${utilisateur.prenom}" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required class="form-control col-8"
 						name="prenom">
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Email :</label> <input type="email"
-						value="${utilisateur.email}" class="form-control col-8"
+						value="${utilisateur.email}" required class="form-control col-8"
 						name="email">
 				</div>
 				<div class="form-group row">
@@ -42,21 +42,21 @@
 			<div class="col-md">
 				<div class="form-group row">
 					<label class="col-4">Rue :</label> <input type="text"
-						value="${utilisateur.rue}" class="form-control col-8" name="rue">
+						value="${utilisateur.rue}" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required class="form-control col-8" name="rue">
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Code Postal :</label> <input type="text"
-						value="${utilisateur.codePostal}" class="form-control col-8"
+						value="${utilisateur.codePostal}" required maxlength="5" pattern="^[0-9_]*$" class="form-control col-8"
 						name="codepostal">
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Ville :</label> <input type="text"
-						value="${utilisateur.ville}" class="form-control col-8"
+						value="${utilisateur.ville}" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required class="form-control col-8"
 						name="ville">
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Mot de passe actuel :</label> <input
-						type="password" class="form-control col-8" name="mdpactuel">
+						type="password" class="form-control col-8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required name="mdpactuel">
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Nouveau mot de passe :</label> <input
