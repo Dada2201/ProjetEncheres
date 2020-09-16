@@ -24,12 +24,12 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Nom :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z_]*$" name="nom"
+						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="nom"
 						maxlength="30" required>
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Prénom :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z_]*$" name="prenom"
+						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="prenom"
 						maxlength="30" required>
 				</div>
 				<div class="form-group row">
@@ -45,7 +45,7 @@
 			<div class="col-md">
 				<div class="form-group row">
 					<label class="col-4">Rue :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z0-9_]*$"
+						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
 						maxlength="30" name="rue" required>
 				</div>
 				<div class="form-group row">
@@ -55,7 +55,7 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Ville :</label> <input type="text"
-						class="form-control col-8" pattern="^[a-zA-Z_]*$" maxlength="30"
+						class="form-control col-8" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" maxlength="30"
 						name="ville" required>
 				</div>
 				<div class="form-group row">
