@@ -1,3 +1,5 @@
+alert('toto');
+
 $(document).ready(function(){
 	$('#achats').click(function() {
 	   if($('#achats').is(':checked')) { 

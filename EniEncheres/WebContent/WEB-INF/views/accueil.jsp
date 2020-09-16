@@ -139,6 +139,26 @@
 			});
 		});
 
+		$('.pagination li').on('click', function() {
+			alert('ici');
+			$.ajax({
+				url : 'ServletHome',
+				type :'GET',
+				data : {
+					page : this.value
+				},
+				success : function(data) {
+					liste = "";
+					liste = $(data).find('#liste').html();
+					alert(liste)
+					$('#liste').filter(function() {
+						return $(this).val() == "";
+					});
+					$('#liste').html(liste);
+				}
+			});
+		});
+
 		$(document).on("click", "input[type='checkbox']", function(event) {
 			if ($("#encheresouvertes").is(':checked')) {
 				checkedCheckbox.push($("#encheresouvertes").attr('id'))
