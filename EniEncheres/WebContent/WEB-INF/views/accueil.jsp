@@ -98,12 +98,7 @@
 
 		<div id="liste" class="container">
 			<div class="row justify-content-around">
-				<c:forEach items="${listeArticles}" var="article">
-					<%@ include file="partial/article.jspf"%>
-				</c:forEach>
-			</div>
-		</div>
-		<c:if test="${(nbItems/6) > 1}">
+			<c:if test="${(nbItems/6) > 1}">
 			<nav class="row justify-content-center pt-5">
 				<ul id="pagination" class="pagination">
 					<c:forEach var="i" begin="1" end="${(nbItems/6)+1}">
@@ -112,6 +107,13 @@
 				</ul>
 			</nav>
 		</c:if>
+				<c:forEach items="${listeArticles}" var="article">
+					<%@ include file="partial/article.jspf"%>
+				</c:forEach>
+			</div>
+			
+		</div>
+		
 	</div>
 
 	<script>
