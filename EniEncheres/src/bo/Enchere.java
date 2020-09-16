@@ -8,17 +8,11 @@ public class Enchere {
 	private Date dateEnchere;
 	private int montantEnchere;
 	private Statut statut;
-	
-	public enum Statut{
-		NOT_READY,
-		OPEN,
-		EN_COURS,
-		EN_COURS_UTILISATEUR,
-		FINI,
-		WIN,
-		NULL, 
+
+	public enum Statut {
+		NOT_READY, OPEN, EN_COURS, EN_COURS_UTILISATEUR, FINI, WIN, NULL,
 	}
-	
+
 	public Enchere(Utilisateur utilisateur, Date dateEnchere, int montantEnchere) {
 		super();
 		this.utilisateur = utilisateur;
@@ -55,27 +49,29 @@ public class Enchere {
 
 	@Override
 	public String toString() {
-		return "Enchere [utilisateur=" + utilisateur  + ", dateEnchere=" + dateEnchere
-				+ ", montantEnchere=" + montantEnchere + "]";
+		return "Enchere [utilisateur=" + utilisateur + ", dateEnchere=" + dateEnchere + ", montantEnchere="
+				+ montantEnchere + "]";
 	}
-	
-	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur){
-		if(currentUtilisateur != null) {
-			if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin()) && article.getEncheres()!=null && article.getEncheres().size()!=0 && article.getEncheres().get(0).getUtilisateur().getId().equals(currentUtilisateur.getId())){
+
+	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur) {
+		if (currentUtilisateur != null) {
+			if (new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())
+					&& article.getEncheres() != null && article.getEncheres().size() != 0
+					&& article.getEncheres().get(0).getUtilisateur().getId().equals(currentUtilisateur.getId())) {
 				return Article.Statut.WIN_ENCHERE;
 			}
-			
-			for(int i = 0; i < article.getEncheres().size(); i++) {
-				if(article.getEncheres().get(i).getUtilisateur().getId().equals(currentUtilisateur.getId())) {
+
+			for (int i = 0; i < article.getEncheres().size(); i++) {
+				if (article.getEncheres().get(i).getUtilisateur().getId().equals(currentUtilisateur.getId())) {
 					return Article.Statut.EN_COURS_UTILISATEUR_ENCHERE;
 				}
 			}
 		}
-		
-		if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())){
+
+		if (new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())) {
 			return Article.Statut.CLOSE;
 		}
-		
+
 		return Article.Statut.EN_COURS_ENCHERE;
 	}
 

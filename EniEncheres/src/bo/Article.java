@@ -17,18 +17,13 @@ public class Article {
 	private List<Enchere> encheres;
 	private Statut statut;
 	private String img;
-	
-	public static enum Statut{
-		NOT_READY,
-		EN_COURS,
-		CLOSE,
-		NULL,
-		
-		WIN_ENCHERE, 
-		EN_COURS_UTILISATEUR_ENCHERE, 
-		EN_COURS_ENCHERE
+
+	public static enum Statut {
+		NOT_READY, EN_COURS, CLOSE, NULL,
+
+		WIN_ENCHERE, EN_COURS_UTILISATEUR_ENCHERE, EN_COURS_ENCHERE
 	}
-	
+
 	public Article(int noArticle, String nomArticle, String description, Date dateDebut, Date dateFin, int prixInitial,
 			int prixVente, Utilisateur utilisateur, Categorie categorie) {
 		super();
@@ -122,15 +117,13 @@ public class Article {
 	public void setEncheres(List<Enchere> encheres) {
 		this.encheres = encheres;
 	}
-	
-	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur){
-		if(article.getDateDebut().compareTo(new Date()) > 0) {
+
+	public static Article.Statut getStatut(Article article, Utilisateur currentUtilisateur) {
+		if (article.getDateDebut().compareTo(new Date()) > 0) {
 			return Article.Statut.NOT_READY;
-		}	
-		else if(new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())){
+		} else if (new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())) {
 			return Article.Statut.CLOSE;
-		}
-		else {
+		} else {
 			return Article.Statut.EN_COURS;
 		}
 	}

@@ -29,7 +29,8 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="inputPassword" class="col-3 col-form-label">Catégories :</label>
+							<label for="inputPassword" class="col-3 col-form-label">Catégories
+								:</label>
 							<div class="col-9">
 								<select id="categories" class="form-control" required
 									name="categorie">
@@ -80,7 +81,8 @@
 										disabled>Ventes non débutées</label>
 								</div>
 								<div class="checkbox pl-5">
-									<label><input type="checkbox" id="ventesend" value="" disabled>Ventes terminées</label>
+									<label><input type="checkbox" id="ventesend" value=""
+										disabled>Ventes terminées</label>
 								</div>
 							</div>
 						</div>
@@ -135,8 +137,8 @@
 				}
 			});
 		});
-		
-		$('.pagination li').on('click', function(){
+
+		$('.pagination li').on('click', function() {
 			$.ajax({
 				url : 'ServletHome',
 				data : {
@@ -153,7 +155,6 @@
 				}
 			});
 		});
-
 
 		$(document).on("click", "input[type='checkbox']", function(event) {
 			if ($("#encheresouvertes").is(':checked')) {
@@ -174,7 +175,7 @@
 			if ($("#ventesend").is(':checked')) {
 				checkedCheckbox.push($("#ventesend").attr('id'))
 			}
-			
+
 			var json = JSON.stringify(checkedCheckbox);
 			checkedCheckbox.length = 0;
 

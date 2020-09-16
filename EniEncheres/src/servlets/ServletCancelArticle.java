@@ -19,53 +19,54 @@ import bo.Utilisateur;
 @WebServlet("/cancelArticle")
 public class ServletCancelArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    public ServletCancelArticle() {
-        super();
-    }
 
-    /**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	public ServletCancelArticle() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		int idArticle;
-		
+
 		RequestDispatcher rd = null;
 
-		try
-		{			
+		try {
 			idArticle = Integer.parseInt(request.getParameter("idArticle"));
-			
+
 			ArticleManager articleManager = new ArticleManager();
 			EnchereManager enchereManager = new EnchereManager();
 			RetraitManager retraitManager = new RetraitManager();
-			
+
 			Article article = articleManager.selectById(idArticle);
 
-			if(article.getUtilisateur().getId().equals(((Utilisateur)request.getSession().getAttribute(Common.UTILISATEUR_NAME)).getId())) {
-								
+			if (article.getUtilisateur().getId()
+					.equals(((Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME)).getId())) {
+
 				enchereManager.removeEnchere(article.getNoArticle());
 				retraitManager.removeArticle(article.getNoArticle());
 				articleManager.removeArticle(idArticle);
 				response.sendRedirect(request.getContextPath());
-			}
-			else
-			{
+			} else {
 				rd = request.getRequestDispatcher("/WEB-INF/views/error404.jsp");
 				rd.forward(request, response);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
 	}
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		this.doGet(request, response);
 	}
-
 
 }

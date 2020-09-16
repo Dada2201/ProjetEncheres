@@ -11,54 +11,49 @@ import dal.BusinessException;
 import dal.DAOFactory;
 import dal.EnchereDAO;
 
-
 public class EnchereManager {
-	
+
 	private EnchereDAO enchereDAO;
-	
+
 	public EnchereManager() {
-		this.enchereDAO=DAOFactory.getEnchereDAO();
+		this.enchereDAO = DAOFactory.getEnchereDAO();
 	}
 
-	public Enchere ajouter(Utilisateur utilisateur, Article article, Enchere enchere) throws BusinessException
-	{
+	public Enchere ajouter(Utilisateur utilisateur, Article article, Enchere enchere) throws BusinessException {
 		BusinessException exception = new BusinessException();
-		this.validerEnchere(utilisateur,article,enchere,exception);
-				
-		if(!exception.hasErreurs())
-		{
+		this.validerEnchere(utilisateur, article, enchere, exception);
+
+		if (!exception.hasErreurs()) {
 			this.enchereDAO.insert(utilisateur, article, enchere);
-		}
-		else
-		{
+		} else {
 			throw exception;
 		}
 		return enchere;
-	}	
-	
-	public List<Enchere> selectionTout() throws BusinessException{
+	}
+
+	public List<Enchere> selectionTout() throws BusinessException {
 		return this.enchereDAO.selectAll();
 	}
-	
-	public List<Enchere> selectionParArticle(int idArticle) throws BusinessException{
+
+	public List<Enchere> selectionParArticle(int idArticle) throws BusinessException {
 		return this.enchereDAO.selectByArticle(idArticle);
 	}
-	
-	public Enchere selectionParArticleUtilisateur(int idArticle, int idUtilisateur) throws BusinessException{
+
+	public Enchere selectionParArticleUtilisateur(int idArticle, int idUtilisateur) throws BusinessException {
 		return this.enchereDAO.selectByArticleUtilisateur(idArticle, idUtilisateur);
 	}
-	
-	public List<Enchere> selectionParUtilisateur(int idUtilisateur) throws BusinessException{
+
+	public List<Enchere> selectionParUtilisateur(int idUtilisateur) throws BusinessException {
 		return this.enchereDAO.selectByArticle(idUtilisateur);
 	}
-		
-	private void validerEnchere(Utilisateur utilisateur, Article article, Enchere enchere, BusinessException businessException) {
-		if(enchere==null || utilisateur==null || article==null)
-		{
+
+	private void validerEnchere(Utilisateur utilisateur, Article article, Enchere enchere,
+			BusinessException businessException) {
+		if (enchere == null || utilisateur == null || article == null) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_ENCHERE_ERREUR);
 		}
 	}
-	
+
 	public void removeEnchere(int idEnchere) throws BusinessException {
 		this.enchereDAO.remove(idEnchere);
 	}
@@ -67,14 +62,15 @@ public class EnchereManager {
 		this.enchereDAO.update(enchere, article);
 	}
 
-	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre, Utilisateur utilisateur, int page) throws BusinessException {
+	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre,
+			Utilisateur utilisateur, int page) throws BusinessException {
 		return this.enchereDAO.selectionFiltre(encheresStatut, categorieFiltre, utilisateur, page);
 	}
 
-	public List<Article> selectionArticles(int page) throws BusinessException{
+	public List<Article> selectionArticles(int page) throws BusinessException {
 		return this.enchereDAO.selectArticles(page);
 	}
-	
+
 	public int getNbRows() throws BusinessException {
 		return this.enchereDAO.foundRows();
 	}

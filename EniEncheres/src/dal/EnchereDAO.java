@@ -22,7 +22,8 @@ public interface EnchereDAO {
 
 	public void update(Enchere enchere, Article article) throws BusinessException;
 
-	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre, Utilisateur utilisateur, int page) throws BusinessException;
+	public List<Article> selectionFiltre(List<Statut> encheresStatut, Categorie categorieFiltre,
+			Utilisateur utilisateur, int page) throws BusinessException;
 
 	public Enchere selectByArticleUtilisateur(int idArticle, int idUtilisateur) throws BusinessException;
 
