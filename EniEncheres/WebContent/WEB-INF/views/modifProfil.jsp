@@ -5,7 +5,9 @@
 	<div class="row justify-content-center mb-5">
 		<h1>Modifier mon profil</h1>
 	</div>
-
+	<c:if test="${errorOldNewSame}">
+		<div class="alert alert-danger" role="alert">Le nouveau mot de passe et le mot de passe actuel sont identiques.</div>
+	</c:if>
 	<c:if test="${errorMdp}">
 		<div class="alert alert-danger" role="alert">Le mot de passe actuel ne correspond pas.</div>
 	</c:if>

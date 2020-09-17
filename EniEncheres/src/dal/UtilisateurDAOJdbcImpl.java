@@ -19,7 +19,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ?;";
 	private static final String SELECT_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where email = ?;";
 	private static final String SELECT_BY_PSEUDO_MOT_DE_PASSE = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ? and mot_de_passe = ?;";
-
+	private static final String UPDATE_CREDIT = "UPDATE encheres.utilisateurs SET credit = ? WHERE no_utilisateur = ?";
 	@Override
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException {
 		if (utilisateur == null) {
@@ -219,6 +219,22 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(8, utilisateur.getVille());
 			pstmt.setString(9, utilisateur.getMotDePasse());
 			pstmt.setInt(10, utilisateur.getId());
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.UPDATE_UTILISATEUR_ERREUR);
+			throw businessException;
+		}
+	}
+	
+	public void updateCredit(Utilisateur utilisateur,int credit) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT);
+			pstmt.setInt(1, credit);
+			pstmt.setInt(2, utilisateur.getId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
