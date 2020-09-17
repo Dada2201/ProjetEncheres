@@ -101,7 +101,8 @@ public class ServletEncherir extends HttpServlet {
 				enchereManager.ajouter(utilisateur, this.article, enchere);
 				int credit = utilisateur.getCredit() - prix;
 				System.out.println(credit);
-				um.updateCredit(utilisateur,credit);
+				Utilisateur ucredit = um.updateCredit(utilisateur,credit);
+				request.getSession().setAttribute(Common.UTILISATEUR_NAME,ucredit);
 				System.out.println(utilisateur.getCredit());
 				
 			} catch (BusinessException e) {

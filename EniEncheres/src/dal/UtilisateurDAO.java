@@ -22,5 +22,5 @@ public interface UtilisateurDAO {
 
 	public Utilisateur selectByEmail(String email) throws BusinessException;
 	
-	public void updateCredit(Utilisateur utilisateur, int credit) throws BusinessException;
+	public Utilisateur updateCredit(Utilisateur utilisateur, int credit) throws BusinessException;
 }
