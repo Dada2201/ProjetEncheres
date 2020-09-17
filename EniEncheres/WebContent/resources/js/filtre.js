@@ -89,7 +89,8 @@ $(document).on("click", ".pagination li", function() {
 		data : {
 			page : this.value,
 			checkbox : json,
-			search : $("#searchContent").val()
+			search : $("#searchContent").val(),
+			categorie : $('#categories').val()
 		},
 		success : function(data) {
 			liste = "";

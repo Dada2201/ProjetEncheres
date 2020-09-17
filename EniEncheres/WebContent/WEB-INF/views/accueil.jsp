@@ -33,7 +33,7 @@
 							<div class="col-9">
 								<select id="categories" class="form-control" required
 									name="categorie">
-									<option>Toutes</option>
+									<option selected disable hidden>Toutes</option>
 
 									<c:forEach var="c" items="${categories}">
 										<option value='<c:out value="${c.noCategorie}"/>'><c:out
