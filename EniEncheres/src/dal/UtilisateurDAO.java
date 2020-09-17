@@ -8,7 +8,7 @@ public interface UtilisateurDAO {
 
 	public Utilisateur insert(Utilisateur utilisateur) throws BusinessException;
 
-	public List<Utilisateur> selectAll() throws BusinessException;
+	public List<Utilisateur> selectAll(int idUser) throws BusinessException;
 
 	public Utilisateur selectById(int idUtilisateur) throws BusinessException;
 

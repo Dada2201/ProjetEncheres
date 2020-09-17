@@ -43,7 +43,7 @@ public class ServletGestionUsersAdmin extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 
 			try {
-				List<Utilisateur> utilisateurs = utilisateurManager.selectionTout();
+				List<Utilisateur> utilisateurs = utilisateurManager.selectionTout(utilisateur.getId());
 				request.setAttribute("utilisateurs", utilisateurs);
 			} catch (BusinessException e) {
 				e.printStackTrace();
