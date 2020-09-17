@@ -1,11 +1,15 @@
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Masque34","Nalad","Rafael","rafanalad@gmail.com","0231215130","rue du moulin","14000","Caen","81dc9bdb52d04dc20036dbd8313ed055","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("CarlosDu13","Martin","Carl","carlos13@gmail.com","0231215131","rue de la villa","13090","Aix-En-Provence","81dc9bdb52d04dc20036dbd8313ed055","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Micheline","Halo","Micheline","michmich@gmail.com","0231215132","rue du hein","35000","Rennes","81dc9bdb52d04dc20036dbd8313ed055","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("DumontJ","Dumont","Jean","jd@gmail.com","0231215429","Avenue Dumont","13000","Marseille","81dc9bdb52d04dc20036dbd8313ed055","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Louisatak","Attac","Louis","LouisAtak@gmail.com","0231215929","rue du moulin","14000","Caen","81dc9bdb52d04dc20036dbd8313ed055","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Jojo","Lorent","Jordan","jl@gmail.com","0231215129","rue du moulin","14000","Caen","81dc9bdb52d04dc20036dbd8313ed055","1000",0);
+select * from utilisateurs
+
+
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Masque34","Nalad","Rafael","rafanalad@gmail.com","0231215130","rue du moulin","14000","Caen","3cc31cd246149aec68079241e71e98f6","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("CarlosDu13","Martin","Carl","carlos13@gmail.com","0231215131","rue de la villa","13090","Aix-En-Provence","3cc31cd246149aec68079241e71e98f6","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Micheline","Halo","Micheline","michmich@gmail.com","0231215132","rue du hein","35000","Rennes","3cc31cd246149aec68079241e71e98f6","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("DumontJ","Dumont","Jean","jd@gmail.com","0231215429","Avenue Dumont","13000","Marseille","3cc31cd246149aec68079241e71e98f6","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Louisatak","Attac","Louis","LouisAtak@gmail.com","0231215929","rue du moulin","14000","Caen","3cc31cd246149aec68079241e71e98f6","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Jojo","Lorent","Jordan","jl@gmail.com","0231215129","rue du moulin","14000","Caen","3cc31cd246149aec68079241e71e98f6","1000",0);
 
 select * from articles_vendus
+select * from categories;
 
 insert into articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) values("Cafetiere","Elle fait le café","2020-09-10","2020-09-30",30,0,1,16);
 insert into articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) values("Maison 200m","15 chambres","2020-09-10","2020-09-30",200000,0,2,7);
