@@ -12,7 +12,7 @@
 </c:if>
 <div class="container py-5">
 	<div class="row justify-content-center">
-		<h1>${h1}</h1>
+		<h1>Détail de l'Enchère</h1>
 	</div>
 	<div class="row">
 		<div class="col-md-3">

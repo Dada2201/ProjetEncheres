@@ -177,8 +177,7 @@ public class ServletHome extends HttpServlet {
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
 							if (checkboxList.contains("ventesend") || checkboxList.contains("ventesencours")
-									|| checkboxList.contains("ventesnon")
-									|| checkboxList.contains("encheresouvertes")) {
+									|| checkboxList.contains("ventesnon")) {
 								article.setStatut(Article.getStatut(article, utilisateur));
 							} else {
 								article.setEncheres(enchereManager.selectionParArticle(article.getNoArticle()));
