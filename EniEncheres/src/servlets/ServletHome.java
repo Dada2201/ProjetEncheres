@@ -67,7 +67,6 @@ public class ServletHome extends HttpServlet {
 			if (request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {
 
 				if(search == null && categorie == null) {
-					encheresStatut.add(Enchere.Statut.EN_COURS);
 					listeArticles = enchereManager.selectionArticles(page != null ? Integer.parseInt(page) - 1 : 0);
 					nbRows = enchereManager.getNbRows();
 
