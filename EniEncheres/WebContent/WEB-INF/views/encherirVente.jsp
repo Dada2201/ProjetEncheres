@@ -59,10 +59,10 @@
 				<p>Vendeur</p>
 				<p>${article.utilisateur.pseudo}</p>
 			</div>
-			<c:if test="${enchere.montantEnchere < utilisateur.credit}">
+			<c:if test="${enchere == null || enchere.montantEnchere < utilisateur.credit}">
 				<form action="encherir" method="post" class="form-group row">
 					<p>Ma proposition</p>
-					<input type="number" name="prix" min="${enchere.montantEnchere+1}" /> <input type="submit"
+					<input type="number" name="prix" class="form-control" min="${enchere.montantEnchere+1}" /> <input type="submit"
 						class="btn btn-primary" value="Enchérir" />
 				</form>
 			</c:if>
