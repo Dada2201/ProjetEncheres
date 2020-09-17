@@ -116,8 +116,17 @@ public class ServletHome extends HttpServlet {
 						listeArticles = articleManager.selectionFiltre(new ArrayList<Article.Statut>(), categorieFiltre,
 								utilisateur, null, page != null ? Integer.parseInt(page) - 1 : 0);
 						nbRows = articleManager.getNbRows();
+						for (Article article : listeArticles) {
+							Common.setImg(article, getServletContext());
+							article.setStatut(Article.getStatut(article, utilisateur));
+						}
 						listeArticles.addAll(enchereManager.selectionFiltre(new ArrayList<Enchere.Statut>(),
 								categorieFiltre, utilisateur, page != null ? Integer.parseInt(page) - 1 : 0));
+						for (Article article : listeArticles) {
+							Common.setImg(article, getServletContext());
+							article.setEncheres(enchereManager.selectionParArticle(article.getNoArticle()));
+							article.setStatut(Enchere.getStatut(article, utilisateur));
+						}
 						nbRows += enchereManager.getNbRows();
 					}
 					for (Article article : listeArticles) {

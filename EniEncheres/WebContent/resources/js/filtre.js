@@ -84,6 +84,7 @@ $(document).on("click", ".pagination li", function() {
 		checkedCheckbox.push($("#ventesend").attr('id'))
 	}
 	var json = JSON.stringify(checkedCheckbox);
+	alert($('#categories').val());
 	$.ajax({
 		url : 'ServletHome',
 		data : {
