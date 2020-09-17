@@ -1,9 +1,3 @@
--- Script de création de la base de données ENCHERES
---   type :      SQL Server 2012
---
-
-SET autocommit = 0;
-
 CREATE TABLE CATEGORIES (
     no_categorie   INTEGER auto_increment NOT NULL PRIMARY KEY,
     libelle        VARCHAR(30) NOT NULL
@@ -30,10 +24,10 @@ ALTER TABLE RETRAITS ADD constraint retrait_pk PRIMARY KEY  (no_article);
 
 CREATE TABLE UTILISATEURS (
     no_utilisateur   INTEGER auto_increment NOT NULL PRIMARY KEY,
-    pseudo           VARCHAR(30) NOT NULL,
+    pseudo           VARCHAR(30) UNIQUE NOT NULL,
     nom              VARCHAR(30) NOT NULL,
     prenom           VARCHAR(30) NOT NULL,
-    email            VARCHAR(255) NOT NULL,
+    email            VARCHAR(255) UNIQUE NOT NULL,
     telephone        VARCHAR(15),
     rue              VARCHAR(30) NOT NULL,
     code_postal      VARCHAR(10) NOT NULL,
@@ -83,4 +77,3 @@ ALTER TABLE ARTICLES_VENDUS
         REFERENCES utilisateurs ( no_utilisateur )
 ON DELETE NO ACTION 
     ON UPDATE no action ;
-
