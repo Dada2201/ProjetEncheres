@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,7 +54,11 @@ public class ServletDetailEnchere extends HttpServlet {
 			}
 
 			Retrait retrait = retraitManager.selectById(article.getNoArticle());
-			Enchere enchere = enchereManager.selectionParArticle(article.getNoArticle()).get(0);
+			List<Enchere> encheres = enchereManager.selectionParArticle(article.getNoArticle());
+			Enchere enchere = null;
+			if(encheres != null && encheres.size() != 0) {
+				enchere = encheres.get(0);
+			}
 			request.setAttribute("enchere", enchere);
 			request.setAttribute("retrait", retrait);
 			request.setAttribute("article", article);
@@ -61,11 +66,13 @@ public class ServletDetailEnchere extends HttpServlet {
 			Article.Statut statut = Enchere.getStatut(article,
 					(Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
 			
-
 			switch (statut) {
 			case EN_COURS_ENCHERE:
-				h1 = "L'enchère la plus haute pour le moment est de la part de " + enchere.getUtilisateur().getPseudo()
-						+ " !";
+				if(enchere!=null) {
+					h1 = "L'enchère la plus haute pour le moment est de la part de " + enchere.getUtilisateur().getPseudo() + " !";
+				}else {
+					h1 = "L'enchère à débuté, mais il n'y a pas encore d'enchère, soyer le premier !";
+				}
 				break;
 			case CLOSE:
 				h1 = "L'enchère à été remportéé par " + enchere.getUtilisateur().getPseudo() + " !";
