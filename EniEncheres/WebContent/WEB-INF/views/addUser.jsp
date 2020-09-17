@@ -18,52 +18,52 @@
 		<div class="row">
 			<div class="col-md">
 				<div class="form-group row">
-					<label class="col-4">Pseudo :</label> <input type="text"
+					<label class="col-4">Pseudo</label> <input type="text"
 						class="form-control col-8" pattern="^[a-zA-Z0-9_]*$" name="pseudo"
 						maxlength="30" required autofocus>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Nom :</label> <input type="text"
+					<label class="col-4">Nom</label> <input type="text"
 						class="form-control col-8"
 						pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="nom" maxlength="30"
 						required>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Prénom :</label> <input type="text"
+					<label class="col-4">Prénom</label> <input type="text"
 						class="form-control col-8"
 						pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" name="prenom"
 						maxlength="30" required>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Email :</label> <input type="email"
+					<label class="col-4">Email</label> <input type="email"
 						class="form-control col-8" maxlength="20" name="email" required>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Téléphone :</label> <input type="tel"
+					<label class="col-4">Téléphone</label> <input type="tel"
 						class="form-control col-8" pattern="^[0-9_]*$" maxlength="10"
 						name="telephone">
 				</div>
 			</div>
 			<div class="col-md">
 				<div class="form-group row">
-					<label class="col-4">Rue :</label> <input type="text"
+					<label class="col-4">Rue</label> <input type="text"
 						class="form-control col-8"
 						pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" maxlength="30"
 						name="rue" required>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Code Postal :</label> <input type="text"
+					<label class="col-4">Code Postal</label> <input type="text"
 						class="form-control col-8" pattern="^[0-9_]*$" maxlength="5"
 						name="codePostal" required>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Ville :</label> <input type="text"
+					<label class="col-4">Ville</label> <input type="text"
 						class="form-control col-8"
 						pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" maxlength="30"
 						name="ville" required>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Mot de passe :</label> <input type="password"
+					<label class="col-4">Mot de passe</label> <input type="password"
 						class="form-control col-8"
 						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
 						onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Respectez le format du mot de passe (1minuscule, 1Majuscule, 1chiffre, 1symbole et min 8chars ' : ''); if(this.checkValidity()) 
@@ -72,7 +72,7 @@
 					<!-- Le pattern du mot de passe : 1Maj ,1Min, 1chiffre, 1symbol 8min 255max -->
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Confirmation :</label> <input type="password"
+					<label class="col-4">Confirmation</label> <input type="password"
 						class="form-control col-8"
 						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
 						onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');"

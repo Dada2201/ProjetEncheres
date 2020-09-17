@@ -30,7 +30,7 @@ public class ServletAddUser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute(Common.PAGE_TITLE, "Ajout d'un utilisateur");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/addUser.jsp");
 		rd.forward(request, response);
 	}
 
@@ -67,7 +67,7 @@ public class ServletAddUser extends HttpServlet {
 
 			if (utilisateur == null) {
 				utilisateur = utilisateurManager.ajouter(new Utilisateur(0, pseudo, nom, prenom, email, telephone, rue,
-						codePostal, ville, Common.getMd5(motDePasse), 0, false));
+						codePostal, ville, Common.getMd5(motDePasse), 1000, false));
 				HttpSession currentUserSession = request.getSession();
 				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
 				// 5 minutes
@@ -79,7 +79,7 @@ public class ServletAddUser extends HttpServlet {
 			}
 
 			if (erreurInscription) {
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/account.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/addUser.jsp");
 				rd.forward(request, response);
 			} else {
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/modifProfil.jsp");

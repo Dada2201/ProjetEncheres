@@ -7,17 +7,17 @@
 	</div>
 	<form action="editPassword" method="post">
 		<div class="form-group row mx-auto col-md-6">
-			<label class="col-4">Email :</label> <input type="email"
+			<label class="col-4">Email</label> <input type="email"
 				class="form-control col-8" placeholder="Email" maxlength="30"
 				name="email" required autofocus>
 		</div>
 		<div class="form-group row mx-auto col-md-6">
-			<label class="col-4">Mot de passe :</label> <input type="password"
+			<label class="col-4">Mot de passe</label> <input type="password"
 				class="form-control col-8" placeholder="Mot de passe"
 				maxlength="255" name="motDePasse" required>
 		</div>
 		<div class="form-group row mx-auto col-md-6">
-			<label class="col-4">Répéter le mot de passe :</label> <input
+			<label class="col-4">Répéter le mot de passe</label> <input
 				type="password" class="form-control col-8"
 				placeholder="Répéter le mot de passe" maxlength="255"
 				name="confirmationMotDePasse" required>

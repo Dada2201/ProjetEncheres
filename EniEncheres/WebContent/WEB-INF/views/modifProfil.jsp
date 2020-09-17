@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="partial/header/connected.jspf"%>
-<div class="container">
-	<div class="row justify-content-center">
-		<h1>Mon profil</h1>
+<div class="container py-5">
+	<div class="row justify-content-center mb-5">
+		<h1>Modifier mon profil</h1>
 	</div>
 
 	<c:if test="${errorMdp}">
@@ -20,46 +20,46 @@
 						name="pseudo">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Nom :</label> <input type="text"
+					<label class="col-4">Nom</label> <input type="text"
 						value="${utilisateur.nom}" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required class="form-control col-8" name="nom">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Prénom :</label> <input type="text"
+					<label class="col-4">Prénom</label> <input type="text"
 						value="${utilisateur.prenom}" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required class="form-control col-8"
 						name="prenom">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Email :</label> <input type="email"
+					<label class="col-4">Email</label> <input type="email"
 						value="${utilisateur.email}" required class="form-control col-8"
 						name="email">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Téléphone :</label> <input type="tel"
+					<label class="col-4">Téléphone</label> <input type="tel"
 						value="${utilisateur.telephone}" class="form-control col-8"
 						name="telephone">
 				</div>
 			</div>
 			<div class="col-md">
 				<div class="form-group row">
-					<label class="col-4">Rue :</label> <input type="text"
+					<label class="col-4">Rue</label> <input type="text"
 						value="${utilisateur.rue}" pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required class="form-control col-8" name="rue">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Code Postal :</label> <input type="text"
+					<label class="col-4">Code Postal</label> <input type="text"
 						value="${utilisateur.codePostal}" required maxlength="5" pattern="^[0-9_]*$" class="form-control col-8"
 						name="codepostal">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Ville :</label> <input type="text"
+					<label class="col-4">Ville</label> <input type="text"
 						value="${utilisateur.ville}" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$" required class="form-control col-8"
 						name="ville">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Mot de passe actuel :</label> <input
+					<label class="col-4">Mot de passe actuel</label> <input
 						type="password" class="form-control col-8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$" required name="mdpactuel">
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Nouveau mot de passe :</label> <input
+					<label class="col-4">Nouveau mot de passe</label> <input
 						type="password" class="form-control col-8" 
 						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
 						onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Respectez le format du mot de passe (1minuscule, 1Majuscule, 1chiffre, 1symbole et min 8chars ' : ''); if(this.checkValidity()) 
@@ -67,7 +67,7 @@
 						maxlength="255" name="mdpnouveau" required>
 				</div>
 				<div class="form-group row">
-					<label class="col-4">Confirmation :</label> <input type="password"
+					<label class="col-4">Confirmation</label> <input type="password"
 						class="form-control col-8" 
 						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,}$"
 						onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');"

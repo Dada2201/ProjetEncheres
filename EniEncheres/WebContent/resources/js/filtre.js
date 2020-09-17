@@ -44,6 +44,23 @@ $(document).ready(function() {
 		});
 	});
 
+	$('#searchButton').on('click', function() {
+		$.ajax({
+			url : 'ServletHome',
+			data : {
+				search : $("#searchContent").val()
+			},
+			success : function(data) {
+				liste = "";
+				liste = $(data).find('#liste').html();
+				$('#liste').filter(function() {
+					return $(this).val() == "";
+				});
+				$('#liste').html(liste);
+			}
+		});
+	});
+
 });
 
 $(document).on("click", ".pagination li", function() {
@@ -71,7 +88,8 @@ $(document).on("click", ".pagination li", function() {
 		url : 'ServletHome',
 		data : {
 			page : this.value,
-			checkbox : json
+			checkbox : json,
+			search : $("#searchContent").val()
 		},
 		success : function(data) {
 			liste = "";

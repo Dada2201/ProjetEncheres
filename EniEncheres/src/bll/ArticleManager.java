@@ -53,8 +53,8 @@ public class ArticleManager {
 	}
 
 	public List<Article> selectionFiltre(List<Statut> arcticleStatut, Categorie categorieFiltre,
-			Utilisateur utilisateur, int page) throws BusinessException {
-		return this.articleDAO.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur, page);
+			Utilisateur utilisateur, String search, int page) throws BusinessException {
+		return this.articleDAO.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur, search, page);
 	}
 
 	public Article update(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException {

@@ -41,37 +41,47 @@ public class ServletEditArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
+		if (Common.isConnected(request) && Common.isNumeric(request.getParameter("enchere"))) {
+			try {
+				CategoriesManager categoriesManager = new CategoriesManager();
+				ArticleManager articleManager = new ArticleManager();
+				RetraitManager retraitManager = new RetraitManager();
 
-			CategoriesManager categoriesManager = new CategoriesManager();
-			ArticleManager articleManager = new ArticleManager();
-			RetraitManager retraitManager = new RetraitManager();
+				this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
 
-			this.article = articleManager.selectById(Integer.parseInt(request.getParameter("enchere")));
+				Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME);
+				if (this.article!=null && utilisateur.getId().equals(this.article.getUtilisateur().getId())) {
+					File f = new File(getServletContext().getRealPath("/") + "resources\\img\\articles\\"
+							+ this.article.getNoArticle() + ".png");
 
-			File f = new File(getServletContext().getRealPath("/") + "resources\\img\\articles\\"
-					+ this.article.getNoArticle() + ".png");
+					if (f.exists() && !f.isDirectory()) {
+						this.article.setImg("resources\\img\\articles\\" + this.article.getNoArticle() + ".png");
+					} else {
+						this.article.setImg("resources\\img\\articles\\article.png");
+					}
 
-			if (f.exists() && !f.isDirectory()) {
-				this.article.setImg("resources\\img\\articles\\" + this.article.getNoArticle() + ".png");
-			} else {
-				this.article.setImg("resources\\img\\articles\\article.png");
+					List<Categorie> categories = categoriesManager.selectionTout();
+					Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
+
+					request.setAttribute("article", this.article);
+					request.setAttribute("categories", categories);
+					request.setAttribute("retrait", retrait);
+
+					request.setAttribute(Common.PAGE_TITLE, "Modifier un article");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/editVente.jsp");
+					rd.forward(request, response);
+				} else {
+					response.sendRedirect(request.getContextPath());
+				}
+			} catch (BusinessException e) {
+				System.out.println("sdds");
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			} catch (Exception e) {
+				System.out.println(e);
 			}
-
-			List<Categorie> categories = categoriesManager.selectionTout();
-			Retrait retrait = retraitManager.selectById(this.article.getNoArticle());
-
-			request.setAttribute("article", this.article);
-			request.setAttribute("categories", categories);
-			request.setAttribute("retrait", retrait);
-		} catch (BusinessException e) {
-			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
+		} else {
+			response.sendRedirect(request.getContextPath());
 		}
-		request.setAttribute(Common.PAGE_TITLE, "Modifier un article");
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/editVente.jsp");
-		rd.forward(request, response);
 	}
 
 	/**

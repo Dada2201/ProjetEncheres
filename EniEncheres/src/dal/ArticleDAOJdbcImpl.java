@@ -17,6 +17,7 @@ import bo.Utilisateur;
 class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String STRING_UTILISATEUR = "numero_utilisateur";
 	private static final String STRING_CATEGORIE = "numero_categorie";
+	private static final String STRING_SEARCH = "search";
 
 	private static final String SELECT_ALL = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur LIMIT "
 			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
@@ -44,6 +45,9 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String FILTER_OPEN = String.format(
 			"('%s' BETWEEN articles_vendus.date_debut_encheres AND articles_vendus.date_fin_encheres)",
 			new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+
+	private static final String FILTER_SEARCH = String.format(
+			"(articles_vendus.nom_article LIKE '%%%s%%')", STRING_SEARCH);
 
 	@Override
 	public List<Article> selectAll() throws BusinessException {
@@ -181,7 +185,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Categorie categorie,
-			Utilisateur utilisateur, int page) throws BusinessException {
+			Utilisateur utilisateur, String search, int page) throws BusinessException {
 		List<Article> listeArticle = new ArrayList<Article>();
 		String filter = "";
 		if (arcticleStatut != null) {
@@ -212,6 +216,12 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			filter = FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie()));
 		} else if (!filter.equals("") && categorie != null) {
 			filter += " OR " + FILTER_CATEGORIE.replace(STRING_CATEGORIE, String.valueOf(categorie.getNoCategorie())).replace(STRING_UTILISATEUR, String.valueOf(utilisateur.getId()));
+		}
+
+		if (filter.equals("") && search != null) {
+			filter = FILTER_SEARCH.replace(STRING_SEARCH, search);
+		} else if (!filter.equals("") && search != null) {
+			filter += " OR " + FILTER_SEARCH.replace(STRING_SEARCH, search);
 		}
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
