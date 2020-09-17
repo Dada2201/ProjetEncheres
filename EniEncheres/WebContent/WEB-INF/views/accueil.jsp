@@ -24,7 +24,7 @@
 								<span class="input-group-text">&#x1F50D;</span>
 							</div>
 							<input type="text" class="form-control"
-								placeholder="Le nom de l'aticle contient">
+								placeholder="Le nom de l'aticle contient" id="searchContent">
 						</div>
 
 						<div class="form-group row">
@@ -46,7 +46,7 @@
 
 				</div>
 				<c:if test="${logged}">
-					<form>
+					<div>
 						<div class="row justify-content-around">
 							<div class="col-md-4">
 								<div class="radio">
@@ -85,12 +85,12 @@
 								</div>
 							</div>
 						</div>
-					</form>
+					</div>
 				</c:if>
 			</div>
 			<div>
 				<div class="col-md-6 justify-content-center align-self-center">
-					<button class="btn btn-primary">Rechercher</button>
+					<button id="searchButton" class="btn btn-primary">Rechercher</button>
 				</div>
 			</div>
 		</div>
@@ -131,6 +131,23 @@
 				url : 'ServletHome',
 				data : {
 					categorie : this.value
+				},
+				success : function(data) {
+					liste = "";
+					liste = $(data).find('#liste').html();
+					$('#liste').filter(function() {
+						return $(this).val() == "";
+					});
+					$('#liste').html(liste);
+				}
+			});
+		});
+
+		$('#searchButton').on('click', function() {
+			$.ajax({
+				url : 'ServletHome',
+				data : {
+					search : $("#searchContent").val()
 				},
 				success : function(data) {
 					liste = "";

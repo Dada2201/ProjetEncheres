@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -58,21 +59,22 @@ public class ServletHome extends HttpServlet {
 		List<Article.Statut> arcticleStatut = new ArrayList<>();
 
 		List<Article> listeArticles = new ArrayList<>();
-		int nbRows = 0;
+		int nbRows = 0;			
+		String search = request.getParameter("search");
 		String page = request.getParameter("page");
-
 		try {
 			if (request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {
+				if(search == null) {
+					encheresStatut.add(Enchere.Statut.EN_COURS);
+					listeArticles = enchereManager.selectionArticles(page != null ? Integer.parseInt(page) - 1 : 0);
+					nbRows = enchereManager.getNbRows();
 
-				encheresStatut.add(Enchere.Statut.EN_COURS);
-				listeArticles = enchereManager.selectionArticles(page != null ? Integer.parseInt(page) - 1 : 0);
-				nbRows = enchereManager.getNbRows();
-
-				for (Article article : listeArticles) {
-					Common.setImg(article, getServletContext());
+					for (Article article : listeArticles) {
+						Common.setImg(article, getServletContext());
+					}
+					request.setAttribute("listeArticles", listeArticles);
+					request.setAttribute("nbItems", nbRows);
 				}
-				request.setAttribute("listeArticles", listeArticles);
-				request.setAttribute("nbItems", nbRows);
 
 			} else {
 				Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME);
@@ -82,7 +84,7 @@ public class ServletHome extends HttpServlet {
 					categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));
 					if (arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) {
 						listeArticles = articleManager.selectionFiltre(new ArrayList<Article.Statut>(), categorieFiltre,
-								utilisateur, page != null ? Integer.parseInt(page) - 1 : 0);
+								utilisateur, null, page != null ? Integer.parseInt(page) - 1 : 0);
 						nbRows = articleManager.getNbRows();
 						listeArticles.addAll(enchereManager.selectionFiltre(new ArrayList<Enchere.Statut>(),
 								categorieFiltre, utilisateur, page != null ? Integer.parseInt(page) - 1 : 0));
@@ -120,17 +122,17 @@ public class ServletHome extends HttpServlet {
 					}
 
 					try {
-						if(encheresStatut.size() != 0) {
+						if (encheresStatut.size() != 0) {
 							listeArticles = enchereManager.selectionFiltre(encheresStatut, categorieFiltre, utilisateur,
 									page != null ? Integer.parseInt(page) - 1 : 0);
 							nbRows += enchereManager.getNbRows();
 						}
-						if(arcticleStatut.size() != 0) {
+						if (arcticleStatut.size() != 0) {
 							listeArticles = articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur,
-									page != null ? Integer.parseInt(page) - 1 : 0);
+									null, page != null ? Integer.parseInt(page) - 1 : 0);
 							nbRows += articleManager.getNbRows();
 						}
-						
+
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
 							if (checkboxList.contains("ventesend") || checkboxList.contains("ventesencours")
@@ -150,6 +152,21 @@ public class ServletHome extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
+			}
+
+			if (search != null && Pattern.matches("^[a-zA-Z 0-9]+$", search)) {
+				search = search.trim();
+				try {
+					listeArticles.addAll(articleManager.selectionFiltre(null, null, null, search, page != null ? Integer.parseInt(page) - 1 : 0));
+					for (Article article : listeArticles) {
+						Common.setImg(article, getServletContext());
+					}
+					nbRows += articleManager.getNbRows();
+				} catch (BusinessException e) {
+					e.printStackTrace();
+				}
+				request.setAttribute("listeArticles", listeArticles);
+				request.setAttribute("nbItems", nbRows);
 			}
 
 		} catch (BusinessException e2) {
@@ -173,6 +190,6 @@ public class ServletHome extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		this.doGet(request, response);
 	}
 }
