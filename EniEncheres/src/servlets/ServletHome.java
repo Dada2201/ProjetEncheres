@@ -169,7 +169,7 @@ public class ServletHome extends HttpServlet {
 						if(listeArticles.size() != 6) {
 							if (arcticleStatut.size() != 0) {
 								listeArticles.addAll(articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur,
-										null, page != null ? Integer.parseInt((nbRows/6)+page) - 1 : 0, 5));
+										null, page != null ? Integer.parseInt((nbRows/6)+page) - 1 : 0, Common.NB_ITEMS_PAGE-listeArticles.size()));
 								nbRows += articleManager.getNbRows();
 							}
 						}
