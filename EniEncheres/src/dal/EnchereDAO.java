@@ -30,4 +30,6 @@ public interface EnchereDAO {
 	public List<Article> selectArticles(int page) throws BusinessException;
 
 	public int foundRows() throws BusinessException;
+
+	public void removeUtilisateur(int idUtilisateur) throws BusinessException;
 }

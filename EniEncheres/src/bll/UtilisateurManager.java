@@ -33,7 +33,7 @@ public class UtilisateurManager {
 		return this.utilisateurDAO.selectById(id);
 	}
 
-	public void removeListe(int idUtilisateur) throws BusinessException {
+	public void remove(int idUtilisateur) throws BusinessException {
 		this.utilisateurDAO.removeUtilisateur(idUtilisateur);
 	}
 

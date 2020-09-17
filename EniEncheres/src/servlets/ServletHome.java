@@ -95,7 +95,7 @@ public class ServletHome extends HttpServlet {
 				if (search != null && Pattern.matches("^[a-zA-Z 0-9]+$", search)) {
 					search = search.trim();
 					try {
-						listeArticles.addAll(articleManager.selectionFiltre(null, null, null, search, page != null ? Integer.parseInt(page) - 1 : 0));
+						listeArticles.addAll(articleManager.selectionFiltre(null, null, null, search, page != null ? Integer.parseInt(page) - 1 : 0, Common.NB_ITEMS_PAGE));
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
 						}
@@ -110,11 +110,11 @@ public class ServletHome extends HttpServlet {
 			} else {
 				Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 
-				if (categorie != null) {
+				if (categorie != null && !categorie.equals("Toutes")) {
 					categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));
 					if (arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) {
 						listeArticles = articleManager.selectionFiltre(new ArrayList<Article.Statut>(), categorieFiltre,
-								utilisateur, null, page != null ? Integer.parseInt(page) - 1 : 0);
+								utilisateur, null, page != null ? Integer.parseInt(page) - 1 : 0, Common.NB_ITEMS_PAGE);
 						nbRows = articleManager.getNbRows();
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
@@ -166,10 +166,12 @@ public class ServletHome extends HttpServlet {
 									page != null ? Integer.parseInt(page) - 1 : 0));
 							nbRows += enchereManager.getNbRows();
 						}
-						if (arcticleStatut.size() != 0) {
-							listeArticles.addAll(articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur,
-									null, page != null ? Integer.parseInt(page) - 1 : 0));
-							nbRows += articleManager.getNbRows();
+						if(listeArticles.size() != 6) {
+							if (arcticleStatut.size() != 0) {
+								listeArticles.addAll(articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur,
+										null, page != null ? Integer.parseInt((nbRows/6)+page) - 1 : 0, 5));
+								nbRows += articleManager.getNbRows();
+							}
 						}
 
 						for (Article article : listeArticles) {
@@ -195,7 +197,7 @@ public class ServletHome extends HttpServlet {
 				if (search != null && Pattern.matches("^[a-zA-Z 0-9]+$", search)) {
 					search = search.trim();
 					try {
-						listeArticles.addAll(articleManager.selectionFiltre(null, null, null, search, page != null ? Integer.parseInt(page) - 1 : 0));
+						listeArticles.addAll(articleManager.selectionFiltre(null, null, null, search, page != null ? Integer.parseInt(page) - 1 : 0, Common.NB_ITEMS_PAGE));
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
 						}

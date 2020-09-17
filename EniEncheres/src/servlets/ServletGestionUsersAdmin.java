@@ -85,7 +85,8 @@ public class ServletGestionUsersAdmin extends HttpServlet {
 						retraitManager.removeArticle(article.getNoArticle());
 						articleManager.removeArticle(article.getNoArticle());
 					}
-					utilisateurManager.removeListe(utilisateurRemoved.getId());
+					enchereManager.removeEnchereUtilisateur(utilisateurRemoved.getId());
+					utilisateurManager.remove(utilisateurRemoved.getId());
 				}
 			} catch (BusinessException e) {
 				e.printStackTrace();

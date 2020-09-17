@@ -23,8 +23,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
 	private static final String SELECT_BY_ID = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
 	private static final String SELECT_BY_UTILISATEUR = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE utilisateurs.no_utilisateur = ?";
-	private static final String SELECT_FILTRE = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE (%s) LIMIT "
-			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
+	private static final String SELECT_FILTRE = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE (%s) LIMIT ? OFFSET ?";
 	private static final String SELECT_ROWS = "select found_rows() as nbRows;";
 
 	private static final String REMOVE = "DELETE FROM encheres.articles_vendus WHERE no_article = ?";
@@ -210,7 +209,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	@Override
 	public List<Article> selectionFiltre(List<Article.Statut> arcticleStatut, Categorie categorie,
-			Utilisateur utilisateur, String search, int page) throws BusinessException {
+			Utilisateur utilisateur, String search, int page, int nbItems) throws BusinessException {
 		List<Article> listeArticle = new ArrayList<Article>();
 		String filter = "";
 		if (arcticleStatut != null) {
@@ -252,7 +251,8 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
-			pstmt.setLong(1, page * Common.NB_ITEMS_PAGE);
+			pstmt.setLong(1, nbItems);
+			pstmt.setLong(2, page * Common.NB_ITEMS_PAGE);
 			System.out.println(pstmt);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {

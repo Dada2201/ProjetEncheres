@@ -98,7 +98,7 @@ public class ServletModificationProfil extends HttpServlet {
 					Utilisateur u = (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 					UtilisateurManager um = new UtilisateurManager();
 					try {
-						um.removeListe(u.getId());
+						um.remove(u.getId());
 					} catch (BusinessException e) {
 						e.printStackTrace();
 					} finally {

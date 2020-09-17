@@ -12,7 +12,7 @@ import bo.Utilisateur;
 class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT = "INSERT INTO encheres.utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)VALUES(?,?,?,?,?,?,?,?,?,?,?);";
-	private static final String DELETE_LISTE = "DELETE from encheres.utilisateurs where no_utilisateur=?";
+	private static final String DELETE = "DELETE from encheres.utilisateurs where no_utilisateur=?";
 	private static final String UPDATE = "UPDATE encheres.utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur = ?";
 	private static final String SELECT_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs;";
 	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where no_utilisateur = ?;";
@@ -190,7 +190,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void removeUtilisateur(int idUtilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
-			PreparedStatement pstmt = cnx.prepareStatement(DELETE_LISTE);
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE);
 			pstmt.setInt(1, idUtilisateur);
 			pstmt.executeUpdate();
 			pstmt.close();
