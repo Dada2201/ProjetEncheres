@@ -62,5 +62,8 @@ public class UtilisateurManager {
 	public Utilisateur selectionParEmail(String email) throws BusinessException {
 		return this.utilisateurDAO.selectByEmail(email);
 	}
-
+	
+	public void updateCredit(Utilisateur utilisateur, int credit) throws BusinessException{
+		this.utilisateurDAO.updateCredit(utilisateur,credit);
+	}
 }

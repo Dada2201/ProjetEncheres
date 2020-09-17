@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import bll.ArticleManager;
 import bll.EnchereManager;
 import bll.RetraitManager;
+import bll.UtilisateurManager;
 import bo.Article;
 import bo.Common;
 import bo.Enchere;
@@ -89,14 +90,20 @@ public class ServletEncherir extends HttpServlet {
 			throws ServletException, IOException {
 
 		Utilisateur utilisateur = ((Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME));
+		UtilisateurManager um = new UtilisateurManager();
 		EnchereManager enchereManager = new EnchereManager();
 		int prix = Integer.parseInt(request.getParameter("prix"));
 		if(prix > this.enchere.getMontantEnchere()) {
 			Enchere enchere = new Enchere((Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME),
 					new Date(), prix);
-
+			
 			try {
 				enchereManager.ajouter(utilisateur, this.article, enchere);
+				int credit = utilisateur.getCredit() - prix;
+				System.out.println(credit);
+				um.updateCredit(utilisateur,credit);
+				System.out.println(utilisateur.getCredit());
+				
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}

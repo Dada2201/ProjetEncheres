@@ -23,7 +23,7 @@
 					href="${pageContext.request.contextPath}/ajoutArticle">Vendre
 						un article</a></li>
 				<li class="nav-item mr-auto"><a class="nav-link text-light"
-					href="${pageContext.request.contextPath}/profil">Mon profil</a></li>
+					href="${pageContext.request.contextPath}/profil">Mon profil (${utilisateur.credit} crédits)</a></li>
 				<c:if test="${utilisateur.isAdmin}">
 					<li class="nav-item mr-auto"><a class="nav-link text-light"
 						href="${pageContext.request.contextPath}/gestionUtilisateurs">Gestion des utilisateurs</a></li>
