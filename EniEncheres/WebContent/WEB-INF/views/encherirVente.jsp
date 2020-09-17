@@ -61,8 +61,8 @@
 			</div>
 			<c:if test="${enchere == null || enchere.montantEnchere < utilisateur.credit}">
 				<form action="encherir" method="post" class="form-group row">
-					<p>Ma proposition</p>
-					<input type="number" name="prix" class="form-control" min="${enchere.montantEnchere+1}" /> <input type="submit"
+					<p class ="col-md-4">Ma proposition</p>
+					<input class="col-md-8" type="number" name="prix" class="form-control" min="${enchere.montantEnchere+1}" /> <input type="submit"
 						class="btn btn-primary" value="Enchérir" />
 				</form>
 			</c:if>

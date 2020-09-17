@@ -83,6 +83,8 @@ public class ServletDetailVente extends HttpServlet {
 									for (Utilisateur utilisateurTemp : listUtilisateurs) {
 										if (!utilisateurTemp.getId().equals(enchere.getUtilisateur().getId())) {
 											listUtilisateurs.add(enchere.getUtilisateur());
+										}else {
+											continue;
 										}
 									}
 								}
