@@ -123,7 +123,7 @@ public class Article {
 			return Article.Statut.NOT_READY;
 		} else if (new Date(new Date().getTime() - (1000 * 60 * 60 * 24)).after(article.getDateFin())) {
 			return Article.Statut.CLOSE;
-		} else if (article.getDateDebut().compareTo(new Date()) <= 0) {
+		} else if (article.getDateDebut().compareTo(new Date()) <= 0 && !article.getUtilisateur().getId().equals(currentUtilisateur.getId())) {
 			return Article.Statut.OPEN;
 		} else {
 			return Article.Statut.EN_COURS;

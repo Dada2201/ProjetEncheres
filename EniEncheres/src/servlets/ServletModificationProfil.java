@@ -85,7 +85,6 @@ public class ServletModificationProfil extends HttpServlet {
 				}
 				
 				if(Common.getMd5(actuelMdp).equals(currentUser.getMotDePasse())) {
-					System.out.println("yes");
 					Utilisateur updatedUser = new Utilisateur(currentUser.getId(), pseudo, nom, prenom, email, telephone,
 							rue, codePostal, ville, Common.getMd5(motDePasse), currentUser.getCredit(), currentUser.getIsAdmin());
 					try {
