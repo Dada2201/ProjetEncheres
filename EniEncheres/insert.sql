@@ -35,4 +35,17 @@ insert into retraits (no_article,rue,code_postal,ville) values(11,"rue des sport
 insert into retraits (no_article,rue,code_postal,ville) values(12,"rue des marins",14000,"Caen");
 insert into retraits (no_article,rue,code_postal,ville) values(13,"rue de l'or",14000,"Caen");
 
+select * from encheres;
+
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (2,1,"2020-09-16",31);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (3,1,"2020-09-17",40);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (1,3,"2020-09-17",105);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (2,3,"2020-09-17",110);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (1,4,"2020-09-16",85);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (3,5,"2020-09-17",155);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (1,7,"2020-09-17",400);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (2,8,"2020-09-15",55);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (4,11,"2020-09-24",25);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (4,12,"2020-09-09",10);
+insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (5,13,"2020-09-17",415);
 
