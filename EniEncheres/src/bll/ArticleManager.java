@@ -30,6 +30,10 @@ public class ArticleManager {
 		return this.articleDAO.selectById(idArticle);
 	}
 
+	public List<Article> selectByUser(int idUser) throws BusinessException {
+		return this.articleDAO.selectByUser(idUser);
+	}
+
 	public Article ajouter(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException {
 
 		BusinessException exception = new BusinessException();

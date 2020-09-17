@@ -23,4 +23,6 @@ public interface ArticleDAO {
 	public Article update(Article article, Utilisateur utilisateur, Categorie categorie) throws BusinessException;
 
 	public int foundRows() throws BusinessException;
+
+	List<Article> selectByUser(int idUser) throws BusinessException;
 }

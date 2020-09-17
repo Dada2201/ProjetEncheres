@@ -22,6 +22,7 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_ALL = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur LIMIT "
 			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
 	private static final String SELECT_BY_ID = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE articles_vendus.no_article = ?";
+	private static final String SELECT_BY_UTILISATEUR = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE utilisateurs.no_utilisateur = ?";
 	private static final String SELECT_FILTRE = "SELECT sql_calc_found_rows  articles_vendus.no_article , articles_vendus.nom_article , articles_vendus.description , articles_vendus.date_debut_encheres , articles_vendus.date_fin_encheres , articles_vendus.prix_initial , articles_vendus.prix_vente , articles_vendus.no_utilisateur , articles_vendus.no_categorie , categories.libelle , categories.no_categorie , utilisateurs.no_utilisateur , utilisateurs.pseudo , utilisateurs.nom , utilisateurs.prenom , utilisateurs.email , utilisateurs.telephone , utilisateurs.rue , utilisateurs.code_postal , utilisateurs.ville , utilisateurs.mot_de_passe , utilisateurs.credit , utilisateurs.administrateur FROM articles_vendus inner join categories ON articles_vendus.no_categorie = categories.no_categorie inner join utilisateurs ON articles_vendus.no_utilisateur = utilisateurs.no_utilisateur WHERE (%s) LIMIT "
 			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
 	private static final String SELECT_ROWS = "select found_rows() as nbRows;";
@@ -93,6 +94,30 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			throw businessException;
 		}
 		return null;
+	}
+
+	@Override
+	public List<Article> selectByUser(int idUser) throws BusinessException {
+		List<Article> listeArticles = new ArrayList<Article>();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_UTILISATEUR);
+			pstmt.setLong(1, idUser);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Article article = articleBuilder(rs);
+				listeArticles.add(article);
+			}
+			rs.close();
+			pstmt.close();
+			cnx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_ARTICLE_ECHEC);
+			throw businessException;
+		}
+		return listeArticles;
 	}
 
 	@Override
