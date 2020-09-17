@@ -74,4 +74,8 @@ public class EnchereManager {
 	public int getNbRows() throws BusinessException {
 		return this.enchereDAO.foundRows();
 	}
+
+	public void removeEnchereUtilisateur(Integer idUtilisateur) throws BusinessException {
+		this.enchereDAO.removeUtilisateur(idUtilisateur);
+	}
 }

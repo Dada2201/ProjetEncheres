@@ -25,15 +25,15 @@ public class UtilisateurManager {
 		return utilisateur;
 	}
 
-	public List<Utilisateur> selectionTout() throws BusinessException {
-		return this.utilisateurDAO.selectAll();
+	public List<Utilisateur> selectionTout(int idUser) throws BusinessException {
+		return this.utilisateurDAO.selectAll(idUser);
 	}
 
 	public Utilisateur selectionParId(int id) throws BusinessException {
 		return this.utilisateurDAO.selectById(id);
 	}
 
-	public void removeListe(int idUtilisateur) throws BusinessException {
+	public void remove(int idUtilisateur) throws BusinessException {
 		this.utilisateurDAO.removeUtilisateur(idUtilisateur);
 	}
 

@@ -12,9 +12,9 @@ import bo.Utilisateur;
 class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT = "INSERT INTO encheres.utilisateurs(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)VALUES(?,?,?,?,?,?,?,?,?,?,?);";
-	private static final String DELETE_LISTE = "DELETE from encheres.utilisateurs where no_utilisateur=?";
+	private static final String DELETE = "DELETE from encheres.utilisateurs where no_utilisateur=?";
 	private static final String UPDATE = "UPDATE encheres.utilisateurs SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur = ?";
-	private static final String SELECT_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs;";
+	private static final String SELECT_ALL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs WHERE no_utilisateur != ?;";
 	private static final String SELECT_BY_ID = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where no_utilisateur = ?;";
 	private static final String SELECT_BY_PSEUDO = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where pseudo = ?;";
 	private static final String SELECT_BY_EMAIL = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur FROM encheres.utilisateurs where email = ?;";
@@ -60,11 +60,12 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public List<Utilisateur> selectAll() throws BusinessException {
+	public List<Utilisateur> selectAll(int idUser) throws BusinessException {
 		List<Utilisateur> listeUtilisateurs = new ArrayList<Utilisateur>();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ALL);
+			pstmt.setInt(1, idUser);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Utilisateur utilisateur = utilisateurBuilder(rs);
@@ -190,7 +191,7 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void removeUtilisateur(int idUtilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
-			PreparedStatement pstmt = cnx.prepareStatement(DELETE_LISTE);
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE);
 			pstmt.setInt(1, idUtilisateur);
 			pstmt.executeUpdate();
 			pstmt.close();

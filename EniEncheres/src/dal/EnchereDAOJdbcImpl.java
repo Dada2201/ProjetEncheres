@@ -30,7 +30,8 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ Common.NB_ITEMS_PAGE + " OFFSET ?";
 
 	private static final String INSERT = "INSERT INTO encheres.encheres(no_utilisateur,no_article,date_enchere,montant_enchere)VALUES(?,?,?,?);";
-	private static final String REMOVE = "DELETE from encheres.encheres where no_article=?";
+	private static final String REMOVE_ARTICLE = "DELETE from encheres.encheres where no_article=?";
+	private static final String REMOVE_UTILISATEUR = "DELETE from encheres.encheres where no_utilisateur=?";
 	private static final String UPDATE = "UPDATE encheres.encheres SET no_utilisateur = ?, date_enchere = ?, montant_enchere = ? WHERE no_article = ?";
 
 	private static final String FILTER_EN_COURS_UTILISATEUR = String.format(
@@ -170,7 +171,23 @@ class EnchereDAOJdbcImpl implements EnchereDAO {
 	public void remove(int id) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			cnx.setAutoCommit(false);
-			PreparedStatement pstmt = cnx.prepareStatement(REMOVE);
+			PreparedStatement pstmt = cnx.prepareStatement(REMOVE_ARTICLE);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+			cnx.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SUPPRESSION_ENCHERE_ERREUR);
+			throw businessException;
+		}
+	}
+
+	@Override
+	public void removeUtilisateur(int id) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(REMOVE_UTILISATEUR);
 			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 			cnx.commit();

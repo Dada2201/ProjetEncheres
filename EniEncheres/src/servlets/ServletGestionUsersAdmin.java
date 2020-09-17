@@ -43,7 +43,7 @@ public class ServletGestionUsersAdmin extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 
 			try {
-				List<Utilisateur> utilisateurs = utilisateurManager.selectionTout();
+				List<Utilisateur> utilisateurs = utilisateurManager.selectionTout(utilisateur.getId());
 				request.setAttribute("utilisateurs", utilisateurs);
 			} catch (BusinessException e) {
 				e.printStackTrace();
@@ -85,7 +85,8 @@ public class ServletGestionUsersAdmin extends HttpServlet {
 						retraitManager.removeArticle(article.getNoArticle());
 						articleManager.removeArticle(article.getNoArticle());
 					}
-					utilisateurManager.removeListe(utilisateurRemoved.getId());
+					enchereManager.removeEnchereUtilisateur(utilisateurRemoved.getId());
+					utilisateurManager.remove(utilisateurRemoved.getId());
 				}
 			} catch (BusinessException e) {
 				e.printStackTrace();
