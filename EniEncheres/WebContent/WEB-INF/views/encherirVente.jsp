@@ -17,21 +17,29 @@
 				<p class="text-info">Personne n'a encore enchéri ! Soyez le
 					premier !</p>
 			</c:if>
-			<c:if test="${(enchere != null && enchere.montantEnchere >= utilisateur.credit) || errorEnchere}">
-				<p class="text-danger">Vous ne pouvez pas enchérir, vous avez seulement ${utilisateur.credit}pts alors que l'enchère est à ${enchere.montantEnchere}pts !</p>
+			<c:if
+				test="${(enchere != null && enchere.montantEnchere >= utilisateur.credit) || errorEnchere}">
+				<p class="text-danger">Vous ne pouvez pas enchérir, vous avez
+					seulement ${utilisateur.credit}pts alors que l'enchère est à
+					${enchere.montantEnchere}pts !</p>
 			</c:if>
 
-			<%@ include file="partial/descriptionArticle.jspf" %>
-			<div class="form-group row">
-				<p class="mr-3">Meilleure offre</p>
-				<p>${enchere.montantEnchere}pts par ${enchere.utilisateur.pseudo}</p>
-			</div>
+			<%@ include file="partial/descriptionArticle.jspf"%>
+			<c:if test="${enchere != null}">
+				<div class="form-group row">
+					<p class="mr-3">Meilleure offre</p>
+					<p>${enchere.montantEnchere}ptspar
+						${enchere.utilisateur.pseudo}</p>
+				</div>
+			</c:if>
 			<%@ include file="partial/descriptionRetraitVendeur.jspf"%>
-			<c:if test="${enchere == null || enchere.montantEnchere < utilisateur.credit}">
+			<c:if
+				test="${enchere == null || enchere.montantEnchere < utilisateur.credit}">
 				<form action="encherir" method="post" class="form-group row">
-					<p class ="col-md-3">Ma proposition</p>
-					<input class="col-md-2 mr-2" type="number" name="prix" class="form-control" min="${enchere.montantEnchere+1}" /> <input type="submit"
-						class="btn btn-primary" value="Enchérir" />
+					<p class="col-md-3">Ma proposition</p>
+					<input class="col-md-2 mr-2" type="number" name="prix"
+						class="form-control" min="${enchere.montantEnchere+1}" /> <input
+						type="submit" class="btn btn-primary" value="Enchérir" />
 				</form>
 			</c:if>
 		</div>
