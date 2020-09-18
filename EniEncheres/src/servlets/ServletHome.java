@@ -72,13 +72,14 @@ public class ServletHome extends HttpServlet {
 
 					for (Article article : listeArticles) {
 						Common.setImg(article, getServletContext());
+						article.setStatut(Article.Statut.EN_COURS_ENCHERE);
 					}
 					request.setAttribute("listeArticles", listeArticles);
 					request.setAttribute("nbItems", nbRows);
 				}
 				
 
-				if (categorie != null) {
+				if (categorie != null && Common.isNumeric(categorie)) {
 					categorieFiltre = categoriesManager.selectionById(Integer.parseInt(categorie));
 					if (arcticleStatut.size() == 0 && encheresStatut.size() == 0 && categorieFiltre != null) {
 						listeArticles.addAll(enchereManager.selectionFiltre(new ArrayList<Enchere.Statut>(),
@@ -87,6 +88,7 @@ public class ServletHome extends HttpServlet {
 					}
 					for (Article article : listeArticles) {
 						Common.setImg(article, getServletContext());
+						article.setStatut(Article.Statut.EN_COURS_ENCHERE);
 					}
 					request.setAttribute("listeArticles", listeArticles);
 					request.setAttribute("nbItems", nbRows);
@@ -98,6 +100,7 @@ public class ServletHome extends HttpServlet {
 						listeArticles.addAll(articleManager.selectionFiltre(null, null, null, search, page != null ? Integer.parseInt(page) - 1 : 0, Common.NB_ITEMS_PAGE));
 						for (Article article : listeArticles) {
 							Common.setImg(article, getServletContext());
+							article.setStatut(Article.Statut.EN_COURS_ENCHERE);
 						}
 						nbRows += articleManager.getNbRows();
 					} catch (BusinessException e) {
