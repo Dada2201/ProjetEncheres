@@ -12,39 +12,15 @@ a, a:hover, a:focus {
 
 .ebuy-e {
 	color: #CC0000;
-	letter-spacing: -20px;
 }
-.ebuy-n {
+.ebuy-b {
 	color: #0000FF;
-	letter-spacing: -20px;
 }
-.ebuy-i {
+.ebuy-u {
 	color: #FFA500;
-	letter-spacing: -20px;
 }
-.ebuy-- {
+.ebuy-y {
 	color: #008000;
-	letter-spacing: -20px;
-}
-.ebuy-n {
-	color: #0000FF;
-	letter-spacing: -20px;
-}
-.ebuy-c {
-	color: #FFA500;
-	letter-spacing: -20px;
-}
-.ebuy-h {
-	color: #008000;
-	letter-spacing: -20px;
-}
-.ebuy-r {
-	color: #0000FF;
-	letter-spacing: -20px;
-}
-.ebuy-e2 {
-	color: #FFA500;
-	letter-spacing: -20px;
 }
 
 h1 {font-size: 3rem !important}
