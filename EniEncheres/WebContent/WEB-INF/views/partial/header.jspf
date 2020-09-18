@@ -13,9 +13,19 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 			<a href="${pageContext.request.contextPath}"><span
-				class="display-1 logo-ebuy"><span class="ebuy-e">e</span><span
-					class="ebuy-b">b</span><span class="ebuy-u">u</span><span
-					class="ebuy-y">y</span></span><span></span></a>
+				class="display-4">
+				<span class="ebuy-e">E</span>
+				<span class="ebuy-n">N</span>
+				<span class="ebuy-i">I</span>
+				<span class="ebuy--">-</span>
+				<span class="ebuy-e">E</span>
+				<span class="ebuy-n">N</span>
+				<span class="ebuy-c">C</span>
+				<span class="ebuy-h">H</span>
+				<span class="ebuy-e">E</span>
+				<span class="ebuy-r">R</span>
+				<span class="ebuy-e2">E</span>
+			</span></a>
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			</ul>
 			<ul class="form-inline my-2 my-lg-0">
