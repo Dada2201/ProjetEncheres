@@ -1,13 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:if test="${logged}">
-	<%@ include file="partial/header/connected.jspf"%>
-</c:if>
-<c:if test="${!logged}">
-	<%@ include file="partial/header/notConnected.jspf"%>
-
-</c:if>
+<%@ include file="partial/header/header.jspf"%>
 <body>
 
 	<div class="container py-5">
@@ -28,8 +22,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label for="inputPassword" class="col-3 col-form-label">Catégories
-								:</label>
+							<label for="inputPassword" class="col-3 col-form-label">Catégories</label>
 							<div class="col-9">
 								<select id="categories" class="form-control" required
 									name="categorie">
@@ -45,7 +38,7 @@
 					</div>
 
 				</div>
-				<c:if test="${logged}">
+				<c:if test="${utilisateur!=null}">
 					<div>
 						<div class="row justify-content-around">
 							<div class="col-md-4">
@@ -161,7 +154,6 @@
 		});
 
 		$('.pagination li').on('click', function() {
-			alert('ici');
 			$.ajax({
 				url : 'ServletHome',
 				type : 'GET',
@@ -171,7 +163,6 @@
 				success : function(data) {
 					liste = "";
 					liste = $(data).find('#liste').html();
-					alert(liste)
 					$('#liste').filter(function() {
 						return $(this).val() == "";
 					});

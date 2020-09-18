@@ -213,12 +213,6 @@ public class ServletHome extends HttpServlet {
 			e2.printStackTrace();
 		}
 
-		if (request.getSession().getAttribute(Common.UTILISATEUR_NAME) != null) {
-			request.setAttribute("logged", true);
-		} else {
-			request.setAttribute("logged", false);
-		}
-
 		request.setAttribute(Common.PAGE_TITLE, "Accueil");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/accueil.jsp");
 		rd.forward(request, response);

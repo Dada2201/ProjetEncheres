@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="partial/header/default.jspf"%>
+<%@ include file="partial/header/header.jspf"%>
 <div class="container py-5">
 	<c:if test="${errorPseudo}">
 		<div class="alert alert-danger" role="alert">Le pseudo est déjà
@@ -36,7 +36,7 @@
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Email</label> <input type="email"
-						class="form-control col-8" maxlength="20" name="email" required>
+						class="form-control col-8" maxlength="255" name="email" required>
 				</div>
 				<div class="form-group row">
 					<label class="col-4">Téléphone</label> <input type="tel"

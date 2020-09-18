@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ include file="partial/header/connected.jspf"%>
+<%@ include file="partial/header/header.jspf"%>
 <div class="container py-5">
 	<div class="row justify-content-center mb-5">
 		<h1>Gestion des utilisateur de l'application</h1>

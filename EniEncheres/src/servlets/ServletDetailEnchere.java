@@ -92,12 +92,6 @@ public class ServletDetailEnchere extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}		
-		
-		if (request.getSession().getAttribute(Common.UTILISATEUR_NAME) != null) {
-			request.setAttribute("logged", true);
-		} else {
-			request.setAttribute("logged", false);
-		}
 
 		request.setAttribute(Common.PAGE_TITLE, "Détail d'un article");
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/detailEnchere.jsp");
