@@ -231,7 +231,8 @@ class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 	
 	public Utilisateur updateCredit(Utilisateur utilisateur,int credit) throws BusinessException {
-		try (Connection cnx = ConnectionProvider.getConnection()) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {			
+			cnx.setAutoCommit(false);
 			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT);
 			pstmt.setInt(1, credit);
 			pstmt.setInt(2, utilisateur.getId());

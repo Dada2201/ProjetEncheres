@@ -74,10 +74,8 @@ public class ServletEditArticle extends HttpServlet {
 					response.sendRedirect(request.getContextPath());
 				}
 			} catch (BusinessException e) {
-				System.out.println("sdds");
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			} catch (Exception e) {
-				System.out.println(e);
 			}
 		} else {
 			response.sendRedirect(request.getContextPath());

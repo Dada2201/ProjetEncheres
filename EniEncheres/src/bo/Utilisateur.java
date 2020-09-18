@@ -11,8 +11,8 @@ public class Utilisateur {
 	private String codePostal;
 	private String ville;
 	private String motDePasse;
-	private Integer credit;
-	private Boolean isAdmin;
+	private int credit;
+	private boolean isAdmin;
 
 	public Utilisateur(Integer id, String nom) {
 		this.id = id;
@@ -20,7 +20,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(Integer id, String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, Integer credit, Boolean isAdmin) {
+			String codePostal, String ville, String motDePasse, int credit, boolean isAdmin) {
 		this.id = id;
 		this.pseudo = pseudo;
 		this.nom = nom;
@@ -119,7 +119,7 @@ public class Utilisateur {
 		return credit;
 	}
 
-	public void setCredit(Integer credit) {
+	public void setCredit(int credit) {
 		this.credit = credit;
 	}
 

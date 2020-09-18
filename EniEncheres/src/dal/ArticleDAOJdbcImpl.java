@@ -253,7 +253,6 @@ class ArticleDAOJdbcImpl implements ArticleDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(String.format(SELECT_FILTRE, filter));
 			pstmt.setLong(1, nbItems);
 			pstmt.setLong(2, page * Common.NB_ITEMS_PAGE);
-			System.out.println(pstmt);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Article article = articleBuilder(rs);

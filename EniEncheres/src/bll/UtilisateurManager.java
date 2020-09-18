@@ -63,7 +63,7 @@ public class UtilisateurManager {
 		return this.utilisateurDAO.selectByEmail(email);
 	}
 	
-	public Utilisateur updateCredit(Utilisateur utilisateur, int credit) throws BusinessException{
-		return this.utilisateurDAO.updateCredit(utilisateur,credit);
+	public void updateCredit(Utilisateur utilisateur, int credit) throws BusinessException{
+		this.utilisateurDAO.updateCredit(utilisateur,credit);
 	}
 }

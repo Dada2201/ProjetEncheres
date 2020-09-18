@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,8 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bll.ArticleManager;
 import bll.CodesResultatBLL;
+import bll.EnchereManager;
+import bll.RetraitManager;
 import bll.UtilisateurManager;
+import bo.Article;
 import bo.Common;
 import bo.Utilisateur;
 import dal.BusinessException;
@@ -100,7 +105,22 @@ public class ServletModificationProfil extends HttpServlet {
 					Utilisateur u = (Utilisateur) request.getSession().getAttribute(Common.UTILISATEUR_NAME);
 					UtilisateurManager um = new UtilisateurManager();
 					try {
-						um.remove(u.getId());
+						if(u!=null) {
+							ArticleManager articleManager = new ArticleManager();
+							RetraitManager retraitManager = new RetraitManager();
+							EnchereManager enchereManager = new EnchereManager();
+							
+							List<Article> listArticles = articleManager.selectByUser(u.getId());
+							for (Article article : listArticles) {
+								enchereManager.removeEnchere(article.getNoArticle());
+								retraitManager.removeArticle(article.getNoArticle());
+								articleManager.removeArticle(article.getNoArticle());
+							}
+							enchereManager.removeEnchereUtilisateur(u.getId());
+							um.remove(u.getId());
+						}
+						
+						response.sendRedirect(request.getContextPath());
 					} catch (BusinessException e) {
 						e.printStackTrace();
 					} finally {
