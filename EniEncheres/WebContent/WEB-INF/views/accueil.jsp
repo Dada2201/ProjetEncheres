@@ -55,12 +55,14 @@
 										value="">Mes enchères en cours</label>
 								</div>
 								<div class="checkbox pl-5">
-									<label><input type="checkbox" id="enchereswin" value="">Mes enchères remportées</label>
+									<label><input type="checkbox" id="enchereswin" value="">Mes
+										enchères remportées</label>
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="radio">
-									<label><input type="radio" id="ventes" name="optradio">Mes ventes</label>
+									<label><input type="radio" id="ventes" name="optradio">Mes
+										ventes</label>
 								</div>
 								<div class="checkbox pl-5">
 									<label><input type="checkbox" id="ventesencours"
@@ -87,8 +89,7 @@
 		</div>
 
 		<div id="liste" class="container">
-			<c:if test="${listeArticles != null && }">
-				<c:if test="${listeArticles != null && listeArticles.size() > 0}">
+			<c:if test="${listeArticles != null && listeArticles.size() > 0}">
 				<div class="row justify-content-center">
 					<h2>Toutes les enchères</h2>
 				</div>
