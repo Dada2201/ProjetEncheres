@@ -76,8 +76,6 @@ public class ServletModificationProfil extends HttpServlet {
 				
 				HttpSession currentUserSession = request.getSession();
 				Utilisateur currentUser = (Utilisateur) currentUserSession.getAttribute(Common.UTILISATEUR_NAME);
-				System.out.println(currentUser.getMotDePasse());
-				System.out.println(Common.getMd5(actuelMdp));
 				
 				if(currentUser.getMotDePasse().equals(Common.getMd5(motDePasse))) {
 					erreurModif = true;

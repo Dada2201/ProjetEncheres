@@ -84,10 +84,11 @@ public class ServletLogin extends HttpServlet {
 				currentUserSession.setAttribute(Common.UTILISATEUR_NAME, utilisateur);
 				// 5 minutes
 				currentUserSession.setMaxInactiveInterval(300);
-				request.setAttribute(Common.PAGE_TITLE, "Profil");
+				request.setAttribute(Common.PAGE_TITLE, "Connexion");
 				response.sendRedirect(request.getContextPath());
 			} else {
 				request.setAttribute("error", true);
+				request.setAttribute(Common.PAGE_TITLE, "Connexion");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
 				rd.forward(request, response);
 			}

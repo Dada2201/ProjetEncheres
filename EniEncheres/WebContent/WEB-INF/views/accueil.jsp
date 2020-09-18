@@ -154,7 +154,6 @@
 		});
 
 		$('.pagination li').on('click', function() {
-			alert('ici');
 			$.ajax({
 				url : 'ServletHome',
 				type : 'GET',
@@ -164,7 +163,6 @@
 				success : function(data) {
 					liste = "";
 					liste = $(data).find('#liste').html();
-					alert(liste)
 					$('#liste').filter(function() {
 						return $(this).val() == "";
 					});
