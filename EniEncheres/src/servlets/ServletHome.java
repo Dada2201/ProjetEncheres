@@ -166,10 +166,10 @@ public class ServletHome extends HttpServlet {
 									page != null ? Integer.parseInt(page) - 1 : 0));
 							nbRows += enchereManager.getNbRows();
 						}
-						if(listeArticles.size() != 6) {
+						if(listeArticles.size() != Common.NB_ITEMS_PAGE) {
 							if (arcticleStatut.size() != 0) {
 								listeArticles.addAll(articleManager.selectionFiltre(arcticleStatut, categorieFiltre, utilisateur,
-										null, page != null ? Integer.parseInt((nbRows/6)+page) - 1 : 0, Common.NB_ITEMS_PAGE-listeArticles.size()));
+										null, page != null ? Integer.parseInt((nbRows/Common.NB_ITEMS_PAGE)+page) - 1 : 0, Common.NB_ITEMS_PAGE-listeArticles.size()));
 								nbRows += articleManager.getNbRows();
 							}
 						}
