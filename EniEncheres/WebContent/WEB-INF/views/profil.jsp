@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="partial/header/header.jspf"%>
+<%@ include file="partial//header.jspf"%>
 <div class="container py-5">
 	<div class="row justify-content-center mb-5">
 		<h1>Mon compte</h1>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="partial/header/header.jspf"%>
+<%@ include file="partial//header.jspf"%>
 <body>
 
 	<div class="container py-5">
