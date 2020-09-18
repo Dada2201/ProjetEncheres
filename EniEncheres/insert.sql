@@ -1,10 +1,13 @@
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Masque34","Nalad","Rafael","rafanalad@gmail.com","0231215130","rue du moulin","14000","Caen","3cc31cd246149aec68079241e71e98f6","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("CarlosDu13","Martin","Carl","carlos13@gmail.com","0231215131","rue de la villa","13090","Aix-En-Provence","3cc31cd246149aec68079241e71e98f6","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Micheline","Halo","Micheline","michmich@gmail.com","0231215132","rue du hein","35000","Rennes","3cc31cd246149aec68079241e71e98f6","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("DumontJ","Dumont","Jean","jd@gmail.com","0231215429","Avenue Dumont","13000","Marseille","3cc31cd246149aec68079241e71e98f6","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Louisatak","Attac","Louis","LouisAtak@gmail.com","0231215929","rue du moulin","14000","Caen","3cc31cd246149aec68079241e71e98f6","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Jojo","Lorent","Jordan","jl@gmail.com","0231215129","rue du moulin","14000","Caen","3cc31cd246149aec68079241e71e98f6","1000",0);
-insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("admin","Lorent","Jordan","jladimin@gmail.com","0231215129","rue du moulin","14000","Caen","3cc31cd246149aec68079241e71e98f6","1000",1);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Masque34","Nalad","Rafael","rafanalad@gmail.com","0231215130","rue du moulin","14000","Caen","f925916e2754e5e03f75dd58a5733251","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("CarlosDu13","Martin","Carl","carlos13@gmail.com","0231215131","rue de la villa","13090","Aix-En-Provence","f925916e2754e5e03f75dd58a5733251","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Micheline","Halo","Micheline","michmich@gmail.com","0231215132","rue du hein","35000","Rennes","f925916e2754e5e03f75dd58a5733251","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("DumontJ","Dumont","Jean","jd@gmail.com","0231215429","Avenue Dumont","13000","Marseille","f925916e2754e5e03f75dd58a5733251","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Louisatak","Attac","Louis","LouisAtak@gmail.com","0231215929","rue du moulin","14000","Caen","f925916e2754e5e03f75dd58a5733251","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("Jojo","Lorent","Jordan","jl@gmail.com","0231215129","rue du moulin","14000","Caen","f925916e2754e5e03f75dd58a5733251","1000",0);
+insert into utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) values("admin","Lorent","Jordan","jladimin@gmail.com","0231215129","rue du moulin","14000","Caen","f925916e2754e5e03f75dd58a5733251","1000",1);
+-- Default password is : Test@123
+
+
 
 insert into articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) values("Cafetiere","Elle fait le café","2020-09-10","2020-09-30",30,0,1,16);
 insert into articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) values("Maison 200m","15 chambres","2020-09-10","2020-09-30",200000,0,2,7);
@@ -20,6 +23,7 @@ insert into articles_vendus (nom_article,description,date_debut_encheres,date_fi
 insert into articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) values("Pelle","Comme neuve","2020-09-10","2020-10-05",5,0,2,45);
 insert into articles_vendus (nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie) values("T1 centre Rennes","loué non meublé, dispo le 1er novembre. téléphoner au 0612453678","2020-09-10","2020-10-05",420,0,3,8);
 
+select * from articles_vendus; 
 insert into retraits (no_article,rue,code_postal,ville) values(1,"rue des artisans",14000,"Caen");
 insert into retraits (no_article,rue,code_postal,ville) values(2,"rue des peintres",14000,"Caen");
 insert into retraits (no_article,rue,code_postal,ville) values(3,"rue des bouchers",14000,"Caen");
@@ -33,8 +37,6 @@ insert into retraits (no_article,rue,code_postal,ville) values(10,"rue des chant
 insert into retraits (no_article,rue,code_postal,ville) values(11,"rue des sportifs",14000,"Caen");
 insert into retraits (no_article,rue,code_postal,ville) values(12,"rue des marins",14000,"Caen");
 insert into retraits (no_article,rue,code_postal,ville) values(13,"rue de l'or",14000,"Caen");
-
-select * from encheres;
 
 insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (2,1,"2020-09-16",31);
 insert into encheres (no_utilisateur,no_article,date_enchere,montant_enchere) values (3,1,"2020-09-17",40);
