@@ -22,14 +22,15 @@
 				placeholder="Répéter le mot de passe" maxlength="255"
 				name="confirmationMotDePasse" required>
 		</div>
-		<div class="mt-5 mx-auto row justify-content-around col-md-6">
-			<a href="${pageContext.request.contextPath}/login"
-				class="btn btn-primary">Se connecter</a>
-			<a href="${pageContext.request.contextPath}/ajoutUtilisateur"
-				class="btn btn-primary">Créer un compte</a> <input
-				class="btn btn-primary" type="submit" value="Modifier">
+		<div class="mx-auto row justify-content-around col-md-6">
+			<input class="btn btn-primary" type="submit" value="Modifier">
 		</div>
 	</form>
-	<div class="mt-5 row justify-content-center"></div>
+	<div class="mt-5 mx-auto col-md-6 row justify-content-around">
+		<a href="${pageContext.request.contextPath}/login"
+			class="btn btn-primary">Se connecter</a> <a
+			href="${pageContext.request.contextPath}/ajoutUtilisateur"
+			class="btn btn-primary">Créer un compte</a>
+	</div>
 </div>
 <%@ include file="partial/footer.jspf"%>
