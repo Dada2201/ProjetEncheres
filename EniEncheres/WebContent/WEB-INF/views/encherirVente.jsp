@@ -20,49 +20,17 @@
 			<c:if test="${(enchere != null && enchere.montantEnchere >= utilisateur.credit) || errorEnchere}">
 				<p class="text-danger">Vous ne pouvez pas enchérir, vous avez seulement ${utilisateur.credit}pts alors que l'enchère est à ${enchere.montantEnchere}pts !</p>
 			</c:if>
+
+			<%@ include file="partial/descriptionArticle.jspf" %>
 			<div class="form-group row">
-				<p>${article.nomArticle}</p>
+				<p class="mr-3">Meilleure offre</p>
+				<p>${enchere.montantEnchere}pts par ${enchere.utilisateur.pseudo}</p>
 			</div>
-			<div class="form-group row">
-				<p>Description</p>
-				<p>${article.description}</p>
-			</div>
-			<div class="form-group row">
-				<p>Catégorie</p>
-				<p>${article.categorie.libelle}</p>
-			</div>
-			<div class="form-group row">
-				<c:if test="${enchere != null}">
-					<p>Meilleure offre</p>
-					<p>${enchere.montantEnchere}pts par
-						${enchere.utilisateur.pseudo}</p>
-				</c:if>
-			</div>
-			<div class="form-group row">
-				<p>Mise à prix</p>
-				<p>${article.prixInitial}pts</p>
-			</div>
-			<div class="form-group row">
-				<p>Fin de l'enchère</p>
-				<p>
-					<fmt:formatDate pattern="dd/MM/yyyy" value="${article.dateFin}" />
-				</p>
-			</div>
-			<div class="form-group row">
-				<p>Retrait</p>
-				<div>
-					<p>${retrait.rue}</p>
-					<p>${retrait.codePostal}${retrait.ville}</p>
-				</div>
-			</div>
-			<div class="form-group row">
-				<p>Vendeur</p>
-				<p>${article.utilisateur.pseudo}</p>
-			</div>
+			<%@ include file="partial/descriptionRetraitVendeur.jspf"%>
 			<c:if test="${enchere == null || enchere.montantEnchere < utilisateur.credit}">
 				<form action="encherir" method="post" class="form-group row">
-					<p class ="col-md-4">Ma proposition</p>
-					<input class="col-md-8" type="number" name="prix" class="form-control" min="${enchere.montantEnchere+1}" /> <input type="submit"
+					<p class ="col-md-3">Ma proposition</p>
+					<input class="col-md-2 mr-2" type="number" name="prix" class="form-control" min="${enchere.montantEnchere+1}" /> <input type="submit"
 						class="btn btn-primary" value="Enchérir" />
 				</form>
 			</c:if>
