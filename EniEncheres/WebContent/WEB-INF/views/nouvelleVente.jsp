@@ -58,17 +58,20 @@
 
 					<div class="form-group row">
 						<label class="col-md-3 form-label">Rue</label> <input type="text"
+							value="${utilisateur.rue }"
 							class="form-control col-md-9"
 							pattern="^[a-zA-Z0-9]+(?:[\s-][a-zA-Z0-9]+)*$" required
 							name="rue" />
 					</div>
 					<div class="form-group row">
 						<label class="col-md-3 form-label">Code postal</label> <input
+							value="${utilisateur.codePostal }"
 							type="text" class="form-control col-md-9" pattern="^[0-9_]*$"
 							maxlength="5" required name="codePostal" />
 					</div>
 					<div class="form-group row">
 						<label class="col-md-3 form-label">Ville</label> <input type="text"
+							value="${utilisateur.ville }"
 							class="form-control col-md-9" pattern="^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$"
 							required name="ville" />
 					</div>
