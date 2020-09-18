@@ -65,17 +65,16 @@ public class ServletHome extends HttpServlet {
 		String page = request.getParameter("page");
 		try {
 			if (request.getSession().getAttribute(Common.UTILISATEUR_NAME) == null) {
-
-				if(search == null && categorie == null) {
+				if(search == null && categorie == null && !Common.isNumeric(categorie) || !Pattern.matches("^[a-zA-Z 0-9]+$", search)) {
 					listeArticles = enchereManager.selectionArticles(page != null ? Integer.parseInt(page) - 1 : 0);
 					nbRows = enchereManager.getNbRows();
-
 					for (Article article : listeArticles) {
 						Common.setImg(article, getServletContext());
 						article.setStatut(Article.Statut.EN_COURS_ENCHERE);
 					}
 					request.setAttribute("listeArticles", listeArticles);
 					request.setAttribute("nbItems", nbRows);
+					
 				}
 				
 
