@@ -1,6 +1,6 @@
 # ProjetEncheres
 
-##Connexion à la base de données
+## Connexion à la base de données
 
     <Context>
     	<Ressource
@@ -21,7 +21,7 @@
     
 Remplir les logins et base de données avec ses identifiants
 
-##Ajout d'images de base
+## Ajout d'images de base
 
 Pour ajouter des images directement dans votre projet, elles doivent se trouver dans le serveur tomcat,
 ajouter des images au chemin workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\EniEncheres\resources\img\articles
